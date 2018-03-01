@@ -1,4 +1,3 @@
-
 .metadata
 bin/
 tmp/
@@ -10,6 +9,9 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+# OSX DS_Store
+.DS_Store
 
 # External tool builders
 .externalToolBuilders/
