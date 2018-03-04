@@ -85,7 +85,6 @@ public class JobSelection {
 	}
 	
 	private static class PriorityComparator implements Comparator<Job>{
-
 		@Override
 		public int compare(Job o1, Job o2) {
 			// TODO Auto-generated method stub
@@ -98,6 +97,24 @@ public class JobSelection {
 		Job nextJob = allJobs.get(0);
 		allJobs.remove(0);
 		return nextJob;
+	}
+	
+	public void cancelJobByJob(Job toCancel) {
+		for(Job job: allJobs) {
+			if(job.getName().equals(toCancel.getName())) {
+				allJobs.remove(job);
+				break;
+			}
+		}
+	}
+	
+	public void cancelJobByName(String cancelName) {
+		for(Job job: allJobs) {
+			if(job.getName().equals(cancelName)) {
+				allJobs.remove(job);
+				break;
+			}
+		}
 	}
 
 }
