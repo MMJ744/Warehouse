@@ -1,27 +1,41 @@
-package jobSelectionAndAllocation;
+package src.jobSelectionAndAllocation;
+
+import java.math.BigDecimal;
 
 public class Item {
 	
+	private int xCoord;
+	private int yCoord;
 	private String name;
-	private int reward;
-	private int weight;
+	private BigDecimal weight;
+	private BigDecimal reward;
 	
-	public Item(String name, int reward, int weight) {
+	public Item(String name,int x,int y, BigDecimal weight, BigDecimal reward) {
 		this.name = name;
-		this.reward = reward;
+		xCoord = x;
+		yCoord = y;
 		this.weight = weight;
+		this.reward = reward;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public int getReward() {
-		return reward;
+	public int getX() {
+		return xCoord;
 	}
 	
-	public int getWeight() {
+	public int getY() {
+		return yCoord;
+	}
+	
+	public BigDecimal getWeight() {
 		return weight;
+	}
+	
+	public BigDecimal getReward() {
+		return reward;
 	}
 
 }
