@@ -93,10 +93,10 @@ public class JobSelection {
 		
 	}
 	
-	public Job nextJob() {
+	public void nextJob() {
 		Job nextJob = allJobs.get(0);
 		allJobs.remove(0);
-		return nextJob;
+		JobAllocation.allocateJob(nextJob);
 	}
 	
 	public void cancelJobByJob(Job toCancel) {
