@@ -41,10 +41,6 @@ public class Node {
 		return g;
 	}
 
-	public boolean checkLoop() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	public boolean isGoal() {
 		if (coordinate.equals(goal)) return true;

@@ -2,6 +2,7 @@ package route_planning;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class AStarSearch {
@@ -18,8 +19,8 @@ public class AStarSearch {
 	
 	public ArrayList<Point> search() {
 		while (true) {
-			Node current = openList.poll(); //signifies the end of the open list.
-			if (current == null) break;
+			Node current = openList.poll(); 
+			if (current == null) break; //signifies the end of the open list.
 			if (current.isGoal()) {
 				ArrayList<Point> route = new ArrayList<Point>();
 				route = traceRoute(current);
@@ -27,7 +28,7 @@ public class AStarSearch {
 			} 
 			Node[] children = generateChildren(current);
 			for (Node child : children) {
-				if (!(child.checkLoop() || checkOpen(child) || checkClosed(child))) {
+				if (!(checkLoop(child) || checkOpen(child) || checkClosed(child))) {
 					openList.add(child);
 				}
 			}
@@ -45,6 +46,20 @@ public class AStarSearch {
 		return null;
 	}
 	
+	private boolean checkLoop(Node node) {
+		Comparator<Point> comp = new Comparator<Point>();
+		ArrayList<Point> hold = new ArrayList<Point>();
+		Point[] history = new Point[hold.size()];
+		history = hold.toArray(history);
+		int length = history.length;
+		history.sort();
+		for (int i = 0; i < length; i++) {
+			for (int j = i+1; j < length; j++)
+				if (history.get(i));
+		}
+		return false;
+	}
+	
 	private boolean checkOpen(Node node) {
 		//find some way to iterate through a PriorityQueue ???
 		return false;
@@ -57,11 +72,6 @@ public class AStarSearch {
 			}
 		}
 		return false;
-	}
-
-	private boolean isGoal(Node node) {
-		if (node.getCoordinate().equals(goalState)) return true;
-		else return false;
 	}
 	
 	private ArrayList<Point> traceRoute(Node node) {
