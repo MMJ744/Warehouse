@@ -1,33 +1,59 @@
 package route_planning;
 
+import java.awt.Point;
+
 public class Node {
-	int f;
-	int h;
-	int g;
-	Node parent;
-	Coordinate coordinate;
+	private double f;
+	private double h;
+	private double g;
+	private Node parent;
+	Point coordinate;
+	Point goal;
 	
-	Node (Coordinate c) {
-		f = 0;
-		h = 0;
-		g = 0;
+	Node (Point c, Point goal) {
 		parent = null;
 		coordinate = c;
+		this.goal = goal;
+		g = 0;
+		h = heuristic();
+		f = g + h;
+		
 	}
 	
-	public void setF (int f) {
-		this.f = f;
+	Node (Point c, Point goal, Node p) {
+		parent = p;
+		coordinate = c;
+		this.goal = goal;
+		g = parent.getG() + 1;
+		h = heuristic();
+		f = g + h;
 	}
 	
-	public void setH (int h) {
-		this.h= h;
+	public Node getParent() {
+		return parent;
 	}
 	
-	public void setG (int g) {
-		this.g= g;
+	public Point getCoordinate() {
+		return this.coordinate;
 	}
 	
-	public void setParent (Node parent) {
-		this.parent = parent;
+	public double getG() {
+		return g;
+	}
+
+	public boolean checkLoop() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public boolean isGoal() {
+		if (coordinate.equals(goal)) return true;
+		else return false;
+	}
+	
+	private double heuristic() {
+		double x = Math.abs(goal.getX() - coordinate.getX());
+		double y = Math.abs(goal.getY() - coordinate.getY());
+		return (x + y);
 	}
 }
