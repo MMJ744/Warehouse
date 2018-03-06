@@ -1,29 +1,36 @@
 package com.rp25.motion.behavior;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
 public class BehaviorStack{
 	
-	Stack stack;
+	ArrayList<String> stack;
 	
 	public BehaviorStack(){
-		this.stack = new Stack();
-	}
-	
-	public String peek(){
-		return (String) this.stack.peek();
-	}
-	
-	public String pop(){
-		return (String) this.stack.pop();
-	}
-	
-	public void add(String behavior){
-		this.stack.add(behavior);
+		this.stack = new ArrayList<String>();
 	}
 	
 	public Boolean isEmpty(){
-		return this.stack.isEmpty();
+		return (this.stack.size() == 0);
 	}
+	
+	public String peek(){
+		return this.stack.get(0);
+	}
+	
+	public String pop(){
+		if(!isEmpty()){
+			return this.stack.remove(0);
+		}
+		return null;
+	}
+	
+	public void add(String behavior){
+		ArrayList<String> tempList = new ArrayList<String>();
+		tempList.add(behavior);
+		tempList.addAll(this.stack);
+		this.stack = tempList;
+	}
+
 	
 }

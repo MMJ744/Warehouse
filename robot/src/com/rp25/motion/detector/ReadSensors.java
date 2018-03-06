@@ -1,12 +1,13 @@
 package com.rp25.motion.detector;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
 
-public class ReadSensors extends Thread{
+public class ReadSensors{
 	
 	//Initialise the variables for each of the 3 sensors.
 	private final LightSensor lightSensor1; 
@@ -26,34 +27,28 @@ public class ReadSensors extends Thread{
 	}
 
 
-	public Map<String,Boolean> getSensorStateMap(){
+	private ArrayList<Boolean> getSensorStateMap(){
+		System.out.println("getting sensormap");
 		//Create the return map
-		Map<String,Boolean> state = new HashMap<String,Boolean>();
+		ArrayList<Boolean> state = new ArrayList<Boolean>();
 		//Mapping: SENSOR NAME -> TRUE IF ON LINE, FALSE IF NOT.
-		state.put("left",this.lightSensor1.getNormalizedLightValue() < THRESHOLD);
-		state.put("middle",this.lightSensor2.getNormalizedLightValue() < THRESHOLD);
-		state.put("right",this.lightSensor3.getNormalizedLightValue() < THRESHOLD);
+		state.add(this.lightSensor1.getNormalizedLightValue() < THRESHOLD); //.get(0) == left sensor
+		System.out.println("left status::"+state.get(0));
+		state.add(this.lightSensor2.getNormalizedLightValue() < THRESHOLD); //.get(1) == middle sensor 
+		state.add(this.lightSensor3.getNormalizedLightValue() < THRESHOLD); //.get(2) == right sensor
+		
 		return state;
 	}
 	
-	//The run method of the thread. 
-	public void run(){
-		while(true){
-			//Sleep the run so it does not use up too many resources.
-			try {
-				Thread.sleep(15);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
-			//Get the current state map and give it to the situation detector.
-			Map<String,Boolean> stateMap = getSensorStateMap();
-			detector.giveStateMap(stateMap);
-			detector.addBehaviors();
-			
-			
-		}
+	
+	public void poll(){
+		//Get the current state map and give it to the situation detector.
+		detector.giveStateMap(getSensorStateMap());
+		detector.addBehaviors();
 	}
+	
+	
+	
 	
 	
 	
