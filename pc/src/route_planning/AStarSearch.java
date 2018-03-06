@@ -39,11 +39,32 @@ public class AStarSearch {
 		//should report this (to warehouse interface?)
 	}
 	
-	private Node[] generateChildren(Node current) {
-		// calculate the four cardinal points around the point passed in the node
-		// check these points are on the board & accessible
-		// if so, add to an array
-		return null;
+	private Node[] generateChildren(Node parentNode) {
+		Point parent = parentNode.getCoordinate();
+		
+		Point[] points = new Point[4];
+		
+		points[0] = new Point(parent.x + 1, parent.y); //north
+		points[1] = new Point(parent.x, parent.y + 1); //east
+		points[2] = new Point(parent.x - 1, parent.y); //south
+		points[3] = new Point(parent.x, parent.y - 1); //west
+		
+		ArrayList<Node> h = new ArrayList<Node>();
+		
+		for (Point child : points) {
+			if (checkIsOnGrid(child)) {
+				Node childNode = new Node(child, goalState, parentNode);
+				h.add(childNode);
+			}
+		}
+		
+		Node[] children = new Node[h.size()];
+		children = h.toArray(children);
+		return children;
+	}
+	
+	private boolean checkIsOnGrid(Point point) {
+		return false;
 	}
 	
 	private boolean checkLoop(Node node) {
