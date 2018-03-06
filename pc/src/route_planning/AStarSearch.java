@@ -67,16 +67,12 @@ public class AStarSearch {
 		return false;
 	}
 	
-	private boolean checkLoop(Node node) {
-		Comparator<Point> comp = new Comparator<Point>();
-		ArrayList<Point> hold = new ArrayList<Point>();
-		Point[] history = new Point[hold.size()];
-		history = hold.toArray(history);
-		int length = history.length;
-		history.sort();
+	private boolean checkLoop(Node node) { //NB this method has bad time complexity; look at using comparator & sort to improve
+		ArrayList<Point> history = new ArrayList<Point>();
+		int length = history.size();
 		for (int i = 0; i < length; i++) {
 			for (int j = i+1; j < length; j++)
-				if (history.get(i));
+				if (history.get(i).equals(history.get(j))) return true;
 		}
 		return false;
 	}
