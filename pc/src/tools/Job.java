@@ -9,13 +9,13 @@ public class Job {
 		parts.add(part);
 	}
 	
-	public ArrayList<JobPart> getParts{
+	public ArrayList<JobPart> getParts(){
 		return parts;
 	}
 	
 	public JobPart getPart(String name) {
 		for (JobPart jobPart : parts) {
-			String jobName = jobPart.getName;
+			String jobName = jobPart.getName();
 			if(name.equals(jobName)) {
 				return jobPart;
 			}
