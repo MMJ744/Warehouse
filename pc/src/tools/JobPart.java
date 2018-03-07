@@ -7,7 +7,7 @@ public class JobPart {
 	private String name;
 	private int numberOfItems;
 	
-	public JobPart(name, x, y, numItems) {
+	public JobPart(String name,int x,int y,int numItems) {
 		this.name = name;
 		xCoord = x;
 		yCoord = y;
