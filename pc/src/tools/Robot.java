@@ -37,6 +37,13 @@ public class Robot {
 		x = xCoor;
 		y = yCoor;
 	}
+	
+	/**
+	 * @return ID number of the robot
+	 */
+	public int getID() {
+		return id;
+	}
 
 	/**
 	 * @return Current assigned job.
