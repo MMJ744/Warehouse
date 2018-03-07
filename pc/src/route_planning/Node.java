@@ -2,19 +2,27 @@ package route_planning;
 
 import java.awt.Point;
 
+import route_planning.Location.STATE;
+
 public class Node {
 	private double f;
 	private double h;
 	private double g;
 	private Node parent;
+	
+	Location location;
+	
 	Point coordinate;
 	Point goal;
 	
 	//constructor for root node only
-	Node (Point c, Point goal) {
+	Node (Location location, Point goal) {
 		parent = null;
-		coordinate = c;
+		
+		this.location = location;
 		this.goal = goal;
+		coordinate = location.coordinate;
+		
 		g = 0;
 		h = heuristic();
 		f = g + h;
@@ -22,10 +30,13 @@ public class Node {
 	}
 	
 	//general constructor
-	Node (Point c, Point goal, Node p) {
+	Node (Location location, Point goal, Node p) {
 		parent = p;
-		coordinate = c;
+		
+		this.location = location;
 		this.goal = goal;
+		coordinate = location.coordinate;
+		
 		g = parent.getG() + 1;
 		h = heuristic();
 		f = g + h;
@@ -53,6 +64,8 @@ public class Node {
 	}
 	
 	private double heuristic() {
+		if(location.state != STATE.EMPTY) return Integer.MAX_VALUE;
+		
 		double x = Math.abs(goal.getX() - coordinate.getX());
 		double y = Math.abs(goal.getY() - coordinate.getY());
 		return (x + y);
