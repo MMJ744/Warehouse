@@ -1,11 +1,13 @@
-package com.rp25.interfaces.warehouse;
+package com.rp25.interfaces.warehouse.cli;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.rp25.interfaces.warehouse.WarehouseState;
+
 import tools.Robot;
 
-public class WarehouseCLI {
+public class WarehouseCLI implements Runnable {
 
 	private WarehouseState warehouseState;
 	private Scanner userInput;
@@ -32,5 +34,16 @@ public class WarehouseCLI {
 	
 	public void close() {
 		userInput.close();
+	}
+
+	@Override
+	public void run() {
+		String i;
+		
+		while(!(i = getInput()).equalsIgnoreCase("quit")) {
+			System.out.println(getState().getRobot(Integer.parseInt(i)));
+		}
+		
+		close();
 	}
 }

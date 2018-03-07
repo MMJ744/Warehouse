@@ -1,4 +1,4 @@
-package com.rp25.interfaces.warehouse;
+package com.rp25.interfaces.warehouse.cli;
 
 import java.util.ArrayList;
 
@@ -23,12 +23,7 @@ public class WarehouseInterfaceMain {
 		rs.add(r2);
 		rs.add(r3);
 		
-		WarehouseCLI cli = new WarehouseCLI(rs);
-		String i;
-		
-		while(!(i = cli.getInput()).equalsIgnoreCase("quit")) {
-			System.out.println(cli.getState().getRobot(Integer.parseInt(i)));
-		}
+		(new WarehouseCLI(rs)).run();
 	}
 
 }
