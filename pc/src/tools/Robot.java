@@ -83,5 +83,23 @@ public class Robot {
 		x = newX;
 		y = newY;
 	}
-
+	
+	/*
+	 * toString() method for interface purposes
+	 */
+	public String toString() {
+		StringBuilder output = new StringBuilder();
+		
+			String strID  = "Robot ID: " + this.getID();
+			String strPos = "Position: (" + this.getX() + ", " + this.getY() + ")";
+			String strJob =	"Current Job: " + this.getCurrentJob();
+			
+			output.append(strID)
+				  .append("\r\n")
+				  .append(strPos)
+				  .append("\r\n")
+				  .append(strJob);
+		
+		return output.toString();
+	}
 }

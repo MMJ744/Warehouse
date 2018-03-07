@@ -5,7 +5,7 @@ import tools.Robot;
 
 public class WarehouseState {
 	
-	/**
+	/*
 	 * List of robots in the warehouse. 
 	 * Key: ID Number
 	 * Value: Robot Object
@@ -16,23 +16,7 @@ public class WarehouseState {
 		robotList.put(id, r);
 	}
 	
-	public String getStringInfo(int id) {
-		StringBuilder output = new StringBuilder();
-		
-		if (robotList.containsKey(id)) {
-			Robot currentBot = robotList.get(id);
-			
-			String strID  = "Robot ID: " + currentBot.getID();
-			String strPos = "Position: (" + currentBot.getX() + ", " + currentBot.getY() + ")";
-			String strJob =	"Current Job: " + currentBot.getCurrentJob();
-			
-			output.append(strID)
-				  .append("\r\n")
-				  .append(strPos)
-				  .append("\r\n")
-				  .append(strJob);
-		}
-		
-		return output.toString();
+	public Robot getRobot(int id) {
+		return robotList.get(id);
 	}
 }
