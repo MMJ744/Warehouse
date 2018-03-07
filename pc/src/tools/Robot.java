@@ -92,7 +92,7 @@ public class Robot {
 		
 			String strID  = "Robot ID: " + this.getID();
 			String strPos = "Position: (" + this.getX() + ", " + this.getY() + ")";
-			String strJob =	"Current Job: " + this.getCurrentJob();
+			String strJob =	"Current Job: " + this.getCurrentJob().getName();
 			
 			output.append(strID)
 				  .append("\r\n")
