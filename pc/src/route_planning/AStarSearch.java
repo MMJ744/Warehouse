@@ -2,11 +2,14 @@ package route_planning;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 
 public class AStarSearch {
-	PriorityQueue<Node> openList = new PriorityQueue<Node>();
+	Comparator<Node> comparator = new NodeComparatorF();
+	PriorityQueue<Node> openList = new PriorityQueue<Node>(comparator);
 	ArrayList<Node> closedList = new ArrayList<Node>();
 	Node startNode;
 	Point goalState;
@@ -67,18 +70,23 @@ public class AStarSearch {
 		return false;
 	}
 	
-	private boolean checkLoop(Node node) { //NB this method has bad time complexity; look at using comparator & sort to improve
+	private boolean checkLoop(Node node) { 		
 		ArrayList<Point> history = new ArrayList<Point>();
-		int length = history.size();
-		for (int i = 0; i < length; i++) {
-			for (int j = i+1; j < length; j++)
-				if (history.get(i).equals(history.get(j))) return true;
+		history = traceRoute(node);
+		
+		Collections.sort(history, new NodeComparatorPoint());
+		
+		for (int i = 0; i < history.size(); i++) {
+			if (history.get(i).equals(history.get(i+1))) return true;
 		}
 		return false;
 	}
 	
 	private boolean checkOpen(Node node) {
-		//find some way to iterate through a PriorityQueue ???
+		Iterator<Node> iterator = openList.iterator();
+		while(iterator.hasNext()) {
+			if (iterator.next().getCoordinate().equals(node.getCoordinate())) return true;
+		}
 		return false;
 	}
 	
@@ -97,5 +105,13 @@ public class AStarSearch {
 		if (!(parent == null)) route = traceRoute(parent);
 		route.add(node.getCoordinate());
 		return route;
+	}
+	
+	private ArrayList<Node> traceAncestors(Node node) {
+		Node parent = node.getParent();
+		ArrayList<Node> ancestors = new ArrayList<Node>();
+		if (!(parent == null)) ancestors = traceAncestors(parent);
+		ancestors.add(node);
+		return ancestors;
 	}
 }

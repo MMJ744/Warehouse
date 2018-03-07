@@ -10,6 +10,7 @@ public class Node {
 	Point coordinate;
 	Point goal;
 	
+	//constructor for root node only
 	Node (Point c, Point goal) {
 		parent = null;
 		coordinate = c;
@@ -20,6 +21,7 @@ public class Node {
 		
 	}
 	
+	//general constructor
 	Node (Point c, Point goal, Node p) {
 		parent = p;
 		coordinate = c;
@@ -37,10 +39,13 @@ public class Node {
 		return this.coordinate;
 	}
 	
+	public double getF() {
+		return f;
+	}
+	
 	public double getG() {
 		return g;
 	}
-
 	
 	public boolean isGoal() {
 		if (coordinate.equals(goal)) return true;
