@@ -1,5 +1,7 @@
 package tools;
 
+import org.apache.log4j.Logger;
+
 /**
  * A class to hold information about the coordinates and current job of
  * each robot such that it can be referenced in other classes. 
@@ -23,6 +25,8 @@ public class Robot {
 	 * Coordinates of the robot.
 	 */
 	private int x, y;
+	
+	private final static Logger logger = Logger.getLogger(Robot.class);
 	
 	/**
 	 * Constructor to initialize the robot class.
@@ -51,6 +55,8 @@ public class Robot {
 	 */
 	public void setCurrentJob(Job newJob) {
 		currentJob = newJob;
+		logger.debug("Job set to: " + getCurrentJob().getName());
+		
 	}
 	
 	/**

@@ -4,12 +4,14 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import org.apache.log4j.Logger;
 
 public class AStarSearch {
 	PriorityQueue<Node> openList = new PriorityQueue<Node>();
 	ArrayList<Node> closedList = new ArrayList<Node>();
 	Node startNode;
 	Point goalState;
+	final static Logger logger = Logger.getLogger(AStarSearch.class);
 	
 	AStarSearch (Point c, Point g) {
 		startNode = new Node(c, g);
@@ -22,6 +24,7 @@ public class AStarSearch {
 			Node current = openList.poll(); 
 			if (current == null) break; //signifies the end of the open list.
 			if (current.isGoal()) {
+				logger.debug("Current Node: " + current.getCoordinate());
 				ArrayList<Point> route = new ArrayList<Point>();
 				route = traceRoute(current);
 				return route;
@@ -60,6 +63,9 @@ public class AStarSearch {
 		
 		Node[] children = new Node[h.size()];
 		children = h.toArray(children);
+		for(int i = 0; i < children.length; i++) {
+			logger.debug("Child " + i + " Coordinates: " + children[i]);
+		}
 		return children;
 	}
 	

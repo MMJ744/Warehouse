@@ -2,14 +2,18 @@ package jobSelectionAndAllocation;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import tools.Job;
 
 public class JobAllocation {
 	
 	private static ArrayList<Job> robot1 = new ArrayList<Job>();
+	private final static Logger logger = Logger.getLogger(JobAllocation.class);
 	
 	public static void allocateJob(Job nextJob) {
 		robot1.add(nextJob);
+		logger.debug("Current Job: " + nextJob.getName());
 	}
 	
 	public static Job getNextJob(int robot) {

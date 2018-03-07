@@ -8,6 +8,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import org.apache.log4j.Logger;
+
 import tools.Job;
 import tools.JobPart;
 
@@ -18,6 +20,7 @@ public class JobSelection {
 	private BufferedReader brLocation;
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private ArrayList<Job> allJobs = new ArrayList<Job>();
+	private final static Logger logger = Logger.getLogger(JobSelection.class);
 	
 	public JobSelection(String jobLocation, String itemsLocation, String locationLocation) {
 		try {
@@ -27,10 +30,12 @@ public class JobSelection {
 			String line;
 			String line2;
 			while((line = brLocation.readLine()) != null) {
+				logger.debug("Location = " + line);
 				brItems.close();
 				brItems = new BufferedReader(new FileReader(itemsLocation));
 				String[] locationParts = line.split(",");
 				while((line2 = brItems.readLine()) != null) {
+					logger.debug("Item = " + line2);
 					String itemParts[] = line2.split(",");
 					if(itemParts[0].equals(locationParts[2])) {
 						Item item = new Item(itemParts[0], Integer.parseInt(locationParts[0]), Integer.parseInt(locationParts[1]), new BigDecimal(itemParts[1]), new BigDecimal(itemParts[2]));
@@ -39,6 +44,7 @@ public class JobSelection {
 				}
 			}
 			while((line = brJobs.readLine()) != null) {
+				logger.debug("Job = " + line);
 				String[] jobParts = line.split("");
 				Job job = new Job(jobParts[0]);
 				allJobs.add(job);
