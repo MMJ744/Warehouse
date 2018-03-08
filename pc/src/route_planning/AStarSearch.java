@@ -73,7 +73,7 @@ public class AStarSearch {
 		
 		Collections.sort(history, new NodeComparatorPoint());
 		
-		for (int i = 0; i < history.size(); i++) {
+		for (int i = 0; (i < history.size() - 1); i++) {
 			if (history.get(i).equals(history.get(i+1))) return true;
 		}
 		return false;
