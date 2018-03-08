@@ -1,4 +1,4 @@
-package tools;
+package com.rp25.tools;
 
 public class JobPart {
 	

@@ -1,4 +1,4 @@
-package tools;
+package com.rp25.tools;
 
 /**
  * A class to hold information about the coordinates and current job of

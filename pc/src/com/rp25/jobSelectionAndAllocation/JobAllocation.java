@@ -1,8 +1,8 @@
-package jobSelectionAndAllocation;
+package com.rp25.jobSelectionAndAllocation;
 
 import java.util.ArrayList;
 
-import tools.Job;
+import com.rp25.tools.Job;
 
 public class JobAllocation {
 	

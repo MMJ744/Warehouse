@@ -1,4 +1,4 @@
-package jobSelectionAndAllocation;
+package com.rp25.jobSelectionAndAllocation;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import tools.Job;
-import tools.JobPart;
+import com.rp25.tools.Job;
+import com.rp25.tools.JobPart;
 
 public class JobSelection {
 	
