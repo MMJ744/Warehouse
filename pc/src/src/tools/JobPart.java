@@ -1,4 +1,4 @@
-package tools;
+package src.tools;
 
 public class JobPart {
 	
@@ -7,7 +7,7 @@ public class JobPart {
 	private String name;
 	private int numberOfItems;
 	
-	public JobPart(String name, int x, int y, int numItems) {
+	public JobPart(String name,int x,int y,int numItems) {
 		this.name = name;
 		xCoord = x;
 		yCoord = y;
