@@ -1,4 +1,4 @@
-package tools;
+package com.rp25.tools;
 import java.io.InputStream;
 import java.io.OutputStream;
 
