@@ -41,10 +41,9 @@ public class ReadSensors{
 	}
 	
 	
-	public void poll(){
+	public ArrayList<Boolean> poll(){
 		//Get the current state map and give it to the situation detector.
-		detector.giveStateMap(getSensorStateMap());
-		detector.addBehaviors();
+		return getSensorStateMap();
 	}
 	
 	

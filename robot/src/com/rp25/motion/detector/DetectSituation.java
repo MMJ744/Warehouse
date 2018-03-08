@@ -43,7 +43,9 @@ public class DetectSituation{
 		
 	private Boolean detectJunction(){	
 		if (getState("left") && getState("middle") && getState("right")){
-			System.out.println("found a junction m8");
+			//Code goes here to find next route when a junction has been reached.
+			
+			
 			return true;
 		}
 		return false;
@@ -54,11 +56,11 @@ public class DetectSituation{
 		if (getState("middle") == false){
 			//Check if one of the side sensors is on the line. If they are, we know in what direction the robot is skewed.
 			if (getState("left")){
-				//The robot is skewing to the right
+				behaviorStack.push("skewingRight");
 
 			}
 			else if (getState("right")){
-				//The robot is skewing to the left.
+				behaviorStack.push("skewingLeft");
 			}
 			return true;
 		}

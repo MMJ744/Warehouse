@@ -7,17 +7,22 @@ import lejos.robotics.subsumption.Behavior;
 public class RotateRight implements Behavior{
 
 	DifferentialPilot pilot;
+	BehaviorStack behaviorStack;
 	
-	public RotateRight(DifferentialPilot pilot){
+	public RotateRight(DifferentialPilot pilot,BehaviorStack behaviorStack){
 			this.pilot = pilot;
+			this.behaviorStack = behaviorStack;
 	}
 	
 	
 	@Override
 	public boolean takeControl() {
 		// TODO Auto-generated method stub
-		//System.out.println("MoveRight taken control.");
-		return true;
+		if (this.behaviorStack.peek().equals("right")){
+			this.behaviorStack.pop();
+			return true;
+		}
+		return false;
 	}
 
 	@Override

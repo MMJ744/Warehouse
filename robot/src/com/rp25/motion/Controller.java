@@ -34,6 +34,11 @@ public class Controller{
 		//Create the differential pilot and link the robot, check am
 		DifferentialPilot pilot = (new WheeledRobotSystem(RobotConfigs.CASTOR_BOT)).getPilot();
 		
+		//Create the behaviour stack
+		BehaviorStack behaviorStack = new BehaviorStack();
+		//Tell the robot to start going forward.
+		behaviorStack.push("forward");
+		
 		//Create sensors object to poll
 		ReadSensors sensors = new ReadSensors(SensorPort.S4,SensorPort.S3, SensorPort.S1);
 		
@@ -47,14 +52,16 @@ public class Controller{
 		}
 		
 		//Create the behavior objects
-		Behavior BehaviorForward = new Forward(pilot);
-		Behavior BehaviorTurnAround = new TurnAround(pilot);
-		Behavior BehaviorRotateLeft = new RotateLeft(pilot);
-		Behavior BehaviorRotateRight = new RotateRight(pilot);
+		Behavior BehaviorForward = new Forward(pilot,behaviorStack);
+		Behavior BehaviorTurnAround = new TurnAround(pilot,behaviorStack);
+		Behavior BehaviorRotateLeft = new RotateLeft(pilot,behaviorStack);
+		Behavior BehaviorRotateRight = new RotateRight(pilot,behaviorStack);
+		Behavior BehaviorPassiveCheck = new PassiveCheckSituation(sensors);
+		
 		
 		
 		//Create and run arbitrator with the list of behaviours. 
-		Behavior[] behaviorList = {BehaviorTurnAround,BehaviorRotateRight,BehaviorRotateLeft,BehaviorForward};
+		Behavior[] behaviorList = {BehaviorPassiveCheck,BehaviorTurnAround,BehaviorRotateRight,BehaviorRotateLeft,BehaviorForward};
 		Arbitrator robotArby = new Arbitrator(behaviorList);
 		//robotArby.start();
 		
@@ -82,8 +89,7 @@ public class Controller{
 				e.printStackTrace();
 			}
 			
-			//Poll the sensors.
-			sensors.poll();
+			
 		}
 		
 		

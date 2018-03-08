@@ -22,10 +22,10 @@ public class BehaviorStack{
 		if(!isEmpty()){
 			return this.stack.remove(0);
 		}
-		return null;
+		return "empty";
 	}
 	
-	public void add(String behavior){
+	public void push(String behavior){
 		ArrayList<String> tempList = new ArrayList<String>();
 		tempList.add(behavior);
 		tempList.addAll(this.stack);
