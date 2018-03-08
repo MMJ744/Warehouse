@@ -48,8 +48,10 @@ public class RouteExecutor {
 			System.err.println("robot has been told to go to the location it is already at");
 			return;
 		}
-		if(desired == direction)
+		if(desired == direction) {
+			tellRobot(Command.FORWARD);
 			return;
+		}
 		tellRobot(Orientation.rotate(direction, desired)); //sends the command to point the robot in the right direction
 	}
 	
