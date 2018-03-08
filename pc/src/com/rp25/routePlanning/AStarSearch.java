@@ -1,65 +1,69 @@
-package route_planning;
+package com.rp25.routePlanning;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 import org.apache.log4j.Logger;
 
 public class AStarSearch {
-	PriorityQueue<Node> openList = new PriorityQueue<Node>();
+	Comparator<Node> comparator = new NodeComparatorF();
+	PriorityQueue<Node> openList = new PriorityQueue<Node>(comparator);
 	ArrayList<Node> closedList = new ArrayList<Node>();
 	Node startNode;
 	Point goalState;
 	final static Logger logger = Logger.getLogger(AStarSearch.class);
 	
+	Grid grid;
+	
 	AStarSearch (Point c, Point g) {
-		startNode = new Node(c, g);
+		grid = new Grid();
+		
+		startNode = new Node(grid.getLocation(c), g);
 		goalState = g;
 		openList.add(startNode);
 	}
 	
 	public ArrayList<Point> search() {
 		while (true) {
-			Node current = openList.poll(); 
+			Node current = openList.poll();
 			if (current == null) break; //signifies the end of the open list.
+			
 			if (current.isGoal()) {
 				logger.debug("Current Node: " + current.getCoordinate());
 				ArrayList<Point> route = new ArrayList<Point>();
 				route = traceRoute(current);
 				return route;
-			} 
-			Node[] children = generateChildren(current);
-			for (Node child : children) {
-				if (!(checkLoop(child) || checkOpen(child) || checkClosed(child))) {
-					openList.add(child);
-				}
 			}
+			
+			Node[] children = generateChildrenFromParent(current);
+			for (Node child : children)
+				if (!(checkLoop(child) || checkOpen(child) || checkClosed(child)))
+					openList.add(child);
+			
 			closedList.add(current);
 		}
-		return null;
 		//if this point is reached, the algorithm has been unable to find the route
 		//should report this (to warehouse interface?)
+		
+		return null;
 	}
 	
-	private Node[] generateChildren(Node parentNode) {
-		Point parent = parentNode.getCoordinate();
+	private Node[] generateChildrenFromParent(Node parentNode) {
+		Point parent = parentNode.coordinate;
 		
 		Point[] points = new Point[4];
-		
 		points[0] = new Point(parent.x + 1, parent.y); //north
 		points[1] = new Point(parent.x, parent.y + 1); //east
 		points[2] = new Point(parent.x - 1, parent.y); //south
 		points[3] = new Point(parent.x, parent.y - 1); //west
 		
 		ArrayList<Node> h = new ArrayList<Node>();
-		
-		for (Point child : points) {
-			if (checkIsOnGrid(child)) {
-				Node childNode = new Node(child, goalState, parentNode);
-				h.add(childNode);
-			}
-		}
+		for (Point child : points)
+			if (grid.isOnGrid(child) && grid.isEmpty(child))
+				h.add(new Node(grid.getLocation(child), parentNode.goal, parentNode));
 		
 		Node[] children = new Node[h.size()];
 		children = h.toArray(children);
@@ -69,22 +73,23 @@ public class AStarSearch {
 		return children;
 	}
 	
-	private boolean checkIsOnGrid(Point point) {
-		return false;
-	}
-	
-	private boolean checkLoop(Node node) { //NB this method has bad time complexity; look at using comparator & sort to improve
+	private boolean checkLoop(Node node) { 		
 		ArrayList<Point> history = new ArrayList<Point>();
-		int length = history.size();
-		for (int i = 0; i < length; i++) {
-			for (int j = i+1; j < length; j++)
-				if (history.get(i).equals(history.get(j))) return true;
+		history = traceRoute(node);
+		
+		Collections.sort(history, new NodeComparatorPoint());
+		
+		for (int i = 0; (i < history.size() - 1); i++) {
+			if (history.get(i).equals(history.get(i+1))) return true;
 		}
 		return false;
 	}
 	
 	private boolean checkOpen(Node node) {
-		//find some way to iterate through a PriorityQueue ???
+		Iterator<Node> iterator = openList.iterator();
+		while(iterator.hasNext()) {
+			if (iterator.next().getCoordinate().equals(node.getCoordinate())) return true;
+		}
 		return false;
 	}
 	
