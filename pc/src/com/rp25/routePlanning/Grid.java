@@ -1,8 +1,8 @@
-package route_planning;
+package com.rp25.routePlanning;
 
 import java.awt.Point;
 
-import route_planning.Location.STATE;
+import com.rp25.routePlanning.Location.STATE;
 
 public class Grid {
 	/*needs:
