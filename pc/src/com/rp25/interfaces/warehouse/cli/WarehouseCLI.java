@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.rp25.interfaces.warehouse.WarehouseState;
-
-import tools.Robot;
+import com.rp25.tools.Robot;
 
 public class WarehouseCLI implements Runnable {
 
