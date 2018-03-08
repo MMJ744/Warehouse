@@ -6,21 +6,21 @@ import lejos.robotics.subsumption.Behavior;
 public class CorrectPath implements Behavior{
 	
 	DifferentialPilot pilot;
-	BehaviorStack behaviorStack;
+	BehaviorVariable behaviorVar;
 	int rotationDirection = 0; //1 to turn clockwise and -1 to turn counter-clockwise? 
 	
-	public CorrectPath(DifferentialPilot pilot, BehaviorStack behaviorStack){
+	public CorrectPath(DifferentialPilot pilot, BehaviorVariable behaviorStack){
 		this.pilot = pilot;
-		this.behaviorStack = behaviorStack;
+		this.behaviorVar = behaviorStack;
 	}
 
 	@Override
 	public boolean takeControl() {
-		if (this.behaviorStack.peek().equals("skewingLeft") || this.behaviorStack.peek().equals("skewingRight")){
-			this.behaviorStack.pop();
+		if (this.behaviorVar.get().equals("skewingLeft") || this.behaviorVar.get().equals("skewingRight")){
+			this.behaviorVar.get();
 			//Set the rotation direction depending on what direction it is skewing to.
 			if(rotationDirection == 0){
-				if (behaviorStack.peek().equals("skewingLeft")){
+				if (behaviorVar.get().equals("skewingLeft")){
 					rotationDirection = 1;
 				}
 				else{

@@ -14,7 +14,7 @@ public class ReadSensors{
 	private final LightSensor lightSensor2; 
 	private final LightSensor lightSensor3;
 	//Initialise the threshold to determine whether or not the sensor is pointing on a black line.
-	private static final int THRESHOLD = 355;
+	private static final int THRESHOLD = 330; // 385 = white, 285 = black , if > threshold, then white
 	//Initialise the detector object
 	DetectSituation detector = new DetectSituation();
 	
@@ -28,12 +28,11 @@ public class ReadSensors{
 
 
 	private ArrayList<Boolean> getSensorStateMap(){
-		System.out.println("getting sensormap");
 		//Create the return map
 		ArrayList<Boolean> state = new ArrayList<Boolean>();
 		//Mapping: SENSOR NAME -> TRUE IF ON LINE, FALSE IF NOT.
+
 		state.add(this.lightSensor1.getNormalizedLightValue() < THRESHOLD); //.get(0) == left sensor
-		System.out.println("left status::"+state.get(0));
 		state.add(this.lightSensor2.getNormalizedLightValue() < THRESHOLD); //.get(1) == middle sensor 
 		state.add(this.lightSensor3.getNormalizedLightValue() < THRESHOLD); //.get(2) == right sensor
 		

@@ -2,31 +2,34 @@ package com.rp25.motion.behavior;
 
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
+import lejos.util.Delay;
 
 public class Forward implements Behavior{
 	
 	DifferentialPilot pilot;
-	BehaviorStack behaviorStack;
+	BehaviorVariable behaviorVar;
 	
-	public Forward(DifferentialPilot pilot, BehaviorStack behaviorStack){
+	public Forward(DifferentialPilot pilot, BehaviorVariable behaviorVar){
 		this.pilot = pilot;
-		this.behaviorStack = behaviorStack;
+		this.behaviorVar = behaviorVar;
 	}
 
 	@Override
 	public boolean takeControl() {
-		if (this.behaviorStack.peek().equals("forward")){
-			this.behaviorStack.pop();
+		Delay.msDelay(10);
+		if (behaviorVar.get().equals("forward")){
+			behaviorVar.reset();
 			return true;
 		}
+
 		return false;
 	}
 
 	@Override
 	public void action() {
 		System.out.println("forward behavior active!");
-		pilot.forward();
-		suppress();
+		//pilot.forward();
+
 		// TODO Auto-generated method stub
 		
 	}

@@ -16,8 +16,9 @@ public class PassiveCheckSituation implements Behavior{
 	ArrayList<Boolean> sensorStateMap;
 	DetectSituation detector;
 
-	public PassiveCheckSituation(ReadSensors sensors){
+	public PassiveCheckSituation(ReadSensors sensors, DetectSituation detector){
 		this.sensors = sensors;
+		this.detector = detector;
 	}
 	
 	
@@ -30,8 +31,7 @@ public class PassiveCheckSituation implements Behavior{
 	public void action() {
 		//This gets updates from the sensors and updates the behaviour stack.
 		sensorStateMap = sensors.poll();
-		detector.giveStateMap(sensorStateMap);
-		detector.addBehaviors();
+		detector.addBehaviors(sensorStateMap);
 		
 	}
 
