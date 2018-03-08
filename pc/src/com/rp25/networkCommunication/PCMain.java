@@ -9,7 +9,7 @@ import tools.Channel;
 
 public class PCMain {
 	public static final int robotNo = 2;
-	private static String[][] robots = {{"NXT1", "00:16:53:00:78:48"}} ; //must update to real values
+	private static String[][] robots = {{"NXT", "00:16:53:15:5F:9B"},{"Thunderbird 6","00:16:53:17:BD:EA"}} ; //must update to real values
 	public static void main(String[] args) {
 		try {
 			lejos.pc.comm.NXTComm nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
@@ -23,8 +23,8 @@ public class PCMain {
 				Sender.channels[i] = (new Channel(in,out));
 
 			}
-				Sender sender = new Sender();
-				// pass sender object to RouteExecution class
+				//Sender sender = new Sender();
+				// pass sender object to RouteExecution class {Sender is now static}
 				
 		} catch (NXTCommException e) {
 			// TODO Auto-generated catch block

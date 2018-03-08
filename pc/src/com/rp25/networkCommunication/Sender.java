@@ -15,7 +15,7 @@ public class Sender  {
 	public static Channel[] channels = new Channel[PCMain.robotNo]; //keeps track of senders for each robot
 
 
-	public int sendJob(int i, Job j) {
+	public static int sendJob(int i, Job j) {
 		try {
 			DataOutputStream out = new DataOutputStream(channels[i].getOutput()); //gets output stream for that robot.
 			out.writeInt(Purpose.JOB.ordinal()); //writes the enum int to stream
@@ -30,7 +30,7 @@ public class Sender  {
 		}
 		
 	}
-	public int sendMove(int i, Command c ) {
+	public static int sendMove(int i, Command c ) {
 		try {
 			DataOutputStream out = new DataOutputStream(channels[i].getOutput()); //gets output stream for that robot.
 			out.writeInt(Purpose.MOVE.ordinal()); //writes the enum int to stream
