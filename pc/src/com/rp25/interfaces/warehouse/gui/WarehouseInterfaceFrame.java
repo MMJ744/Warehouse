@@ -1,18 +1,20 @@
 package com.rp25.interfaces.warehouse.gui;
 
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 import rp.robotics.mapping.GridMap;
 import rp.robotics.mapping.MapUtils;
 import rp.robotics.visualisation.GridMapVisualisation;
+import tools.Job;
+import tools.Robot;
 
 public class WarehouseInterfaceFrame extends JFrame {
 	
 	GridMapVisualisation visualPanel;
-	JPanel infoPanel;
+	InfoPanel infoPanel;
 
 	public WarehouseInterfaceFrame(String title) {
 		super(title);
@@ -24,16 +26,19 @@ public class WarehouseInterfaceFrame extends JFrame {
 		visualPanel = new GridMapVisualisation(map, map, 150f); 
 		add(visualPanel);
 		
-		infoPanel = new JPanel();
+		infoPanel = new InfoPanel();
 		add(infoPanel);
 		
-		setSize(1290, 500);
+		
+		setSize(1300, 500);
+
 		
 		setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		new WarehouseInterfaceFrame("Robot Warehouse Interface");
+	public void addInfo(String s) {
+		infoPanel.addInfo(s);
+		setVisible(true);
 	}
-	
+
 }
