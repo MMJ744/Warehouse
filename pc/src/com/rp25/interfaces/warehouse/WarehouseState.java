@@ -1,6 +1,8 @@
 package com.rp25.interfaces.warehouse;
 
 import java.util.HashMap;
+
+import tools.Job;
 import tools.Robot;
 
 public class WarehouseState {
@@ -18,5 +20,15 @@ public class WarehouseState {
 	
 	public Robot getRobot(int id) {
 		return robotList.get(id);
+	}
+	
+	public void updateBotPos(int id, int x, int y) {
+		Robot bot = robotList.get(id);
+		bot.updateCoordinates(x, y);
+	}
+	
+	public void updateBotJob(int id, Job j) {
+		Robot bot = robotList.get(id);
+		bot.setCurrentJob(j);
 	}
 }
