@@ -14,10 +14,11 @@ public class InfoPanel extends JPanel {
 	}
 	
 	public void addInfo(String s) {
-		JTextArea st = new JTextArea(3, 16);
-		st.setText(s);
+		JTextArea textArea = new JTextArea(3, 16);
+		textArea.setText(s);
+		textArea.setEditable(false);
 		
-		add(st);
+		add(textArea);
 		
 	}
 	
