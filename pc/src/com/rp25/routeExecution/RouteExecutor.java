@@ -20,16 +20,20 @@ public class RouteExecutor {
 		cancled = false;
 	}
 
-	public boolean execute(Queue<Point> _path) {
+	public boolean execute(Queue<Point> _path, String action) {
 		Point next;
 		path = _path;
 		while ((next = path.poll()) != null && !cancled) {
 			orentate(next);
 			tellRobot(Command.FORWARD);
+			updatePosition(next);
 		}
 		if(cancled) {
 			cancled = false;
 			return false;
+		}
+		if(action == "finished" || action == "cancled") {
+			tellInterface(action);
 		}
 		return true;
 	}
@@ -65,9 +69,14 @@ public class RouteExecutor {
 		cancled = true;
 	}
 	
-	private boolean pickupObjects(Map<String,Integer> map) {
+	private boolean tellInterface(String action) {
+		
 		boolean r = false;
 		// r = how ever to send the map to the robot
 		return r;
+	}
+	
+	private void updatePosition(Point next) {
+		//pass the new point to warehouse interface.
 	}
 }
