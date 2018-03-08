@@ -1,16 +1,15 @@
 package com.rp25.interfaces.warehouse;
 
 import java.util.ArrayList;
-import com.rp25.interfaces.warehouse.gui.WarehouseInterfaceFrame;
 
-import tools.Job;
-import tools.Robot;
+import com.rp25.interfaces.warehouse.cli.WarehouseCLI;
+import com.rp25.interfaces.warehouse.gui.WarehouseInterfaceView;
+import com.rp25.tools.Job;
+import com.rp25.tools.Robot;
 
 public class WarehouseInterfaceMain {
 	
 	public static void main(String[] args) {
-
-		WarehouseInterfaceFrame frame = new WarehouseInterfaceFrame("Robot Warehouse Interface");
 		
 		Job j1 = new Job("job 1");
 		Job j2 = new Job("job 2");
@@ -25,10 +24,10 @@ public class WarehouseInterfaceMain {
 		rs.add(r1);
 		rs.add(r2);
 		rs.add(r3);
+	
+		WarehouseInterfaceView view = new WarehouseInterfaceView(rs);
+//		(new WarehouseCLI(rs)).run();
 		
-		for (Robot r : rs) {
-			frame.addInfo(r.toString());
-		}
 	}
 
 }

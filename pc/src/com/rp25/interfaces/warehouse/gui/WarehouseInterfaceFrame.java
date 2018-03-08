@@ -8,8 +8,6 @@ import javax.swing.*;
 import rp.robotics.mapping.GridMap;
 import rp.robotics.mapping.MapUtils;
 import rp.robotics.visualisation.GridMapVisualisation;
-import tools.Job;
-import tools.Robot;
 
 public class WarehouseInterfaceFrame extends JFrame {
 	
@@ -31,14 +29,10 @@ public class WarehouseInterfaceFrame extends JFrame {
 		
 		
 		setSize(1300, 500);
-
-		
-		setVisible(true);
 	}
 	
 	public void addInfo(String s) {
 		infoPanel.addInfo(s);
-		setVisible(true);
 	}
 
 }

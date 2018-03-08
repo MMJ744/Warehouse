@@ -2,8 +2,8 @@ package com.rp25.interfaces.warehouse;
 
 import java.util.HashMap;
 
-import tools.Job;
-import tools.Robot;
+import com.rp25.tools.Job;
+import com.rp25.tools.Robot;
 
 public class WarehouseState {
 	
