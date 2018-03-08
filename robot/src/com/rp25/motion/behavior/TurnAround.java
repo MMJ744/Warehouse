@@ -7,16 +7,21 @@ import lejos.robotics.subsumption.Behavior;
 public class TurnAround implements Behavior{
 	
 	DifferentialPilot pilot;
+	BehaviorStack behaviorStack;
 	
-	public TurnAround(DifferentialPilot pilot){
+	public TurnAround(DifferentialPilot pilot,BehaviorStack behaviorStack){
 		this.pilot = pilot;
+		this.behaviorStack = behaviorStack;
 	}
 
 	@Override
 	public boolean takeControl() {
 		// TODO Auto-generated method stub
-		//System.out.println("MoveDown taken control.");
-		return true;
+		if (this.behaviorStack.peek().equals("turn around")){
+			this.behaviorStack.pop();
+			return true;
+		}
+		return false;
 	}
 
 	@Override
