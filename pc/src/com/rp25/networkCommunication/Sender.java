@@ -2,8 +2,8 @@ package com.rp25.networkCommunication;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import tools.Channel;
-import tools.Job;
+import com.rp25.tools.Channel;
+import com.rp25.tools.Job;
 
 public class Sender  {
 

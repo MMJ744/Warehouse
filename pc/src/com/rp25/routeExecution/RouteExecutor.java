@@ -23,7 +23,8 @@ public class RouteExecutor {
 	public boolean execute(Queue<Point> _path, String action) {
 		Point next;
 		path = _path;
-		while ((next = path.poll()) != null && !cancled) {
+		while ( !path.isEmpty() && !cancled) {
+			next = (Point) path.pop();
 			orentate(next);
 			tellRobot(Command.FORWARD);
 			updatePosition(next);

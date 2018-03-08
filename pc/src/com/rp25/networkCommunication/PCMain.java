@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import lejos.pc.comm.NXTCommException;
 import lejos.pc.comm.NXTCommFactory;
 import lejos.pc.comm.NXTInfo;
-import tools.Channel;
+import com.rp25.tools.Channel;
 
 public class PCMain {
 	public static final int robotNo = 2;
