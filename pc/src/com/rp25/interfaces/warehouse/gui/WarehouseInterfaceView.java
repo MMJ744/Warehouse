@@ -19,7 +19,11 @@ public class WarehouseInterfaceView {
 	private void initialise(ArrayList<Robot> list) {
 		for (Robot r : list) {
 			state.addRobot(r.getID(), r);
-			frame.addInfo(r.toString());
+			frame.addInfo(r);
 		}
+	}
+	
+	public void update(int id) {
+		state.getRobot(id);
 	}
 }

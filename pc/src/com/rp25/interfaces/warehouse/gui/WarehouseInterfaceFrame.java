@@ -1,18 +1,14 @@
 package com.rp25.interfaces.warehouse.gui;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-
+import java.awt.Dimension;
 import javax.swing.*;
 
-import rp.robotics.mapping.GridMap;
-import rp.robotics.mapping.MapUtils;
-import rp.robotics.visualisation.GridMapVisualisation;
+import com.rp25.tools.Robot;
 
 public class WarehouseInterfaceFrame extends JFrame {
 	
-	JPanel visualPanel;
+	VisualPanel visualPanel;
 	InfoPanel infoPanel;
 
 	public WarehouseInterfaceFrame(String title) {
@@ -20,31 +16,21 @@ public class WarehouseInterfaceFrame extends JFrame {
 		super(title);
 		setSize(600, 400);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new GridLayout(1, 2));
+		setLayout(new GridLayout(1,2));
 		
 		//Display panel that handles warehouse simulation
-		GridMap map = MapUtils.createRealWarehouse();
-		GridMapVisualisation v = new GridMapVisualisation(map, map, 150f) {
-			
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Dimension getPreferredSize() {
-			    return new Dimension(650, 400);
-			}
-		}; 
-		visualPanel = new JPanel();
-		visualPanel.add(v);
+		visualPanel = new VisualPanel();
 		add(visualPanel);
 		
 		//Display panel that shows robot information
 		infoPanel = new InfoPanel();
 		add(infoPanel);
 		pack();
+		setMinimumSize(new Dimension(1400, 450));
 	}
 	
-	public void addInfo(String s) {
-		infoPanel.addInfo(s);
+	public void addInfo(Robot r) {
+		infoPanel.addInfo(r);
 	}
 
 }
