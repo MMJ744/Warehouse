@@ -45,7 +45,7 @@ public class JobSelection {
 				for(int i = 1; i < jobParts.length; i+=2) {
 					for(Item item: items) {
 						if(jobParts[i].equals(item.getName())) {
-							job.addPart(new JobPart(item.getName(), item.getX(), item.getY(), Integer.parseInt(jobParts[i+1])));
+							job.addPart(new JobPart(item.getName(), item.getX(), item.getY(), Integer.parseInt(jobParts[i+1]), item.getWeight()));
 						}
 					}
 				}
