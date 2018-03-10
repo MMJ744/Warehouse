@@ -1,39 +1,33 @@
 package com.rp25.motion.detector;
 
-import com.rp25.motion.Controller;
-import com.rp25.motion.behavior.BehaviorVariable;
+import com.rp25.motion.actions.CorrectPath;
+import com.rp25.motion.actions.JunctionHandler;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
-import lejos.nxt.LightSensor;
-import lejos.nxt.SensorPort;
+import lejos.robotics.navigation.DifferentialPilot;
 
 public class DetectSituation{
 
 	//Initialise sensorStateMap variable
 	ArrayList<Boolean> sensorStateMap;
-	//Initialise the behaviour stack variable
-	BehaviorVariable behaviorVar;
-	
+
 	public DetectSituation(){
-		this.sensorStateMap = sensorStateMap;
-		this.behaviorVar = behaviorVar;
-	}
-	
-	private void giveStateMap(ArrayList<Boolean> stateMap){
-		this.sensorStateMap = stateMap;
-	}
-	
-	public void giveBehaviorVar(BehaviorVariable behaviorVar){
-		this.behaviorVar = behaviorVar;
 	}
 	
 	//This adds behaviours to the behaviour stack depending on the situation.
-	public void addBehaviors(ArrayList<Boolean> state){
-		giveStateMap(state);
-		detectJunction();
-		offCourse();
+	public String getSituation(ArrayList<Boolean> state){
+		sensorStateMap = state;
+		if (skewingLeft()){
+			return "skewingLeft";
+		}
+		if (skewingRight()){
+			return "skewingRight";
+		}
+		if (detectJunction()){
+			return "junction";
+		}
+		return "none";
 	}
 	
 	private Boolean getState(String sensor){
@@ -49,31 +43,57 @@ public class DetectSituation{
 		
 	private Boolean detectJunction(){	
 		if (getState("left") && getState("middle") && getState("right")){
-			//Code goes here to find next route when a junction has been reached.
-			System.out.println("JUNCTION FOUND!");
-			
+			//Code goes here to choose where to get @ junction
 			return true;
 		}
 		return false;
 	}
 	
-	private Boolean offCourse(){
-		//If the middle sensor is not on the line, this is bad and should never ever happen.
-		if (getState("middle") == false){
-			//Check if one of the side sensors is on the line. If they are, we know in what direction the robot is skewed.
-			if (getState("left")){
-				this.behaviorVar.set("skewingRight");
-				System.out.println("SKEWING RIGHT!");
-
+	private Boolean skewingLeft(){
+		if (!getState("middle")){
+			if (!getState("left")){
+				return true;
 			}
-			else if (getState("right")){
-				this.behaviorVar.set("skewingLeft");
-				System.out.println("SKEWING LEFT!");
-			}
-			return true;
 		}
 		return false;
 	}
+	
+	private Boolean skewingRight(){
+		if (!getState("middle")){
+			if (!getState("right")){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	//This deals with any arisen situation by calling the appropriate actions. When returns, robot should be repositioned.
+	public void dealWith(String situation,ReadSensors sensors, DifferentialPilot pilot){
+		//Stop the robot.
+		pilot.stop();
+		
+		if (situation.equals("skewingLeft") || situation.equals("skewingRight")){
+			CorrectPath pathCorrector = new CorrectPath(situation,sensors,pilot);
+			pathCorrector.run();
+		}
+		
+		if (situation.equals("junction")){
+			JunctionHandler handleJunction = new JunctionHandler(sensors,pilot);
+			handleJunction.run();
+		}
+		
+		
+		//By now all situations have been alleviated, and we can continue.
+		pilot.forward();
+		
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

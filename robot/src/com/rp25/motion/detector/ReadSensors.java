@@ -1,8 +1,6 @@
 package com.rp25.motion.detector;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import lejos.nxt.LightSensor;
 import lejos.nxt.SensorPort;
