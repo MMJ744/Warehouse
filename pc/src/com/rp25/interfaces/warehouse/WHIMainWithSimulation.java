@@ -2,6 +2,7 @@ package com.rp25.interfaces.warehouse;
 
 import java.util.ArrayList;
 
+import com.rp25.interfaces.warehouse.cli.WarehouseCLI;
 import com.rp25.interfaces.warehouse.gui.WarehouseInterfaceView;
 import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
 import com.rp25.tools.Job;
@@ -22,9 +23,14 @@ public class WHIMainWithSimulation {
 		rs.add(r1);
 		rs.add(r2);
 		
+		WarehouseState state = new WarehouseState();
+		state.addRobot(r1.getID(), r1);
+		state.addRobot(r2.getID(), r2);
+		
 		WarehouseGridSim simulation = new WarehouseGridSim(rs);
-		new WarehouseInterfaceView(rs, simulation);
-
+		new WarehouseInterfaceView(state, simulation);
+		(new WarehouseCLI(state)).run();
+		
 	}
 
 }
