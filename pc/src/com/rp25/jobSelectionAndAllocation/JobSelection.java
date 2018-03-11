@@ -10,9 +10,8 @@ import java.util.Comparator;
 
 import org.apache.log4j.Logger;
 
-import com.rp25.tools.JobPart;
-
 import com.rp25.tools.Job;
+import com.rp25.tools.JobPart;
 
 public class JobSelection {
 	
@@ -52,17 +51,17 @@ public class JobSelection {
 				for(int i = 1; i < jobParts.length; i+=2) {
 					for(Item item: items) {
 						if(jobParts[i].equals(item.getName())) {
-							job.addPart(new JobPart(item.getName(), item.getX(), item.getY(), Integer.parseInt(jobParts[i+1])));
+							job.addPart(new JobPart(item.getName(), item.getX(), item.getY(), Integer.parseInt(jobParts[i+1]), item.getWeight()));
 						}
 					}
 				}
 			}
 		}
 		catch(FileNotFoundException e) {
-			System.out.println("Did not pass filename");
+			logger.debug("File not found", e);
 		}
 		catch(IOException e) {
-			e.printStackTrace();
+			logger.debug("Data Streams Broke", e);
 		}
 	}
 	
@@ -123,9 +122,9 @@ public class JobSelection {
 			}
 		}
 	}
+	
+	public ArrayList<Job> getJobs(){
+		return allJobs;
+	}
 
 }
-
-
-
-

@@ -1,7 +1,6 @@
 package com.rp25.motion;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
 
 import rp.config.RobotConfigs;
 import rp.systems.WheeledRobotSystem;
@@ -9,18 +8,14 @@ import lejos.nxt.Button;
 import lejos.nxt.ButtonListener;
 import lejos.nxt.SensorPort;
 import lejos.robotics.navigation.DifferentialPilot;
-import lejos.robotics.subsumption.Arbitrator;
-import lejos.robotics.subsumption.Behavior;
 
 
 
-
-
-
+import lejos.util.Delay;
 
 
 //Import behaviours 
-import com.rp25.motion.behavior.*;
+import com.rp25.motion.detector.DetectSituation;
 import com.rp25.motion.detector.ReadSensors;
 
 public class Controller{
@@ -29,35 +24,26 @@ public class Controller{
 	public static void main(String[] args){
 		//Run main
 		boolean run = true;
-		System.out.println("Main running.");
 		
 		//Create the differential pilot and link the robot, check am
 		DifferentialPilot pilot = (new WheeledRobotSystem(RobotConfigs.CASTOR_BOT)).getPilot();
+		pilot.setRotateSpeed(pilot.getMaxRotateSpeed()/10);
+		pilot.setTravelSpeed(pilot.getMaxTravelSpeed()/10);
+
 		
 		//Create sensors object to poll
 		ReadSensors sensors = new ReadSensors(SensorPort.S4,SensorPort.S3, SensorPort.S1);
-		
+		ArrayList<Boolean> sensorStateMap;
+		//Create a detector object 
+		DetectSituation detector = new DetectSituation();
 		
 		//Create a fake sample queue. 
-		LinkedList<String> testQueue = new LinkedList<String>();
+		ArrayList<String> testQueue = new ArrayList<String>();
 		for (int i=0;i < 20;i++){
 			String[] directions = {"forward","turn-around","left","right"};
 			int randomNum = (int) Math.floor(Math.random() * 4);
 			testQueue.add(directions[randomNum]);
 		}
-		
-		//Create the behavior objects
-		Behavior BehaviorForward = new Forward(pilot);
-		Behavior BehaviorTurnAround = new TurnAround(pilot);
-		Behavior BehaviorRotateLeft = new RotateLeft(pilot);
-		Behavior BehaviorRotateRight = new RotateRight(pilot);
-		
-		
-		//Create and run arbitrator with the list of behaviours. 
-		Behavior[] behaviorList = {BehaviorTurnAround,BehaviorRotateRight,BehaviorRotateLeft,BehaviorForward};
-		Arbitrator robotArby = new Arbitrator(behaviorList);
-		//robotArby.start();
-		
 		
 		//Add an escape route
 		Button.LEFT.addButtonListener(new ButtonListener() {
@@ -71,24 +57,27 @@ public class Controller{
 		});
 		
 		
-		//Create the run while loop which will constantly poll the sensors 
+		Boolean debugPrints = false;
 		while(run){
-			System.out.println("running");
-			//Sleep the thread to prevent too many resources being used
-			try {
-				Thread.sleep(200);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//Delay the while for a tiny bit to preserve cpu usage.
+			Delay.msDelay(100);
 			
-			//Poll the sensors.
-			sensors.poll();
+			//At the start of every while, we should get the sensor state to determine what's going on.
+			sensorStateMap = sensors.poll();
+			if(debugPrints){System.out.println("CSM:"+sensorStateMap);}
+			
+			//Get any situation that is going on. 
+			String situation = detector.getSituation(sensorStateMap);
+			if(debugPrints){System.out.println("CSIT:"+situation);}
+			
+			//Deal with the situation using the appropriate controls. 
+			//This should run until the situation has cured itself- i.e the next while run should run fine. 
+			if (!situation.equals("none")){
+				detector.dealWith(situation,sensors,pilot);
+			}
 		}
 		
-		
-
-		
+			
 		
 	}
 	

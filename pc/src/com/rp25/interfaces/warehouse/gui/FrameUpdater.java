@@ -3,7 +3,7 @@ package com.rp25.interfaces.warehouse.gui;
 import com.rp25.interfaces.warehouse.WarehouseState;
 import com.rp25.tools.Robot;
 
-import rp.util.Rate;
+import lejos.util.Delay;
 
 public class FrameUpdater extends Thread {
 	
@@ -18,14 +18,13 @@ public class FrameUpdater extends Thread {
 
 	@Override
 	public void run() {
-		Rate r = new Rate(TIME_PER_UPDATE);
 		while(true) {
 			
 			for (Robot bot : warehouseState.getAllRobots()) {
 				frame.updateInfo(bot);
 			}
 			
-			r.sleep();
+			Delay.msDelay(TIME_PER_UPDATE);
 		}
 	}
 
