@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.Map;
 import java.util.Queue;
 
+import org.apache.log4j.Logger;
+
 public class RouteExecutor {
 
 	final int robotID;
@@ -11,6 +13,7 @@ public class RouteExecutor {
 	Orientation direction;
 	Queue<Point> path;
 	Boolean cancled;
+	final static Logger logger = Logger.getLogger(RouteExecutor.class);
 
 	public RouteExecutor(int robotNumber, int startingX, int startingY) {
 		robotID = robotNumber;
@@ -49,7 +52,7 @@ public class RouteExecutor {
 		else if(next.y < current.y)
 			desired = Orientation.N;
 		else {
-			System.err.println("robot has been told to go to the location it is already at");
+			logger.debug("robot has been told to go to the location it is already at");
 			return;
 		}
 		if(desired == direction) {
