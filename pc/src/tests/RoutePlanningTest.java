@@ -14,6 +14,16 @@ public class RoutePlanningTest {
 	private final static Logger logger = Logger.getLogger(RoutePlanningTest.class);
 	
 	@Test
+	public void pathShouldBeBuilt(Point start, Point goal) {
+		AStarSearch tester = new AStarSearch(start, goal);
+		ArrayList<Point> path = new ArrayList<Point>();
+		
+		path = tester.search();
+		
+		assertNotNull("Path Not Built", path);
+	}
+	
+	@Test
 	public void searchShouldReachGoal(Point start, Point goal,  ArrayList<Point> expectedPath) {
 		AStarSearch tester = new AStarSearch(start, goal);
 		ArrayList<Point> path = new ArrayList<Point>();
