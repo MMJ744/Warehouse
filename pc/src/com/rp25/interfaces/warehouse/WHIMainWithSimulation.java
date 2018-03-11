@@ -29,7 +29,7 @@ public class WHIMainWithSimulation {
 		
 		WarehouseGridSim simulation = new WarehouseGridSim(rs);
 		new WarehouseInterfaceView(state, simulation);
-		(new WarehouseCLI(state)).run();
+		(new Thread(new WarehouseCLI(state))).start();
 		
 	}
 
