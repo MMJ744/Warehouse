@@ -51,5 +51,9 @@ public class WarehouseInterfaceFrame extends JFrame {
 	public void addInfo(Robot r) {
 		infoPanel.addInfo(r);
 	}
+	
+	public void updateInfo(Robot r) {
+		infoPanel.update(r);
+	}
 
 }

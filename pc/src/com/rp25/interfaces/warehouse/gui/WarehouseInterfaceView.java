@@ -15,6 +15,10 @@ public class WarehouseInterfaceView {
 		warehouseState = state;
 		initialise();
 		frame.setVisible(true);
+		
+		Thread updateChecker = new FrameUpdater(frame, warehouseState);
+		updateChecker.setDaemon(true);
+		updateChecker.start();
 	}
 	
 	public WarehouseInterfaceView(WarehouseState state, WarehouseGridSim sim) {
@@ -22,6 +26,10 @@ public class WarehouseInterfaceView {
 		warehouseState = state;
 		initialise();
 		frame.setVisible(true);
+		
+		Thread updateChecker = new FrameUpdater(frame, warehouseState);
+		updateChecker.setDaemon(true);
+		updateChecker.start();
 	}
 	
 	private void initialise() {
