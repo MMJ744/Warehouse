@@ -1,9 +1,12 @@
-package com.rp25.routeExecution;
+package tests;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-public class Tests {
+import com.rp25.routeExecution.Command;
+import com.rp25.routeExecution.Orientation;
+
+public class RouteExecutionTest {
 
 	@Test
 	public void OrientationTurnRight() {
