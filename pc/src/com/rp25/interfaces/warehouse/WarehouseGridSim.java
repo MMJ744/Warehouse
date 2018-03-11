@@ -1,5 +1,6 @@
-package com.rp25.interfaces.warehouse.gui;
+package com.rp25.interfaces.warehouse;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import lejos.robotics.RangeFinder;
@@ -18,9 +19,9 @@ import rp.robotics.visualisation.MapVisualisationComponent;
 public class WarehouseGridSim {
 	
 	private GridMapVisualisation viz;
-	private ArrayList<Thread> robotThreads;
+	private ArrayList<Runnable> robotThreads;
 	
-	public GridMapVisualisation makeSim(int numBots) {
+	public WarehouseGridSim(int numBots) {
 		GridMap map = MapUtils.createRealWarehouse();
 		
 		MapBasedSimulation sim = new MapBasedSimulation(map);
@@ -41,13 +42,27 @@ public class WarehouseGridSim {
 
 			Thread bot = new Thread(controller);
 			bot.start();
-			robotThreads.add(bot);
+			robotThreads.add(controller);
 		}
 		
-		viz = new GridMapVisualisation(map, sim.getMap());
+		viz = new GridMapVisualisation(map, sim.getMap()) {
+
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Dimension getPreferredSize() {
+			    return new Dimension(650, 400);
+			}
+			
+		};
 		MapVisualisationComponent.populateVisualisation(viz, sim);
-		
+	}
+	
+	public GridMapVisualisation getViz() {
 		return viz;
 	}
 	
+	public ArrayList<Runnable> getRobotThreads() {
+		return robotThreads;
+	}
 }

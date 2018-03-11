@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.Dimension;
 import javax.swing.*;
 
+import com.rp25.interfaces.warehouse.WarehouseGridSim;
 import com.rp25.tools.Robot;
 
 public class WarehouseInterfaceFrame extends JFrame {
@@ -20,6 +21,24 @@ public class WarehouseInterfaceFrame extends JFrame {
 		
 		//Display panel that handles warehouse simulation
 		visualPanel = new VisualPanel();
+		add(visualPanel);
+		
+		//Display panel that shows robot information
+		infoPanel = new InfoPanel();
+		add(infoPanel);
+		pack();
+		setMinimumSize(new Dimension(1400, 450));
+	}
+	
+	public WarehouseInterfaceFrame(String title, WarehouseGridSim sim) {
+		//JFrame setup
+		super(title);
+		setSize(600, 400);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLayout(new GridLayout(1,2));
+		
+		//Display panel that handles warehouse simulation
+		visualPanel = new VisualPanel(sim);
 		add(visualPanel);
 		
 		//Display panel that shows robot information

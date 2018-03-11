@@ -4,6 +4,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import com.rp25.interfaces.warehouse.WarehouseGridSim;
+
 import rp.robotics.mapping.GridMap;
 import rp.robotics.mapping.MapUtils;
 import rp.robotics.visualisation.GridMapVisualisation;
@@ -24,6 +26,10 @@ public class VisualPanel extends JPanel {
 	
 	public VisualPanel() {
 		add(v);
+	}
+	
+	public VisualPanel(WarehouseGridSim sim) {
+		add(sim.getViz());
 	}
 	
 	
