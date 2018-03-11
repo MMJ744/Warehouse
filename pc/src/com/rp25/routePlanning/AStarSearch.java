@@ -18,7 +18,7 @@ public class AStarSearch {
 	
 	Grid grid;
 	
-	AStarSearch (Point c, Point g) {
+	public AStarSearch (Point c, Point g) {
 		grid = new Grid();
 		
 		startNode = new Node(grid.getLocation(c), g);

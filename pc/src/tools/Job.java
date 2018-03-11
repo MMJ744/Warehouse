@@ -26,6 +26,7 @@ public class Job {
 		for(int i = 0; i < parts.size(); i++) {
 			logger.debug("Part " + i + ": " + parts.get(i).getName());
 		}
+		return parts;
 	}
 	
 	public JobPart getPart(String name) {

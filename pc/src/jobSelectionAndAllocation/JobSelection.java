@@ -58,10 +58,10 @@ public class JobSelection {
 			}
 		}
 		catch(FileNotFoundException e) {
-			System.out.println("Did not pass filename");
+			logger.debug("File not found", e);
 		}
 		catch(IOException e) {
-			e.printStackTrace();
+			logger.debug("Data Streams Broke", e);
 		}
 	}
 	
@@ -121,6 +121,10 @@ public class JobSelection {
 				break;
 			}
 		}
+	}
+	
+	public ArrayList<Job> getJobs(){
+		return allJobs;
 	}
 
 }

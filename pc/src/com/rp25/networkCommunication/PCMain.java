@@ -2,6 +2,8 @@ package com.rp25.networkCommunication;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.log4j.Logger;
+
 import lejos.pc.comm.NXTCommException;
 import lejos.pc.comm.NXTCommFactory;
 import lejos.pc.comm.NXTInfo;
@@ -10,6 +12,7 @@ import tools.Channel;
 public class PCMain {
 	public static final int robotNo = 2;
 	private static String[][] robots = {{"NXT1", "00:16:53:00:78:48"}} ; //must update to real values
+	private final static Logger logger = Logger.getLogger(PCMain.class);
 	public static void main(String[] args) {
 		try {
 			lejos.pc.comm.NXTComm nxtComm = NXTCommFactory.createNXTComm(NXTCommFactory.BLUETOOTH);
@@ -28,8 +31,7 @@ public class PCMain {
 				
 		} catch (NXTCommException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("\n\nError using Bluetooth Drivers");
+			logger.debug("\n\nError using Bluetooth Drivers", e);
 		}
 	}
 
