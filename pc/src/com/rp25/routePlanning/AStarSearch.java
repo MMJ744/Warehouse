@@ -82,15 +82,19 @@ public class AStarSearch {
 	private boolean checkOpen(Node node) {
 		Iterator<Node> iterator = openList.iterator();
 		while(iterator.hasNext()) {
-			if (iterator.next().getCoordinate().equals(node.getCoordinate())) return true;
+			Node openNode = iterator.next();
+			if (openNode.getCoordinate().equals(node.getCoordinate())) {
+				if (openNode.getF() < node.getF()) return true;
+			}
 		}
 		return false;
 	}
 	
 	private boolean checkClosed(Node node) {
 		for (int i = 0; i < closedList.size(); i++) {
-			if (closedList.get(i).getCoordinate().equals(node.getCoordinate())) {
-				return true;
+			Node closedNode = closedList.get(i);
+			if (closedNode.getCoordinate().equals(node.getCoordinate())) {
+				if (closedNode.getF() < node.getF()) return true;
 			}
 		}
 		return false;
