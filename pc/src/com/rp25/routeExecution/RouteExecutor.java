@@ -1,7 +1,6 @@
 package com.rp25.routeExecution;
 
 import java.awt.Point;
-import java.util.Map;
 import java.util.Queue;
 
 import org.apache.log4j.Logger;
@@ -26,61 +25,64 @@ public class RouteExecutor {
 	public boolean execute(Queue<Point> _path, String action) {
 		Point next;
 		path = _path;
-		while ( !path.isEmpty() && !cancled) {
+		while (!path.isEmpty() && !cancled) {
 			next = (Point) path.pop();
 			orentate(next);
-			tellRobot(Command.FORWARD);
 			updatePosition(next);
+			logger.debug("moved to next point");
 		}
-		if(cancled) {
+		if (cancled) {
+			logger.debug("job cancled");
+			tellInterface("cancled");
 			cancled = false;
 			return false;
 		}
-		if(action == "finished" || action == "cancled") {
-			tellInterface(action);
-		}
+		tellInterface("job finished");
+		logger.debug("job finished");
 		return true;
 	}
-	
+
 	private void orentate(Point next) {
 		Orientation desired;
-		if(next.x > current.x)
+		if (next.x > current.x)
 			desired = Orientation.E;
-		else if(next.x < current.x)
+		else if (next.x < current.x)
 			desired = Orientation.W;
-		else if(next.y > current.y)
+		else if (next.y > current.y)
 			desired = Orientation.S;
-		else if(next.y < current.y)
+		else if (next.y < current.y)
 			desired = Orientation.N;
 		else {
 			logger.debug("robot has been told to go to the location it is already at");
 			return;
 		}
-		if(desired == direction) {
+		if (desired == direction) {
 			tellRobot(Command.FORWARD);
 			return;
 		}
-		tellRobot(Orientation.rotate(direction, desired)); //sends the command to point the robot in the right direction
+		tellRobot(Orientation.rotate(direction, desired)); // sends the command to point the robot in the right
+															// direction
+		direction = desired;
 	}
-	
+
 	private boolean tellRobot(Command c) {
 		boolean r = false;
 		// r = how ever to send to c to the robot
 		return r;
 	}
-	
+
 	public void cancel() {
 		cancled = true;
 	}
-	
+
 	private boolean tellInterface(String action) {
-		
+
 		boolean r = false;
 		// r = how ever to send the map to the robot
 		return r;
 	}
-	
+
 	private void updatePosition(Point next) {
-		//pass the new point to warehouse interface.
+
 	}
 }
