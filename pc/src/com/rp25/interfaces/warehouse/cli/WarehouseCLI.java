@@ -11,16 +11,9 @@ public class WarehouseCLI implements Runnable {
 	private WarehouseState warehouseState;
 	private Scanner userInput;
 	
-	public WarehouseCLI(ArrayList<Robot> robots) {
-		warehouseState = new WarehouseState();
+	public WarehouseCLI(WarehouseState state) {
+		warehouseState = state;
 		userInput = new Scanner(System.in);
-		initialise(robots);
-	}
-	
-	private void initialise(ArrayList<Robot> robots) {
-		for (Robot r : robots) {
-			warehouseState.addRobot(r.getID(), r);
-		}
 	}
 	
 	public WarehouseState getState() {
@@ -40,7 +33,32 @@ public class WarehouseCLI implements Runnable {
 		String i;
 		
 		while(!(i = getInput()).equalsIgnoreCase("quit")) {
-			System.out.println(getState().getRobot(Integer.parseInt(i)));
+			switch(i) {
+			case "get":
+				int id = Integer.parseInt(getInput());
+				System.out.println(warehouseState.getRobot(id).toString());
+				break;
+				
+			case "move": 
+				int botid = Integer.parseInt(getInput());
+				Robot current = warehouseState.getRobot(botid);
+				String movement = getInput();
+				switch(movement) {
+				case "up":
+					current.updateCoordinates(current.getX(), current.getY() + 1);
+					break;
+				case "down":
+					current.updateCoordinates(current.getX(), current.getY() - 1);
+					break;
+				case "left":
+					current.updateCoordinates(current.getX(), current.getY() - 1);
+					break;
+				case "right":
+					current.updateCoordinates(current.getX(), current.getY() + 1);
+					break;
+				}
+				break;
+			}
 		}
 		
 		close();

@@ -8,30 +8,29 @@ import com.rp25.tools.Robot;
 
 public class WarehouseInterfaceView {
 	WarehouseInterfaceFrame frame;
-	WarehouseState state;
+	WarehouseState warehouseState;
 	
-	public WarehouseInterfaceView(ArrayList<Robot> list) {
+	public WarehouseInterfaceView(WarehouseState state) {
 		frame = new WarehouseInterfaceFrame("Robot Warehouse Interface");
-		state = new WarehouseState();
-		initialise(list);
+		warehouseState = state;
+		initialise();
 		frame.setVisible(true);
 	}
 	
-	public WarehouseInterfaceView(ArrayList<Robot> list, WarehouseGridSim sim) {
+	public WarehouseInterfaceView(WarehouseState state, WarehouseGridSim sim) {
 		frame = new WarehouseInterfaceFrame("Robot Warehouse Interface", sim);
-		state = new WarehouseState();
-		initialise(list);
+		warehouseState = state;
+		initialise();
 		frame.setVisible(true);
 	}
 	
-	private void initialise(ArrayList<Robot> list) {
-		for (Robot r : list) {
-			state.addRobot(r.getID(), r);
+	private void initialise() {
+		for (Robot r : warehouseState.getAllRobots()) {
 			frame.addInfo(r);
 		}
 	}
 	
 	public void update(int id) {
-		state.getRobot(id);
+		warehouseState.getRobot(id);
 	}
 }
