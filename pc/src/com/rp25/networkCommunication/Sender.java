@@ -4,9 +4,9 @@ import java.io.DataOutputStream;
 
 import org.apache.log4j.Logger;
 
+import com.rp25.tools.Channel;
 import com.rp25.tools.Job;
 
-import tools.Channel;
 
 public class Sender  {
 

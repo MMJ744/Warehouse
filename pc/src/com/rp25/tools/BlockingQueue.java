@@ -1,4 +1,4 @@
-package tools;
+package com.rp25.tools;
 import java.util.Queue;
 //very bad implementation of blockingqueue, which is not included in lejos
 public class BlockingQueue<E> implements Queue<E> {
