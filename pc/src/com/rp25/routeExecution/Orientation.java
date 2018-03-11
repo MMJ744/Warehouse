@@ -7,6 +7,7 @@ public enum Orientation {
 	Orientation(int i) {
 		num = i;
 	}
+	
 	public static Command rotate(Orientation start, Orientation goal) {
 		if(goal.toInt() == start.toInt() + 1 || goal.toInt() == start.toInt() - 3)
 			return Command.RIGHT;
@@ -15,7 +16,7 @@ public enum Orientation {
 		if(goal.toInt() == start.toInt() + 3 || goal.toInt() == start.toInt() - 1)
 			return Command.LEFT;
 		System.err.println("invalid robot is already pointing in correct direction");
-		return null;
+		return Command.FORWARD;
 	}
 	
 	public int toInt() {

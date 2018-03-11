@@ -1,4 +1,4 @@
-package tools;
+package com.rp25.tools;
 
 import org.apache.log4j.Logger;
 
@@ -41,6 +41,13 @@ public class Robot {
 		x = xCoor;
 		y = yCoor;
 	}
+	
+	/**
+	 * @return ID number of the robot
+	 */
+	public int getID() {
+		return id;
+	}
 
 	/**
 	 * @return Current assigned job.
@@ -82,5 +89,23 @@ public class Robot {
 		x = newX;
 		y = newY;
 	}
-
+	
+	/*
+	 * toString() method for interface purposes
+	 */
+	public String toString() {
+		StringBuilder output = new StringBuilder();
+		
+			String strID  = "Robot ID: " + this.getID();
+			String strPos = "Position: (" + this.getX() + ", " + this.getY() + ")";
+			String strJob =	"Current Job: " + this.getCurrentJob().getName();
+			
+			output.append(strID)
+				  .append("\r\n")
+				  .append(strPos)
+				  .append("\r\n")
+				  .append(strJob);
+		
+		return output.toString();
+	}
 }

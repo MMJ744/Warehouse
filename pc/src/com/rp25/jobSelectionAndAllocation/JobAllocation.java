@@ -1,10 +1,10 @@
-package jobSelectionAndAllocation;
+package com.rp25.jobSelectionAndAllocation;
 
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import tools.Job;
+import com.rp25.tools.Job;
 
 public class JobAllocation {
 	
