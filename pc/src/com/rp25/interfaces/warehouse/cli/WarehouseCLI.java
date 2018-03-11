@@ -3,25 +3,20 @@ package com.rp25.interfaces.warehouse.cli;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import com.rp25.interfaces.warehouse.WarehouseState;
+import org.apache.log4j.Logger;
 
-import tools.Robot;
+import com.rp25.interfaces.warehouse.WarehouseState;
+import com.rp25.tools.Robot;
 
 public class WarehouseCLI implements Runnable {
 
 	private WarehouseState warehouseState;
 	private Scanner userInput;
+	final static Logger logger = Logger.getLogger(WarehouseCLI.class);
 	
-	public WarehouseCLI(ArrayList<Robot> robots) {
-		warehouseState = new WarehouseState();
+	public WarehouseCLI(WarehouseState state) {
+		warehouseState = state;
 		userInput = new Scanner(System.in);
-		initialise(robots);
-	}
-	
-	private void initialise(ArrayList<Robot> robots) {
-		for (Robot r : robots) {
-			warehouseState.addRobot(r.getID(), r);
-		}
 	}
 	
 	public WarehouseState getState() {
@@ -41,7 +36,32 @@ public class WarehouseCLI implements Runnable {
 		String i;
 		
 		while(!(i = getInput()).equalsIgnoreCase("quit")) {
-			System.out.println(getState().getRobot(Integer.parseInt(i)));
+			switch(i) {
+			case "get":
+				int id = Integer.parseInt(getInput());
+				logger.debug(warehouseState.getRobot(id).toString());
+				break;
+				
+			case "move": 
+				int botid = Integer.parseInt(getInput());
+				Robot current = warehouseState.getRobot(botid);
+				String movement = getInput();
+				switch(movement) {
+				case "up":
+					warehouseState.updateBotPos(botid, current.getX(), current.getY() + 1);
+					break;
+				case "down":
+					warehouseState.updateBotPos(botid, current.getX(), current.getY() - 1);
+					break;
+				case "left":
+					warehouseState.updateBotPos(botid, current.getX() - 1, current.getY());
+					break;
+				case "right":
+					warehouseState.updateBotPos(botid, current.getX() + 1, current.getY());
+					break;
+				}
+				break;
+			}
 		}
 		
 		close();

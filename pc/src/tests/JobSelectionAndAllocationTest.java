@@ -1,15 +1,16 @@
 package tests;
 
-import jobSelectionAndAllocation.JobSelection;
-import jobSelectionAndAllocation.JobAllocation;
-import tools.Job;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
-import static org.junit.Assert.*;
-
-import java.awt.Point;
 import java.util.ArrayList;
-import org.apache.log4j.Logger;
-import org.junit.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.rp25.jobSelectionAndAllocation.JobAllocation;
+import com.rp25.jobSelectionAndAllocation.JobSelection;
+import com.rp25.tools.Job;
 
 public class JobSelectionAndAllocationTest {
 	

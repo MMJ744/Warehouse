@@ -1,6 +1,9 @@
 package com.rp25.routePlanning;
 
-import tools.Job;
+import java.util.ArrayList;
+
+import com.rp25.tools.Job;
+import com.rp25.tools.JobPart;
 
 public class RoutePlan {
 	

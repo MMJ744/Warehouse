@@ -1,9 +1,10 @@
 package com.rp25.interfaces.warehouse;
 
+import java.util.Collection;
 import java.util.HashMap;
 
-import tools.Job;
-import tools.Robot;
+import com.rp25.tools.Job;
+import com.rp25.tools.Robot;
 
 public class WarehouseState {
 	
@@ -13,6 +14,10 @@ public class WarehouseState {
 	 * Value: Robot Object
 	 */
 	HashMap<Integer, Robot> robotList = new HashMap<>(); 
+	
+	public Collection<Robot> getAllRobots() {
+		return robotList.values();
+	}
 	
 	public void addRobot(int id, Robot r) {
 		robotList.put(id, r);

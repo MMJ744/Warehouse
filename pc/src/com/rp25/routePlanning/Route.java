@@ -1,6 +1,6 @@
 package com.rp25.routePlanning;
 
-import tools.Job;
+import com.rp25.tools.Job;
 
 public class Route {
 	Job job;
