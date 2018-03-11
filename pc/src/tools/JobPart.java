@@ -1,5 +1,6 @@
 package src.tools;
 
+import java.awt.Point;
 import java.math.BigDecimal;
 
 public class JobPart {
@@ -28,6 +29,10 @@ public class JobPart {
 	
 	public int getY() {
 		return yCoord;
+	}
+	
+	public Point getCoordinates() {
+		return new Point(xCoord, yCoord);
 	}
 	
 	public int getNumOfItems() {
