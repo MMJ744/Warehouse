@@ -22,7 +22,7 @@ public class WHIMainWithSimulation {
 		rs.add(r1);
 		rs.add(r2);
 		
-		WarehouseGridSim simulation = new WarehouseGridSim(2);
+		WarehouseGridSim simulation = new WarehouseGridSim(rs);
 		new WarehouseInterfaceView(rs, simulation);
 
 	}

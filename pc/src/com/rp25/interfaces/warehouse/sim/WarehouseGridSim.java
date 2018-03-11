@@ -3,6 +3,8 @@ package com.rp25.interfaces.warehouse.sim;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
+import com.rp25.tools.Robot;
+
 import lejos.robotics.RangeFinder;
 import rp.robotics.MobileRobotWrapper;
 import rp.robotics.control.RandomGridWalk;
@@ -21,15 +23,15 @@ public class WarehouseGridSim {
 	private GridMapVisualisation viz;
 	private ArrayList<Runnable> robotThreads;
 	
-	public WarehouseGridSim(int numBots) {
+	public WarehouseGridSim(ArrayList<Robot> robots) {
 		GridMap map = MapUtils.createRealWarehouse();
 		
 		MapBasedSimulation sim = new MapBasedSimulation(map);
 		
 		robotThreads = new ArrayList<>();
 		
-		for (int i = 0; i < numBots; i++) {
-			GridPose gridStart = new GridPose(3 * i, 0, Heading.PLUS_Y);
+		for (Robot r : robots) {
+			GridPose gridStart = new GridPose(r.getX(), r.getY(), Heading.PLUS_Y);
 
 			MobileRobotWrapper<MovableRobot> wrapper = sim.addRobot(
 					SimulatedRobots.makeConfiguration(false, true),
