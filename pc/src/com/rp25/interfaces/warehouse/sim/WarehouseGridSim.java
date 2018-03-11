@@ -1,4 +1,4 @@
-package com.rp25.interfaces.warehouse;
+package com.rp25.interfaces.warehouse.sim;
 
 import java.awt.Dimension;
 import java.util.ArrayList;

@@ -4,7 +4,7 @@ import java.awt.GridLayout;
 import java.awt.Dimension;
 import javax.swing.*;
 
-import com.rp25.interfaces.warehouse.WarehouseGridSim;
+import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
 import com.rp25.tools.Robot;
 
 public class WarehouseInterfaceFrame extends JFrame {

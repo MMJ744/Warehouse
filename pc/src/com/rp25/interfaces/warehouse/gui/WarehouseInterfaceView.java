@@ -2,7 +2,7 @@ package com.rp25.interfaces.warehouse.gui;
 
 import java.util.ArrayList;
 
-import com.rp25.interfaces.warehouse.WarehouseGridSim;
+import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
 import com.rp25.interfaces.warehouse.WarehouseState;
 import com.rp25.tools.Robot;
 

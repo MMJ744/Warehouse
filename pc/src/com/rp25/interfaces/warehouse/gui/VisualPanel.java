@@ -4,7 +4,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-import com.rp25.interfaces.warehouse.WarehouseGridSim;
+import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
 
 import rp.robotics.mapping.GridMap;
 import rp.robotics.mapping.MapUtils;
