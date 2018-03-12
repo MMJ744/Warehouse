@@ -1,4 +1,4 @@
-package jobSelectionAndAllocation;
+package com.rp25.jobSelectionAndAllocation;
 
 import java.io.*;
 import java.math.BigDecimal;
