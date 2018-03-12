@@ -16,7 +16,6 @@ public class Main {
 		Robot r1 = new Robot(null, 1, (int) r1Start.getX(), (int) r1Start.getY());
 		WarehouseState state = new WarehouseState();
 		state.addRobot(r1.getID(), r1);
-		
 		//WarehouseGridSim simulation = new WarehouseGridSim(s);
 		//new WarehouseInterfaceView(state, simulation);
 		PCMain.main(args);
