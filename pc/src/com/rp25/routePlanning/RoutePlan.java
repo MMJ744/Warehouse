@@ -10,7 +10,7 @@ import com.rp25.tools.*;
 
 public class RoutePlan {
 	static final Point DROPOFF = new Point(4, 7);
-	static Queue<Route> routeList = new LinkedBlockingQueue<Route>();
+	static LinkedBlockingQueue<Route> routeList = new LinkedBlockingQueue<Route>();
 	/* the plan:
 	 	* get the next job
 	 	* split the job into its individual parts, storing as an ArrayList
