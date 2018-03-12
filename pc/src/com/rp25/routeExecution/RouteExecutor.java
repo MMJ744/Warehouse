@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.rp25.interfaces.warehouse.WarehouseState;
 import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
+import com.rp25.networkCommunication.Sender;
 import com.rp25.routePlanning.Route;
 import com.rp25.routePlanning.Route.ACTION;
 
@@ -78,7 +79,8 @@ public class RouteExecutor {
 
 	private boolean tellRobot(Command c) {
 		boolean r = false;
-		// r = how ever to send to c to the robot
+		if(Sender.sendMove(robotID, c) == 0)
+			r = true;
 		return r;
 	}
 
