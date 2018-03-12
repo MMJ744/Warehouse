@@ -40,7 +40,7 @@ public class RoutePlan {
 			
 			Point start = DROPOFF;
 			Point goal;
-			int itemCount;
+			int itemCount = 0;
 			for (JobPart part : orderedParts) {
 				goal = new Point(part.getX(), part.getY());
 				itemCount = part.getNumOfItems();
