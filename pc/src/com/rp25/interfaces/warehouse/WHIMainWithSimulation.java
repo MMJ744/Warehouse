@@ -27,7 +27,7 @@ public class WHIMainWithSimulation {
 		state.addRobot(r1.getID(), r1);
 		state.addRobot(r2.getID(), r2);
 		
-		WarehouseGridSim simulation = new WarehouseGridSim(rs);
+		WarehouseGridSim simulation = new WarehouseGridSim(state.getAllRobots());
 		new WarehouseInterfaceView(state, simulation);
 		(new Thread(new WarehouseCLI(state))).start();
 		
