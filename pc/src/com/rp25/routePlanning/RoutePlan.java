@@ -39,9 +39,10 @@ public class RoutePlan {
 			
 			Point start = DROPOFF;
 			Point goal;
+			int itemCount;
 			for (JobPart part : orderedParts) {
 				goal = new Point(part.getX(), part.getY());
-				int itemCount = orderedParts[i].getNumOfItems();
+				itemCount = part.getNumOfItems();
 				routeList.offer(new Route(start, goal, itemCount));
 				start = goal;
 			}
@@ -50,17 +51,15 @@ public class RoutePlan {
 	}
 	
 	private static JobPart[] orderParts(JobPart[] unordered) {
-		//this isn't working yet, so just returns the input
-		//all this means is that it's likely the robot will be ping-ponging across the pen
-		//instead of taking a sensible route
+		
 		JobPart[] ordered = new JobPart[unordered.length];
-		Point compare = DROPOFF;
+		Point startPoint = DROPOFF;
 		for (int i = 0; i < ordered.length; i++) {
 			JobPart compPart = unordered[0];
-			int compDist = Math.abs(compare.x - compPart.getX()) + Math.abs(compare.y - compPart.getY());
+			int compDist = Math.abs(startPoint.x - compPart.getX()) + Math.abs(startPoint.y - compPart.getY());
 			int index = 0;
 			for (int j = 0; j < unordered.length; j++) {
-				int manDist = Math.abs(compare.x - unordered[j].getX()) + Math.abs(compare.y - unordered[j].getY());
+				int manDist = Math.abs(startPoint.x - unordered[j].getX()) + Math.abs(startPoint.y - unordered[j].getY());
 				if (manDist < compDist) {
 					compPart = unordered[j];
 					compDist = manDist;
@@ -68,13 +67,19 @@ public class RoutePlan {
 				}
 			}
 			ordered[i] = unordered[index];
-			
+			startPoint = new Point(unordered[index].getX(), unordered[index].getY());
+			unordered = removeElement(unordered, index);
 		}
 		
-		
-		
-		
-		return unordered;
+		return ordered;
+	}
+	
+	private static JobPart[] removeElement(JobPart[] original, int index) {
+		ArrayList<JobPart> newArrayList = new ArrayList<JobPart>();
+		for (int i = 0; i < original.length; i++) {
+			if (i != index) newArrayList.add(original[i]);
+		}
+		return newArrayList.toArray(new JobPart[original.length -1]);
 	}
 	
 	private BigDecimal calcOverallWeight (JobPart[] jobs) {
