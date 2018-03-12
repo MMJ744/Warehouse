@@ -3,6 +3,8 @@ package com.rp25.interfaces.warehouse.cli;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import com.rp25.interfaces.warehouse.WarehouseState;
 import com.rp25.tools.Robot;
 
@@ -10,6 +12,7 @@ public class WarehouseCLI implements Runnable {
 
 	private WarehouseState warehouseState;
 	private Scanner userInput;
+	final static Logger logger = Logger.getLogger(WarehouseCLI.class);
 	
 	public WarehouseCLI(WarehouseState state) {
 		warehouseState = state;
@@ -36,7 +39,7 @@ public class WarehouseCLI implements Runnable {
 			switch(i) {
 			case "get":
 				int id = Integer.parseInt(getInput());
-				System.out.println(warehouseState.getRobot(id).toString());
+				logger.debug(warehouseState.getRobot(id).toString());
 				break;
 				
 			case "move": 

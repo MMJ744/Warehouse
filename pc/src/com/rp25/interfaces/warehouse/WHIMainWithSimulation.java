@@ -2,6 +2,8 @@ package com.rp25.interfaces.warehouse;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.rp25.interfaces.warehouse.cli.WarehouseCLI;
 import com.rp25.interfaces.warehouse.gui.WarehouseInterfaceView;
 import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
@@ -10,6 +12,8 @@ import com.rp25.tools.Robot;
 
 public class WHIMainWithSimulation {
 
+	final static Logger logger = Logger.getLogger(WHIMainWithSimulation.class);
+	
 	public static void main(String[] args) {
 		
 		Job j1 = new Job("job 1");
@@ -26,6 +30,9 @@ public class WHIMainWithSimulation {
 		WarehouseState state = new WarehouseState();
 		state.addRobot(r1.getID(), r1);
 		state.addRobot(r2.getID(), r2);
+		
+		logger.debug("Robot " + state.getRobot(r1.getID()).getID() + " added");
+		logger.debug("Robot " + state.getRobot(r2.getID()).getID() + " added");
 		
 		WarehouseGridSim simulation = new WarehouseGridSim(state.getAllRobots());
 		new WarehouseInterfaceView(state, simulation);

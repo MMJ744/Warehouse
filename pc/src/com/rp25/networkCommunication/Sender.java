@@ -2,8 +2,11 @@ package com.rp25.networkCommunication;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
+import org.apache.log4j.Logger;
+
 import com.rp25.tools.Channel;
 import com.rp25.tools.Job;
+
 
 public class Sender  {
 
@@ -12,13 +15,16 @@ public class Sender  {
 	FORWARD, LEFT, RIGHT, UTURN,
 	}
 
+	private final static Logger logger = Logger.getLogger(Sender.class);
+	
 	public static Channel[] channels = new Channel[PCMain.robotNo]; //keeps track of senders for each robot
 
 
-	public int sendJob(int i, Job j) {
+	public static int sendJob(int i, Job j) {
 		try {
 			DataOutputStream out = new DataOutputStream(channels[i].getOutput()); //gets output stream for that robot.
 			out.writeInt(Purpose.JOB.ordinal()); //writes the enum int to stream
+			logger.debug("Job int sent: " + Purpose.JOB.ordinal());
 			out.flush();
 			//send interface shizzle
 			out.flush();
@@ -26,20 +32,23 @@ public class Sender  {
 		}
 		
 		catch(Exception e){
+			logger.debug("Job send failed", e);
 			return -1;
 		}
 		
 	}
-	public int sendMove(int i, Command c ) {
+	public static int sendMove(int i, Command c ) {
 		try {
 			DataOutputStream out = new DataOutputStream(channels[i].getOutput()); //gets output stream for that robot.
 			out.writeInt(Purpose.MOVE.ordinal()); //writes the enum int to stream
 			out.writeInt(c.ordinal()); // writes move enum int to stream
+			logger.debug("Command int sent: " + c.ordinal());
 			out.flush();
 			return (new DataInputStream(channels[i].getInput())).readInt();
 		}
 		
 		catch(Exception e){
+			logger.debug("Move send failed", e);
 			return -1;
 		}
 		
