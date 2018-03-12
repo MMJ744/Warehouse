@@ -12,7 +12,7 @@ public class RobotThread extends Thread {
 	RouteExecutor executor;
 	public RobotThread(int id, int x , int y, WarehouseState state) {
 		robotID = id;
-		executor = new RouteExecutor(robotID, 1, 1, state);
+		executor = new RouteExecutor(robotID, x, y, state);
 	}
 	public void run() {
 		

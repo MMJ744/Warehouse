@@ -9,9 +9,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import com.rp25.jobSelectionAndAllocation.JobAllocation;
 import com.rp25.tools.*;
 
-public class RoutePlan {
+public class RoutePlan extends Thread {
 	static final Point DROPOFF = new Point(4, 7);
-	static LinkedBlockingQueue<Route> routeList = new LinkedBlockingQueue<Route>();
+	public static LinkedBlockingQueue<Route> routeList = new LinkedBlockingQueue<Route>();
 	/* the plan:
 	 	* get the next job
 	 	* split the job into its individual parts, storing as an ArrayList
@@ -27,7 +27,7 @@ public class RoutePlan {
 	//job weights per item stored as BigDecimal
 	
 
-	public static void main(String[] args) {
+	public void run() {
 		while (true) {
 			Job job = JobAllocation.getJob(); // will get when Katie next pushes
 			ArrayList<JobPart> hold = new ArrayList<JobPart>();

@@ -32,6 +32,8 @@ public class JobAllocation {
 	}
 	
 	public static Job getNextJob(int robotID) {
+		if(robot1Jobs.isEmpty())
+			return null;
 		Job nextJob;
 		switch(robotID) {
 		case 1:

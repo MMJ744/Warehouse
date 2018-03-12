@@ -11,12 +11,12 @@ public class JobPart {
 	private int numberOfItems;
 	private BigDecimal weight;
 	
-	public JobPart(String name,int x,int y,int numItems) {
+	public JobPart(String name,int x,int y,int numItems, BigDecimal weight) {
 		this.name = name;
 		xCoord = x;
 		yCoord = y;
 		numberOfItems = numItems;
-		weight = BigDecimal.valueOf(0);
+		this.weight = weight;
 	}
 	
 	public String getName() {
