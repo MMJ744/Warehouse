@@ -33,7 +33,7 @@ public class AStarSearch {
 			
 			if (current.isGoal()) {
 				logger.debug("Current Node: " + current.getCoordinate());
-				ArrayList<Point> route = new ArrayList<Point>();
+				Queue<Point> route = new Queue<Point>();
 				route = traceRoute(current);
 				return route;
 			}
@@ -108,9 +108,9 @@ public class AStarSearch {
 	
 	private ArrayList<Point> traceRoute(Node node) {
 		Node parent = node.getParent();
-		ArrayList<Point> route = new ArrayList<Point>();
+		Queue<Point> route = new Queue<Point>();
 		if (!(parent == null)) route = traceRoute(parent);
-		route.add(node.getCoordinate());
+		route.offer(node.getCoordinate());
 		return route;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import com.rp25.jobSelectionAndAllocation.JobAllocation;
 import com.rp25.tools.*;
 
 public class RoutePlan {
@@ -28,7 +29,7 @@ public class RoutePlan {
 
 	public static void main(String[] args) {
 		while (true) {
-			Job job = getJob(); // will get when Katie next pushes
+			Job job = JobAllocation.getJob(); // will get when Katie next pushes
 			ArrayList<JobPart> hold = new ArrayList<JobPart>();
 			hold = job.getParts();
 			JobPart[] jobParts = hold.toArray(new JobPart[hold.size()]);
