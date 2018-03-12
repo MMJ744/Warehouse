@@ -31,6 +31,7 @@ public class JobPart {
 		return yCoord;
 	}
 	
+	@Deprecated
 	public Point getCoordinates() {
 		return new Point(xCoord, yCoord);
 	}
