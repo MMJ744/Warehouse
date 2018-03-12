@@ -1,5 +1,7 @@
 package com.rp25.tools;
 
+import java.awt.Point;
+
 public class JobPart {
 	
 	private int xCoord;
@@ -25,15 +27,12 @@ public class JobPart {
 	public int getY() {
 		return yCoord;
 	}
-	
-<<<<<<< HEAD:pc/src/com/rp25/tools/JobPart.java
-=======
+
 	@Deprecated
 	public Point getCoordinates() {
 		return new Point(xCoord, yCoord);
 	}
 	
->>>>>>> jobSelectionAndAllocation:pc/src/tools/JobPart.java
 	public int getNumOfItems() {
 		return numberOfItems;
 	}
