@@ -1,7 +1,9 @@
-package com.rp25.routePlanning;
+package com.rp25.routePlanning.tests;
 
 import java.awt.Point;
 import java.util.ArrayList;
+
+import com.rp25.routePlanning.AStarSearch;
 
 public class AStarTest {
 
