@@ -23,7 +23,7 @@ public class Main {
 		RoutePlan route = new RoutePlan();
 		route.start();
 		PCMain.main(args);
-		RobotThread robot1 = new RobotThread(1, (int) 4, (int) 7, state);
+		RobotThread robot1 = new RobotThread(1, 4, 7, state);
 		robot1.start();
 		Route r;
 		while((r = route.routeList.poll()) != null) {
