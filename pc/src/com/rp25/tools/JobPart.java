@@ -1,6 +1,7 @@
 package com.rp25.tools;
 
 import java.awt.Point;
+import java.math.BigDecimal;
 
 public class JobPart {
 	
@@ -8,12 +9,14 @@ public class JobPart {
 	private int yCoord;
 	private String name;
 	private int numberOfItems;
+	private BigDecimal weight;
 	
 	public JobPart(String name,int x,int y,int numItems) {
 		this.name = name;
 		xCoord = x;
 		yCoord = y;
 		numberOfItems = numItems;
+		weight = BigDecimal.valueOf(0);
 	}
 	
 	public String getName() {
@@ -35,6 +38,10 @@ public class JobPart {
 	
 	public int getNumOfItems() {
 		return numberOfItems;
+	}
+
+	public BigDecimal getWeight() {
+		return weight;
 	}
 
 }

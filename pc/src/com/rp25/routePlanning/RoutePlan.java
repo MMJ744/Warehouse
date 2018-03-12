@@ -86,18 +86,18 @@ public class RoutePlan {
 	private BigDecimal calcOverallWeight (JobPart[] jobs) {
 		BigDecimal total = new BigDecimal("0");
 		for (JobPart jobPart : jobs) {
-			total+=jobPart.getWeight();
+			total = total.add(jobPart.getWeight());
 		}
 		return total;
 	}
 	
-	private void generateWeightArray(JobPart[] jobs) {
+	/*private void generateWeightArray(JobPart[] jobs) {
 		JobPart[][] weightedParts = new JobPart[jobs.length][2];
 		for (int i = 0; i < jobs.length; i++) {
 			weightedParts[i][0] = jobs[i];
 			weightedParts[i][1] = calcWeight(jobs[i]);
 		}
-	}
+	} */
 	
 	
 
