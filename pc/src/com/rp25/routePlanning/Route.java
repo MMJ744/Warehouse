@@ -6,6 +6,19 @@ import java.util.ArrayList;
 public class Route {
 	Point[] path;
 	ACTION action;
+	public Point[] getPath() {
+		return path;
+	}
+
+	public ACTION getAction() {
+		return action;
+	}
+
+
+	public int getItemCount() {
+		return itemCount;
+	}
+
 	int itemCount;
 	
 
