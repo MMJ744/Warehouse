@@ -25,10 +25,10 @@ public class Main {
 		PCMain.main(args);
 		RobotThread robot1 = new RobotThread(1, 4, 7, state);
 		robot1.start();
-		Route r;
-		while((r = route.routeList.poll()) != null) {
-			robot1.executor.execute(r);
-		}
+		//Route r;
+		//while((r = route.routeList.poll()) != null) {
+		//	robot1.executor.execute(r);
+		//}
 	}
 
 }

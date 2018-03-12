@@ -16,7 +16,11 @@ public class RoutePlanningTest {
 	private final static Logger logger = Logger.getLogger(RoutePlanningTest.class);
 	
 	@Test
-	public void pathShouldBeBuilt(Point start, Point goal) {
+	public void pathShouldBeBuilt() {
+		Point start = new Point(0,0);
+		Point goal = new Point(0,0);
+		start.setLocation(2, 4);
+		goal.setLocation(2,3);
 		AStarSearch tester = new AStarSearch(start, goal);
 		Queue<Point> path = new Queue<Point>();
 		

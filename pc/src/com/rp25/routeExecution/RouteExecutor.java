@@ -25,7 +25,7 @@ public class RouteExecutor {
 
 	public RouteExecutor(int robotNumber, int startingX, int startingY, WarehouseState _state) {
 		robotID = robotNumber;
-		current.x = startingX;
+		current.setLocation(startingX, startingY);
 		current.y = startingY;
 		direction = Orientation.N;
 		cancled = false;
