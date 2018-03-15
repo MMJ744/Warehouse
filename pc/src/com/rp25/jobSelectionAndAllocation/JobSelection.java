@@ -1,7 +1,7 @@
-package src.com.rp25.jobSelectionAndAllocation;
+package com.rp25.jobSelectionAndAllocation;
 
 import java.io.BufferedReader;
-import src.com.rp25.tools.*;
+import com.rp25.tools.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import org.apache.log4j.Logger;
-
-import src.com.rp25.tools.Job;
-import src.com.rp25.tools.JobPart;
 
 public class JobSelection {
 	
@@ -36,10 +33,10 @@ public class JobSelection {
 				logger.debug("Location = " + line);
 				brItems.close();
 				brItems = new BufferedReader(new FileReader(itemsLocation));
-				String[] locationParts = line.split(",");
+				String[] locationParts = StringMethods.split(line, ",", 0);
 				while((line2 = brItems.readLine()) != null) {
 					logger.debug("Item = " + line2);
-					String itemParts[] = line2.split(",");
+					String itemParts[] = StringMethods.split(line2, ",", 0);
 					if(itemParts[0].equals(locationParts[2])) {
 						Item item = new Item(itemParts[0], Integer.parseInt(locationParts[0]), Integer.parseInt(locationParts[1]), new BigDecimal(itemParts[1]), new BigDecimal(itemParts[2]));
 						items.add(item);
@@ -48,7 +45,7 @@ public class JobSelection {
 			}
 			while((line = brJobs.readLine()) != null) {
 				logger.debug("Job = " + line);
-				String[] jobParts = line.split("");
+				String[] jobParts = StringMethods.split(line, ",", 0);
 				Job job = new Job(jobParts[0]);
 				allJobs.add(job);
 				for(int i = 1; i < jobParts.length; i+=2) {

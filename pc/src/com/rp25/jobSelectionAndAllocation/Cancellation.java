@@ -1,15 +1,15 @@
 
-package src.com.rp25.jobSelectionAndAllocation;
+package com.rp25.jobSelectionAndAllocation;
 
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import src.com.rp25.tools.*;
+import com.rp25.tools.*;
 
-import src.com.rp25.jobSelectionAndAllocation.Item;
-import src.com.rp25.tools.Job;
+import com.rp25.jobSelectionAndAllocation.Item;
+import com.rp25.tools.Job;
 
 public class Cancellation {
 	
@@ -27,8 +27,8 @@ public class Cancellation {
 			String line2;
 			while((line1 = testsReader.readLine()) != null) {
 				line2 = cancellationReader.readLine();
-				String[] testInfo = line1.split(",");
-				String[] cancelInfo = line2.split(",");
+				String[] testInfo = StringMethods.split(line1, ",", 0);
+				String[] cancelInfo = StringMethods.split(line2, ",", 0);
 				String itemName = null;
 				int numOfItems = 0;
 				int numOfTypes = 0;
