@@ -54,7 +54,7 @@ public class WarehouseGridSim {
 
 			@Override
 			public Dimension getPreferredSize() {
-			    return new Dimension(650, 400);
+			    return new Dimension(450, 400);
 			}
 			
 		};

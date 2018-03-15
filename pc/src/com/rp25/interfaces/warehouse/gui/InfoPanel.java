@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -13,7 +14,7 @@ import com.rp25.tools.Robot;
 
 public class InfoPanel extends JPanel {
 	
-	Map<Integer, JTextArea> robots;
+	Map<Integer, RobotInfoPanel> robots;
 	
 	public InfoPanel() {
 		setBackground(Color.WHITE);
@@ -22,18 +23,16 @@ public class InfoPanel extends JPanel {
 	}
 	
 	public void addInfo(Robot r) {
-		JTextArea textArea = new JTextArea(3, 16);
-		textArea.setText(r.toString());
-		textArea.setEditable(false);
-		
-		robots.put(r.getID(), textArea);
-		this.add(textArea);
+		RobotInfoPanel robotPanel = new RobotInfoPanel(r);
+		robots.put(r.getID(), robotPanel);
+		this.add(robotPanel);
 	}
 	
 	public void update(Robot r) {
-		JTextArea robot = robots.get(r.getID());
-		robot.setText(r.toString());
-		robot.setEditable(false);
+		RobotInfoPanel robot = robots.get(r.getID());
+		JTextArea textArea = robot.getTextArea();
+		textArea.setText(r.toString());
+		textArea.setEditable(false);
 	}
 	
 }
