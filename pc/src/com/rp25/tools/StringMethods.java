@@ -1,4 +1,4 @@
-package com.rp25.tools;
+package src.com.rp25.tools;
 
 import java.util.regex.Pattern;
 
