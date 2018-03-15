@@ -22,11 +22,6 @@ public class WHIMainWithSimulation {
 		Robot r1 = new Robot(j1, 1, 3, 0);
 		Robot r2 = new Robot(j2, 2, 2, 4);
 		
-		
-		ArrayList<Robot> rs = new ArrayList<>();
-		rs.add(r1);
-		rs.add(r2);
-		
 		WarehouseState state = new WarehouseState();
 		state.addRobot(r1.getID(), r1);
 		state.addRobot(r2.getID(), r2);
