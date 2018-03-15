@@ -1,4 +1,4 @@
-package com.rp25.routePlanning;
+package src.com.rp25.routePlanning;
 
 import java.awt.Point;
 import java.math.BigDecimal;

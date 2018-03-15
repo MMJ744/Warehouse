@@ -75,14 +75,16 @@ public class AStarSearch {
 		return children;
 	}
 	
-	private boolean checkLoop(Node node) { 		// This may be broken now were using a queue sorry -Matty
-		Queue<Point> history = new Queue<Point>();
-		history = traceRoute(node);
+	private boolean checkLoop(Node node) { 	
+		Queue<Point> queueHistory = new Queue<Point>();
+		queueHistory = traceRoute(node);
 		
-		//Collections.sort(history, new NodeComparatorPoint());
+		ArrayList<Point> history = new ArrayList(queueHistory);
 		
-		for (int i = 0; (i < history.size() - 1); i++) {
-			if (history.pop().equals(history.pop())) return true;
+		Collections.sort(history, new NodeComparatorPoint());
+		
+		for (int i = 0; i < (history.size() - 1); i++) {
+			if (history.get(i).equals(history.get(i+1))) return true;
 		}
 		return false;
 	}

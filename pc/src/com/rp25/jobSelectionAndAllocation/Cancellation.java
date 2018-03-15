@@ -1,5 +1,5 @@
 
-package com.rp25.jobSelectionAndAllocation;
+package src.com.rp25.jobSelectionAndAllocation;
 
 
 import java.io.*;
@@ -27,8 +27,8 @@ public class Cancellation {
 			String line2;
 			while((line1 = testsReader.readLine()) != null) {
 				line2 = cancellationReader.readLine();
-				String[] testInfo = StringMethods.split(line1, ",", 0);
-				String[] cancelInfo = StringMethods.split(line2, ",", 0);
+				String[] testInfo = HelperMethods.split(line1, ",", 0);
+				String[] cancelInfo = HelperMethods.split(line2, ",", 0);
 				String itemName = null;
 				int numOfItems = 0;
 				int numOfTypes = 0;

@@ -1,12 +1,12 @@
-package com.rp25.jobSelectionAndAllocation;
+package src.com.rp25.jobSelectionAndAllocation;
 
 import java.util.ArrayList;
-import com.rp25.tools.*;
+import src.com.rp25.tools.*;
 
 import org.apache.log4j.Logger;
 
-import com.rp25.tools.Job;
-import com.rp25.tools.JobPart;
+import src.com.rp25.tools.Job;
+import src.com.rp25.tools.JobPart;
 
 public class JobAllocation {
 	
@@ -17,8 +17,19 @@ public class JobAllocation {
 	private final static Logger logger = Logger.getLogger(JobAllocation.class);
 	
 	public static void allocateJob(Job nextJob) {
-		robot1Parts.addAll(nextJob.getParts());
-		robot1Jobs.add(nextJob);
+		int numRobot1Jobs = robot1Jobs.size();
+		int numRobot2Jobs = robot2Jobs.size();
+		int numRobot3Jobs = robot3Jobs.size();
+		if(Math.max(numRobot1Jobs, Math.max(numRobot2Jobs, numRobot3Jobs))==numRobot1Jobs) {
+			robot1Jobs.add(nextJob);
+		}
+		else if(Math.max(numRobot1Jobs, Math.max(numRobot2Jobs, numRobot3Jobs))==numRobot2Jobs) {
+			robot2Jobs.add(nextJob);
+		}
+		else {
+			robot3Jobs.add(nextJob);
+		}
+			
 		logger.debug("Current Job: " + nextJob.getName());
 	}
 	
