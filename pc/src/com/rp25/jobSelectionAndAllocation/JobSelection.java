@@ -1,6 +1,7 @@
-package com.rp25.jobSelectionAndAllocation;
+package src.com.rp25.jobSelectionAndAllocation;
 
 import java.io.BufferedReader;
+import src.com.rp25.tools.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,8 +11,8 @@ import java.util.Comparator;
 
 import org.apache.log4j.Logger;
 
-import com.rp25.tools.Job;
-import com.rp25.tools.JobPart;
+import src.com.rp25.tools.Job;
+import src.com.rp25.tools.JobPart;
 
 public class JobSelection {
 	
@@ -21,9 +22,11 @@ public class JobSelection {
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private ArrayList<Job> allJobs = new ArrayList<Job>();
 	private final static Logger logger = Logger.getLogger(JobSelection.class);
+	private Cancellation cancel;
 	
-	public JobSelection(String jobLocation, String itemsLocation, String locationLocation) {
+	public JobSelection(String jobLocation, String itemsLocation, String locationLocation, Cancellation cancel) {
 		try {
+			this.cancel = cancel;
 			brJobs = new BufferedReader(new FileReader(jobLocation));
 			brItems = new BufferedReader(new FileReader(itemsLocation));
 			brLocation = new BufferedReader(new FileReader(locationLocation));
@@ -51,7 +54,7 @@ public class JobSelection {
 				for(int i = 1; i < jobParts.length; i+=2) {
 					for(Item item: items) {
 						if(jobParts[i].equals(item.getName())) {
-							job.addPart(new JobPart(item.getName(), item.getX(), item.getY(), Integer.parseInt(jobParts[i+1]), item.getWeight()));
+							job.addPart(new JobPart(item.getName(), item.getX(), item.getY(), Integer.parseInt(jobParts[i+1]), item.getWeight(), item.getReward()));
 						}
 					}
 				}
@@ -83,7 +86,7 @@ public class JobSelection {
 				weight.add(currentItem.getWeight());
 				reward.add(currentItem.getReward());
 			}
-			BigDecimal priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces)));
+			BigDecimal priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).subtract(cancel.probOfCancellation(job));
 			job.setPriority(priority);
 		}
 		

@@ -1,6 +1,7 @@
-package com.rp25.jobSelectionAndAllocation;
+package src.com.rp25.jobSelectionAndAllocation;
 
 import java.util.ArrayList;
+import src.com.rp25.tools.*;
 
 import org.apache.log4j.Logger;
 
