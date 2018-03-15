@@ -14,7 +14,7 @@ import com.rp25.routePlanning.Route.ACTION;
 public class RouteExecutor {
 
 	final int robotID;
-	Point current;
+	Point current = new Point(0,0);
 	Orientation direction;
 	Queue<Point> path;
 	Boolean cancled;
