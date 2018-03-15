@@ -79,8 +79,8 @@ public class AStarSearch {
 		Queue<Point> queueHistory = new Queue<Point>();
 		queueHistory = traceRoute(node);
 		
-		ArrayList<Point> history = new ArrayList(queueHistory);
-		
+		ArrayList<Point> history = new ArrayList<Point>(queueHistory);
+				
 		Collections.sort(history, new NodeComparatorPoint());
 		
 		for (int i = 0; i < (history.size() - 1); i++) {
