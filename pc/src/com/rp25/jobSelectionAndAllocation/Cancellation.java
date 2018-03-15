@@ -1,5 +1,5 @@
 
-package src.com.rp25.jobSelectionAndAllocation;
+package com.rp25.jobSelectionAndAllocation;
 
 
 import java.io.*;
