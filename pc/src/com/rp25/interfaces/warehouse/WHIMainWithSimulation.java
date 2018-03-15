@@ -34,7 +34,7 @@ public class WHIMainWithSimulation {
 		logger.debug("Robot " + state.getRobot(r1.getID()).getID() + " added");
 		logger.debug("Robot " + state.getRobot(r2.getID()).getID() + " added");
 		
-		WarehouseGridSim simulation = new WarehouseGridSim(rs);
+		WarehouseGridSim simulation = new WarehouseGridSim(state.getAllRobots());
 		new WarehouseInterfaceView(state, simulation);
 		(new Thread(new WarehouseCLI(state))).start();
 		

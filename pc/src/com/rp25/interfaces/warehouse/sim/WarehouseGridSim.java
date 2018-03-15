@@ -2,6 +2,7 @@ package com.rp25.interfaces.warehouse.sim;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import com.rp25.tools.Robot;
 
@@ -23,14 +24,14 @@ public class WarehouseGridSim {
 	private GridMapVisualisation viz;
 	private ArrayList<Runnable> robotThreads;
 	
-	public WarehouseGridSim(ArrayList<Robot> robots) {
+	public WarehouseGridSim(Collection<Robot> collection) {
 		GridMap map = MapUtils.createRealWarehouse();
 		
 		MapBasedSimulation sim = new MapBasedSimulation(map);
 		
 		robotThreads = new ArrayList<>();
 		
-		for (Robot r : robots) {
+		for (Robot r : collection) {
 			GridPose gridStart = new GridPose(r.getX(), r.getY(), Heading.PLUS_Y);
 
 			MobileRobotWrapper<MovableRobot> wrapper = sim.addRobot(

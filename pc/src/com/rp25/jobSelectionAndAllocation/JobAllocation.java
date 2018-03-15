@@ -5,13 +5,15 @@ import src.com.rp25.tools.*;
 
 import org.apache.log4j.Logger;
 
-import com.rp25.tools.Job;
-import com.rp25.tools.JobPart;
+import src.com.rp25.tools.Job;
+import src.com.rp25.tools.JobPart;
 
 public class JobAllocation {
 	
 	private static ArrayList<JobPart> robot1Parts = new ArrayList<JobPart>();
 	private static ArrayList<Job> robot1Jobs = new ArrayList<Job>();
+	private static ArrayList<Job> robot2Jobs = new ArrayList<Job>();
+	private static ArrayList<Job> robot3Jobs = new ArrayList<Job>();
 	private final static Logger logger = Logger.getLogger(JobAllocation.class);
 	
 	public static void allocateJob(Job nextJob) {

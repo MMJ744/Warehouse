@@ -6,11 +6,12 @@ import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import com.rp25.jobSelectionAndAllocation.JobAllocation;
 import com.rp25.tools.*;
 
-public class RoutePlan {
+public class RoutePlan extends Thread {
 	static final Point DROPOFF = new Point(4, 7);
-	static Queue<Route> routeList = new LinkedBlockingQueue<Route>();
+	public static LinkedBlockingQueue<Route> routeList = new LinkedBlockingQueue<Route>();
 	/* the plan:
 	 	* get the next job
 	 	* split the job into its individual parts, storing as an ArrayList
@@ -26,9 +27,9 @@ public class RoutePlan {
 	//job weights per item stored as BigDecimal
 	
 
-	public static void main(String[] args) {
+	public void run() {
 		while (true) {
-			Job job = getJob(); // will get when Katie next pushes
+			Job job = JobAllocation.getJob(); // will get when Katie next pushes
 			ArrayList<JobPart> hold = new ArrayList<JobPart>();
 			hold = job.getParts();
 			JobPart[] jobParts = hold.toArray(new JobPart[hold.size()]);
@@ -39,7 +40,7 @@ public class RoutePlan {
 			
 			Point start = DROPOFF;
 			Point goal;
-			int itemCount;
+			int itemCount = 0;
 			for (JobPart part : orderedParts) {
 				goal = new Point(part.getX(), part.getY());
 				itemCount = part.getNumOfItems();
@@ -85,18 +86,18 @@ public class RoutePlan {
 	private BigDecimal calcOverallWeight (JobPart[] jobs) {
 		BigDecimal total = new BigDecimal("0");
 		for (JobPart jobPart : jobs) {
-			total+=jobPart.getWeight();
+			total = total.add(jobPart.getWeight());
 		}
 		return total;
 	}
 	
-	private void generateWeightArray(JobPart[] jobs) {
+	/*private void generateWeightArray(JobPart[] jobs) {
 		JobPart[][] weightedParts = new JobPart[jobs.length][2];
 		for (int i = 0; i < jobs.length; i++) {
 			weightedParts[i][0] = jobs[i];
 			weightedParts[i][1] = calcWeight(jobs[i]);
 		}
-	}
+	} */
 	
 	
 
