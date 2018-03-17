@@ -35,13 +35,11 @@ public class WarehouseGridSim {
 			GridPose gridStart = new GridPose(r.getX(), r.getY(), Heading.PLUS_Y);
 
 			MobileRobotWrapper<MovableRobot> wrapper = sim.addRobot(
-					SimulatedRobots.makeConfiguration(false, true),
+					SimulatedRobots.makeConfiguration(false, false),
 					map.toPose(gridStart));
 
-			RangeFinder ranger = sim.getRanger(wrapper);
-
-			RandomGridWalk controller = new RandomGridWalk(wrapper.getRobot(),
-					map, gridStart, ranger);
+			WarehouseRobotSimController controller = new WarehouseRobotSimController(wrapper.getRobot(),
+					map, gridStart, r);
 
 			Thread bot = new Thread(controller);
 			bot.start();
@@ -49,15 +47,13 @@ public class WarehouseGridSim {
 		}
 		
 		viz = new GridMapVisualisation(map, sim.getMap()) {
-
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public Dimension getPreferredSize() {
 			    return new Dimension(450, 400);
 			}
-			
 		};
+		
 		MapVisualisationComponent.populateVisualisation(viz, sim);
 	}
 	
