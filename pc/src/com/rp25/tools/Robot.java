@@ -98,19 +98,15 @@ public class Robot {
 		
 			String strID  = "Robot ID: " + this.getID();
 			String strPos = "Position: (" + this.getX() + ", " + this.getY() + ")";
-<<<<<<< HEAD
 			String strJob =	(this.getCurrentJob() == null) ?
 								"Current Job: NONE" :
 								"CurrentJob: " + this.getCurrentJob().getName();
-=======
-			//String strJob =	"Current Job: " + this.getCurrentJob().getName();
->>>>>>> 99b9cb69af779069978f2682b715e5e25cb0f35c
 			
 			output.append(strID)
 				  .append("\r\n")
 				  .append(strPos)
-				  .append("\r\n");
-				//  .append(strJob);
+				  .append("\r\n")
+				  .append(strJob);
 		
 		return output.toString();
 	}
