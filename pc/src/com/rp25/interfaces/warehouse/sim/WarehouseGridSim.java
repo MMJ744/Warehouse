@@ -43,11 +43,11 @@ public class WarehouseGridSim {
 			bot.start();
 		}
 		
-		viz = new GridMapVisualisation(map, sim.getMap()) {
+		viz = new GridMapVisualisation(map, sim.getMap(), 150) {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public Dimension getPreferredSize() {
-			    return new Dimension(450, 400);
+			    return new Dimension(650,600);
 			}
 		};
 		

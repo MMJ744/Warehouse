@@ -30,8 +30,7 @@ public class WarehouseInterfaceFrame extends JFrame {
 		infoPanel = new InfoPanel();
 		add(infoPanel);
 		
-		setMinimumSize(new Dimension(800, 450));
-		pack();
+		setMinimumSize(new Dimension(1100, 600));
 	}
 	
 	public void addInfo(Robot r) {
