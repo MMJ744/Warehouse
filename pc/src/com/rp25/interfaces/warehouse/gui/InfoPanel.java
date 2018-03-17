@@ -1,15 +1,13 @@
 package com.rp25.interfaces.warehouse.gui;
 
-import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import com.rp25.tools.Robot;
 
@@ -36,4 +34,7 @@ public class InfoPanel extends JPanel {
 		textArea.setEditable(false);
 	}
 	
+	public void addButtonListeners(int id, ActionListener listener) {
+		robots.get(id).addCancelListener(listener);
+	}
 }

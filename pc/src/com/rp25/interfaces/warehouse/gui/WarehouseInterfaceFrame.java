@@ -2,6 +2,8 @@ package com.rp25.interfaces.warehouse.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
@@ -38,6 +40,10 @@ public class WarehouseInterfaceFrame extends JFrame {
 	
 	public void updateInfo(Robot r) {
 		infoPanel.update(r);
+	}
+	
+	public void addListeners(int id, ActionListener listener) {
+		infoPanel.addButtonListeners(id, listener);
 	}
 
 }
