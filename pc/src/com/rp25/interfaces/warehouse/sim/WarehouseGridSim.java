@@ -7,6 +7,7 @@ import java.util.Collection;
 import com.rp25.tools.Robot;
 
 import lejos.robotics.RangeFinder;
+import rp.config.MobileRobotConfiguration;
 import rp.robotics.MobileRobotWrapper;
 import rp.robotics.control.RandomGridWalk;
 import rp.robotics.mapping.GridMap;
@@ -31,9 +32,9 @@ public class WarehouseGridSim {
 		for (Robot r : collection) {
 			GridPose gridStart = new GridPose(r.getX(), r.getY(), Heading.PLUS_Y);
 
-			MobileRobotWrapper<MovableRobot> wrapper = sim.addRobot(
-					SimulatedRobots.makeConfiguration(false, false),
-					map.toPose(gridStart));
+			MobileRobotConfiguration config = new MobileRobotConfiguration(0.2f, 0.2f); 
+			
+			MobileRobotWrapper<MovableRobot> wrapper = sim.addRobot(config, map.toPose(gridStart));
 
 			WarehouseRobotSimController controller = new WarehouseRobotSimController(wrapper.getRobot(),
 					map, gridStart, r);
@@ -56,4 +57,5 @@ public class WarehouseGridSim {
 	public GridMapVisualisation getViz() {
 		return viz;
 	}
+
 }
