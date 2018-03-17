@@ -21,10 +21,12 @@ public class WHIMainWithSimulation {
 		
 		Robot r1 = new Robot(j1, 1, 3, 0);
 		Robot r2 = new Robot(j2, 2, 2, 4);
+		Robot r3 = new Robot(null, 3,3,1);
 		
 		WarehouseState state = new WarehouseState();
 		state.addRobot(r1.getID(), r1);
 		state.addRobot(r2.getID(), r2);
+		state.addRobot(r3.getID(), r3);
 		
 		logger.debug("Robot " + state.getRobot(r1.getID()).getID() + " added");
 		logger.debug("Robot " + state.getRobot(r2.getID()).getID() + " added");

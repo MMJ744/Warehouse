@@ -1,6 +1,6 @@
 package com.rp25.interfaces.warehouse.gui;
 
-import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.*;
 
@@ -17,17 +17,19 @@ public class WarehouseInterfaceFrame extends JFrame {
 		super(title);
 		setSize(600, 400);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLayout(new GridLayout(1,2));
+		setLayout(new BorderLayout());
+		
 		
 		//Display panel that handles warehouse simulation
 		visualPanel = new VisualPanel(sim);
-		add(visualPanel);
+		add(visualPanel, BorderLayout.WEST);
 		
 		//Display panel that shows robot information
 		infoPanel = new InfoPanel();
 		add(infoPanel);
+		
+		setMinimumSize(new Dimension(800, 450));
 		pack();
-		setMinimumSize(new Dimension(1400, 450));
 	}
 	
 	public void addInfo(Robot r) {
