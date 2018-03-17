@@ -7,7 +7,7 @@ import lejos.util.Delay;
 
 public class FrameUpdater extends Thread {
 	
-	private final int TIME_PER_UPDATE = 2000;
+	private final int TIME_PER_UPDATE = 1000;
 	private WarehouseInterfaceFrame frame;
 	private WarehouseState warehouseState;
 	
