@@ -90,6 +90,9 @@ public class JobSelection {
 			job.setPriority(priority);
 		}
 		Collections.sort(allJobs, (a, b) -> b.getPriority().compareTo(a.getPriority()));
+		while(!allJobs.isEmpty()) {
+			nextJob();
+		}
 	}
 	
 	public void nextJob() {

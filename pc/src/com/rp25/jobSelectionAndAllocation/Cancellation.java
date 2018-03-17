@@ -13,6 +13,11 @@ import com.rp25.tools.Job;
 
 public class Cancellation {
 	
+	
+	private BigDecimal[] probGivenTypes;
+	private BigDecimal[] probGivenItems;
+	private BigDecimal[] probGivenWeight;
+	private BigDecimal[] probGivenReward;
 	private ArrayList<TestJob> allTestJobs = new ArrayList<TestJob>();
 	private ArrayList<Item> allItems = new ArrayList<Item>();
 	private BigDecimal probYes;
@@ -73,24 +78,16 @@ public class Cancellation {
 		}
 		probYes = new BigDecimal(yesesInTest).divide(new BigDecimal(trainingSetSize));
 		probNo = new BigDecimal(1).subtract(probYes);
+		for(TestJob testJob: allTestJobs) {
+			
+		}
 		
 	}
 	
 	public BigDecimal probOfCancellation(Job job) {
 		BigDecimal probOfCancellation = new BigDecimal("0");
 		ArrayList<JobPart> parts = job.getParts();
-		int numMatchingTypes = 0;
-		int numMatchingItems = 0;
-		int numMatchingWeight = 0;
-		int numMatchingReward = 0;
-		int numCancelledMatchingTypes = 0;
-		int numCancelledMatchingItems = 0;
-		int numCancelledMatchingWeight = 0;
-		int numCancelledMatchingReward = 0;
-		BigDecimal probGivenTypes;
-		BigDecimal probGivenItems;
-		BigDecimal probGivenWeight;
-		BigDecimal probGivenReward;
+		
 		int numOfItems = 0;
 		BigDecimal weight = new BigDecimal("0");
 		BigDecimal reward = new BigDecimal("0");
@@ -99,32 +96,7 @@ public class Cancellation {
 			weight = weight.add(part.getWeight());
 			reward = reward.add(part.getReward());
 		}
-		for(TestJob testJob: allTestJobs) {
-			if(testJob.getNumOfItemTypes() == parts.size()) {
-				numMatchingTypes += 1;
-				if(testJob.isCancelled == 1) {
-					numCancelledMatchingTypes += 1;
-				}
-			}
-			if(testJob.getNumOfItems() == numOfItems) {
-				numMatchingItems += 1;
-				if(testJob.isCancelled == 1) {
-					numCancelledMatchingItems += 1;
-				}
-			}
-			if(testJob.getWeight().compareTo(weight) == 0) {
-				numMatchingWeight += 1;
-				if(testJob.getIsCancelled() == 1) {
-					numCancelledMatchingWeight += 1;
-				}
-			}
-			if(testJob.getReward().compareTo(reward) == 0) {
-				numMatchingReward += 1;
-				if(testJob.getIsCancelled() == 1) {
-					numCancelledMatchingReward += 1;
-				}
-			}
-		}
+		
 		probGivenTypes = new BigDecimal(numCancelledMatchingTypes).divide(new BigDecimal(numMatchingTypes));
 		probGivenItems = new BigDecimal(numCancelledMatchingItems).divide(new BigDecimal(numMatchingItems));
 		probGivenWeight = new BigDecimal(numCancelledMatchingWeight).divide(new BigDecimal(numMatchingWeight));
