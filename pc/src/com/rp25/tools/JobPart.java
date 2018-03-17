@@ -1,17 +1,27 @@
 package com.rp25.tools;
 
+import java.awt.Point;
+import java.math.BigDecimal;
+
+import java.awt.Point;
+import java.math.BigDecimal;
+
 public class JobPart {
 	
 	private int xCoord;
 	private int yCoord;
 	private String name;
 	private int numberOfItems;
+	private BigDecimal weight;
+	private BigDecimal reward;
 	
-	public JobPart(String name,int x,int y,int numItems) {
+	public JobPart(String name,int x,int y,int numItems, BigDecimal weight, BigDecimal reward) {
 		this.name = name;
 		xCoord = x;
 		yCoord = y;
 		numberOfItems = numItems;
+		this.weight = weight;
+		this.reward = reward;
 	}
 	
 	public String getName() {
@@ -25,18 +35,23 @@ public class JobPart {
 	public int getY() {
 		return yCoord;
 	}
-	
-<<<<<<< HEAD:pc/src/com/rp25/tools/JobPart.java
-=======
-	@Deprecated
+
 	public Point getCoordinates() {
 		return new Point(xCoord, yCoord);
 	}
 	
->>>>>>> jobSelectionAndAllocation:pc/src/tools/JobPart.java
 	public int getNumOfItems() {
 		return numberOfItems;
 	}
+
+	public BigDecimal getWeight() {
+		return weight;
+	}
+	
+	public BigDecimal getReward() {
+		return reward;
+	}
+
 
 }
 

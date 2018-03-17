@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Queue;
+
 import org.apache.log4j.Logger;
 import org.junit.*;
 
@@ -14,9 +16,13 @@ public class RoutePlanningTest {
 	private final static Logger logger = Logger.getLogger(RoutePlanningTest.class);
 	
 	@Test
-	public void pathShouldBeBuilt(Point start, Point goal) {
+	public void pathShouldBeBuilt() {
+		Point start = new Point(0,0);
+		Point goal = new Point(0,0);
+		start.setLocation(2, 4);
+		goal.setLocation(2,3);
 		AStarSearch tester = new AStarSearch(start, goal);
-		ArrayList<Point> path = new ArrayList<Point>();
+		Queue<Point> path = new Queue<Point>();
 		
 		path = tester.search();
 		
@@ -26,14 +32,14 @@ public class RoutePlanningTest {
 	@Test
 	public void searchShouldReachGoal(Point start, Point goal,  ArrayList<Point> expectedPath) {
 		AStarSearch tester = new AStarSearch(start, goal);
-		ArrayList<Point> path = new ArrayList<Point>();
+		Queue<Point> path = new Queue<Point>();
 		
 		path = tester.search();
 		
 		try {
 			assertNotNull(path);
 			for(int i = 0; i < path.size(); i++) {
-				assertEquals("Incorrect Node in path", expectedPath.get(i), path.get(i));
+				assertEquals("Incorrect Node in path", expectedPath.get(i), path.pop());
 			}
 		}catch(AssertionError e){
 			logger.debug("Search Failed, path most likely null");

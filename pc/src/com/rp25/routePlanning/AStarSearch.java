@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.PriorityQueue;
+import java.util.Queue;
+
 import org.apache.log4j.Logger;
 
 public class AStarSearch {
@@ -26,14 +28,14 @@ public class AStarSearch {
 		openList.add(startNode);
 	}
 	
-	public ArrayList<Point> search() {
+	public Queue<Point> search() {
 		while (true) {
 			Node current = openList.poll();
 			if (current == null) break; //signifies the end of the open list.
 			
 			if (current.isGoal()) {
 				logger.debug("Current Node: " + current.getCoordinate());
-				ArrayList<Point> route = new ArrayList<Point>();
+				Queue<Point> route = new Queue<Point>();
 				route = traceRoute(current);
 				return route;
 			}
@@ -73,13 +75,15 @@ public class AStarSearch {
 		return children;
 	}
 	
-	private boolean checkLoop(Node node) { 		
-		ArrayList<Point> history = new ArrayList<Point>();
-		history = traceRoute(node);
+	private boolean checkLoop(Node node) { 	
+		Queue<Point> queueHistory = new Queue<Point>();
+		queueHistory = traceRoute(node);
 		
+		ArrayList<Point> history = new ArrayList<Point>(queueHistory);
+				
 		Collections.sort(history, new NodeComparatorPoint());
 		
-		for (int i = 0; (i < history.size() - 1); i++) {
+		for (int i = 0; i < (history.size() - 1); i++) {
 			if (history.get(i).equals(history.get(i+1))) return true;
 		}
 		return false;
@@ -106,11 +110,11 @@ public class AStarSearch {
 		return false;
 	}
 	
-	private ArrayList<Point> traceRoute(Node node) {
+	private Queue<Point> traceRoute(Node node) {
 		Node parent = node.getParent();
-		ArrayList<Point> route = new ArrayList<Point>();
+		Queue<Point> route = new Queue<Point>();
 		if (!(parent == null)) route = traceRoute(parent);
-		route.add(node.getCoordinate());
+		route.push(node.getCoordinate());
 		return route;
 	}
 }

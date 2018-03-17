@@ -4,6 +4,7 @@ import java.io.DataOutputStream;
 
 import org.apache.log4j.Logger;
 
+import com.rp25.routeExecution.Command;
 import com.rp25.tools.Channel;
 import com.rp25.tools.Job;
 
@@ -11,9 +12,6 @@ import com.rp25.tools.Job;
 public class Sender  {
 
 	public static enum Purpose{JOB,MOVE}
-	public enum Command {
-	FORWARD, LEFT, RIGHT, UTURN,
-	}
 
 	private final static Logger logger = Logger.getLogger(Sender.class);
 	

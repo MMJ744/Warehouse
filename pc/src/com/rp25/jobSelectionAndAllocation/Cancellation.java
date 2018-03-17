@@ -1,11 +1,15 @@
-package jobSelectionAndAllocation;
+
+package com.rp25.jobSelectionAndAllocation;
+
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import com.rp25.tools.*;
 
 import com.rp25.jobSelectionAndAllocation.Item;
+import com.rp25.tools.Job;
 
 public class Cancellation {
 	
@@ -23,8 +27,8 @@ public class Cancellation {
 			String line2;
 			while((line1 = testsReader.readLine()) != null) {
 				line2 = cancellationReader.readLine();
-				String[] testInfo = line1.split(",");
-				String[] cancelInfo = line2.split(",");
+				String[] testInfo = HelperMethods.split(line1, ",", 0);
+				String[] cancelInfo = HelperMethods.split(line2, ",", 0);
 				String itemName = null;
 				int numOfItems = 0;
 				int numOfTypes = 0;
@@ -69,6 +73,64 @@ public class Cancellation {
 		}
 		probYes = new BigDecimal(yesesInTest).divide(new BigDecimal(trainingSetSize));
 		probNo = new BigDecimal(1).subtract(probYes);
+		
+	}
+	
+	public BigDecimal probOfCancellation(Job job) {
+		BigDecimal probOfCancellation = new BigDecimal("0");
+		ArrayList<JobPart> parts = job.getParts();
+		int numMatchingTypes = 0;
+		int numMatchingItems = 0;
+		int numMatchingWeight = 0;
+		int numMatchingReward = 0;
+		int numCancelledMatchingTypes = 0;
+		int numCancelledMatchingItems = 0;
+		int numCancelledMatchingWeight = 0;
+		int numCancelledMatchingReward = 0;
+		BigDecimal probGivenTypes;
+		BigDecimal probGivenItems;
+		BigDecimal probGivenWeight;
+		BigDecimal probGivenReward;
+		int numOfItems = 0;
+		BigDecimal weight = new BigDecimal("0");
+		BigDecimal reward = new BigDecimal("0");
+		for(JobPart part: parts) {
+			numOfItems += part.getNumOfItems();
+			weight = weight.add(part.getWeight());
+			reward = reward.add(part.getReward());
+		}
+		for(TestJob testJob: allTestJobs) {
+			if(testJob.getNumOfItemTypes() == parts.size()) {
+				numMatchingTypes += 1;
+				if(testJob.isCancelled == 1) {
+					numCancelledMatchingTypes += 1;
+				}
+			}
+			if(testJob.getNumOfItems() == numOfItems) {
+				numMatchingItems += 1;
+				if(testJob.isCancelled == 1) {
+					numCancelledMatchingItems += 1;
+				}
+			}
+			if(testJob.getWeight().compareTo(weight) == 0) {
+				numMatchingWeight += 1;
+				if(testJob.getIsCancelled() == 1) {
+					numCancelledMatchingWeight += 1;
+				}
+			}
+			if(testJob.getReward().compareTo(reward) == 0) {
+				numMatchingReward += 1;
+				if(testJob.getIsCancelled() == 1) {
+					numCancelledMatchingReward += 1;
+				}
+			}
+		}
+		probGivenTypes = new BigDecimal(numCancelledMatchingTypes).divide(new BigDecimal(numMatchingTypes));
+		probGivenItems = new BigDecimal(numCancelledMatchingItems).divide(new BigDecimal(numMatchingItems));
+		probGivenWeight = new BigDecimal(numCancelledMatchingWeight).divide(new BigDecimal(numMatchingWeight));
+		probGivenReward = new BigDecimal(numCancelledMatchingReward).divide(new BigDecimal(numMatchingReward));
+		probOfCancellation = probGivenTypes.multiply(probYes).multiply(probGivenItems).multiply(probGivenWeight).multiply(probGivenReward);
+		return probOfCancellation;
 	}
 	
 	private class TestJob{

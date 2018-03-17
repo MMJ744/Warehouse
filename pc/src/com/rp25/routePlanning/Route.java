@@ -2,11 +2,12 @@ package com.rp25.routePlanning;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class Route {
-	Point[] path;
+	Queue<Point> path;
 	ACTION action;
-	public Point[] getPath() {
+	public Queue<Point> getPath() {
 		return path;
 	}
 
@@ -34,11 +35,11 @@ public class Route {
 		DROPOFF
 	}
 	
-	private Point[] makePath(Point s, Point g) {
+	private Queue<Point> makePath(Point s, Point g) {
 		AStarSearch search = new AStarSearch(s, g);
-		ArrayList<Point> holdPath= new ArrayList<Point>();
-		holdPath = search.search();
-		Point[] path = holdPath.toArray(new Point[holdPath.size()]);
+		Queue<Point> path= new Queue<Point>();
+		//holdPath = search.search();  dont think we need this
+		//Point[] path = holdPath.toArray(new Point[holdPath.size()]);
 		return path;
 	}
 	

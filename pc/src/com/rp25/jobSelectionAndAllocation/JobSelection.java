@@ -1,6 +1,10 @@
 package com.rp25.jobSelectionAndAllocation;
 
 import java.io.BufferedReader;
+import com.rp25.tools.*;
+
+import rp.util.Collections;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,9 +14,6 @@ import java.util.Comparator;
 
 import org.apache.log4j.Logger;
 
-import com.rp25.tools.Job;
-import com.rp25.tools.JobPart;
-
 public class JobSelection {
 	
 	private BufferedReader brJobs;
@@ -21,9 +22,11 @@ public class JobSelection {
 	private ArrayList<Item> items = new ArrayList<Item>();
 	private ArrayList<Job> allJobs = new ArrayList<Job>();
 	private final static Logger logger = Logger.getLogger(JobSelection.class);
+	private Cancellation cancel;
 	
-	public JobSelection(String jobLocation, String itemsLocation, String locationLocation) {
+	public JobSelection(String jobLocation, String itemsLocation, String locationLocation, Cancellation cancel) {
 		try {
+			this.cancel = cancel;
 			brJobs = new BufferedReader(new FileReader(jobLocation));
 			brItems = new BufferedReader(new FileReader(itemsLocation));
 			brLocation = new BufferedReader(new FileReader(locationLocation));
@@ -33,10 +36,10 @@ public class JobSelection {
 				logger.debug("Location = " + line);
 				brItems.close();
 				brItems = new BufferedReader(new FileReader(itemsLocation));
-				String[] locationParts = line.split(",");
+				String[] locationParts = HelperMethods.split(line, ",", 0);
 				while((line2 = brItems.readLine()) != null) {
 					logger.debug("Item = " + line2);
-					String itemParts[] = line2.split(",");
+					String itemParts[] = HelperMethods.split(line2, ",", 0);
 					if(itemParts[0].equals(locationParts[2])) {
 						Item item = new Item(itemParts[0], Integer.parseInt(locationParts[0]), Integer.parseInt(locationParts[1]), new BigDecimal(itemParts[1]), new BigDecimal(itemParts[2]));
 						items.add(item);
@@ -45,13 +48,13 @@ public class JobSelection {
 			}
 			while((line = brJobs.readLine()) != null) {
 				logger.debug("Job = " + line);
-				String[] jobParts = line.split("");
+				String[] jobParts = HelperMethods.split(line, ",", 0);
 				Job job = new Job(jobParts[0]);
 				allJobs.add(job);
 				for(int i = 1; i < jobParts.length; i+=2) {
 					for(Item item: items) {
 						if(jobParts[i].equals(item.getName())) {
-							job.addPart(new JobPart(item.getName(), item.getX(), item.getY(), Integer.parseInt(jobParts[i+1]), item.getWeight()));
+							job.addPart(new JobPart(item.getName(), item.getX(), item.getY(), Integer.parseInt(jobParts[i+1]), item.getWeight(), item.getReward()));
 						}
 					}
 				}
@@ -83,20 +86,10 @@ public class JobSelection {
 				weight.add(currentItem.getWeight());
 				reward.add(currentItem.getReward());
 			}
-			BigDecimal priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces)));
+			BigDecimal priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).subtract(cancel.probOfCancellation(job));
 			job.setPriority(priority);
 		}
-		
-		allJobs.sort(new PriorityComparator());
-	}
-	
-	private static class PriorityComparator implements Comparator<Job>{
-		@Override
-		public int compare(Job o1, Job o2) {
-			// TODO Auto-generated method stub
-			return o1.getPriority().compareTo(o2.getPriority());
-		}
-		
+		Collections.sort(allJobs, (a, b) -> b.getPriority().compareTo(a.getPriority()));
 	}
 	
 	public void nextJob() {
