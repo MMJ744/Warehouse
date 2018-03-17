@@ -22,14 +22,11 @@ import rp.robotics.visualisation.MapVisualisationComponent;
 public class WarehouseGridSim {
 	
 	private GridMapVisualisation viz;
-	private ArrayList<Runnable> robotThreads;
 	
 	public WarehouseGridSim(Collection<Robot> collection) {
 		GridMap map = MapUtils.createRealWarehouse();
 		
 		MapBasedSimulation sim = new MapBasedSimulation(map);
-		
-		robotThreads = new ArrayList<>();
 		
 		for (Robot r : collection) {
 			GridPose gridStart = new GridPose(r.getX(), r.getY(), Heading.PLUS_Y);
@@ -43,7 +40,6 @@ public class WarehouseGridSim {
 
 			Thread bot = new Thread(controller);
 			bot.start();
-			robotThreads.add(controller);
 		}
 		
 		viz = new GridMapVisualisation(map, sim.getMap()) {
@@ -59,9 +55,5 @@ public class WarehouseGridSim {
 	
 	public GridMapVisualisation getViz() {
 		return viz;
-	}
-	
-	public ArrayList<Runnable> getRobotThreads() {
-		return robotThreads;
 	}
 }
