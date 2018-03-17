@@ -1,26 +1,17 @@
 package com.rp25.interfaces.warehouse.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
 import com.rp25.interfaces.warehouse.WarehouseState;
 import com.rp25.tools.Robot;
 
-public class WarehouseInterfaceView {
+public class WarehouseInterfaceView{
 	WarehouseInterfaceFrame frame;
 	WarehouseState warehouseState;
-	
-	public WarehouseInterfaceView(WarehouseState state) {
-		frame = new WarehouseInterfaceFrame("Robot Warehouse Interface");
-		warehouseState = state;
-		initialise();
-		frame.setVisible(true);
 		
-		Thread updateChecker = new FrameUpdater(frame, warehouseState);
-		updateChecker.setDaemon(true);
-		updateChecker.start();
-	}
-	
 	public WarehouseInterfaceView(WarehouseState state, WarehouseGridSim sim) {
 		frame = new WarehouseInterfaceFrame("Robot Warehouse Interface", sim);
 		warehouseState = state;
@@ -35,6 +26,17 @@ public class WarehouseInterfaceView {
 	private void initialise() {
 		for (Robot r : warehouseState.getAllRobots()) {
 			frame.addInfo(r);
+			frame.addListeners(r.getID(), new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					try {
+						warehouseState.getCancellations().put(r.getID());
+					} 
+					catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				}
+			});
 		}
 	}
 	

@@ -2,6 +2,8 @@ package com.rp25.interfaces.warehouse;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import com.rp25.tools.Job;
 import com.rp25.tools.Robot;
@@ -14,6 +16,8 @@ public class WarehouseState {
 	 * Value: Robot Object
 	 */
 	HashMap<Integer, Robot> robotList = new HashMap<>(); 
+	BlockingQueue<Integer> cancellations = new LinkedBlockingQueue<>();
+	
 	
 	public Collection<Robot> getAllRobots() {
 		return robotList.values();
@@ -35,5 +39,9 @@ public class WarehouseState {
 	public void updateBotJob(int id, Job j) {
 		Robot bot = robotList.get(id);
 		bot.setCurrentJob(j);
+	}
+	
+	public BlockingQueue<Integer> getCancellations(){
+		return cancellations;
 	}
 }

@@ -1,39 +1,40 @@
 package com.rp25.interfaces.warehouse.gui;
 
-import java.awt.Color;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 import com.rp25.tools.Robot;
 
 public class InfoPanel extends JPanel {
 	
-	Map<Integer, JTextArea> robots;
+	Map<Integer, RobotInfoPanel> robots;
 	
 	public InfoPanel() {
-		setBackground(Color.WHITE);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		robots = new HashMap<>();
 	}
 	
 	public void addInfo(Robot r) {
-		JTextArea textArea = new JTextArea(3, 16);
-		textArea.setText(r.toString());
-		textArea.setEditable(false);
-		
-		robots.put(r.getID(), textArea);
-		this.add(textArea);
+		RobotInfoPanel robotPanel = new RobotInfoPanel(r);
+		robots.put(r.getID(), robotPanel);
+		this.add(robotPanel);
+		this.add(Box.createVerticalStrut(20));
 	}
 	
 	public void update(Robot r) {
-		JTextArea robot = robots.get(r.getID());
-		robot.setText(r.toString());
-		robot.setEditable(false);
+		RobotInfoPanel robot = robots.get(r.getID());
+		JTextArea textArea = robot.getTextArea();
+		textArea.setText(r.toString());
+		textArea.setEditable(false);
 	}
 	
+	public void addButtonListeners(int id, ActionListener listener) {
+		robots.get(id).addCancelListener(listener);
+	}
 }
