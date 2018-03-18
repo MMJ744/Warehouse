@@ -30,6 +30,7 @@ public class WHIMainWithSimulation {
 		
 		logger.debug("Robot " + state.getRobot(r1.getID()).getID() + " added");
 		logger.debug("Robot " + state.getRobot(r2.getID()).getID() + " added");
+		logger.debug("Robot " + state.getRobot(r3.getID()).getID() + " added");
 		
 		logger.debug("Robot " + state.getRobot(r1.getID()).getID() + " added");
 		logger.debug("Robot " + state.getRobot(r2.getID()).getID() + " added");

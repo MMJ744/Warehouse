@@ -7,6 +7,7 @@ import java.util.Collection;
 import com.rp25.tools.Robot;
 
 import lejos.robotics.RangeFinder;
+import rp.config.MobileRobotConfiguration;
 import rp.robotics.MobileRobotWrapper;
 import rp.robotics.control.RandomGridWalk;
 import rp.robotics.mapping.GridMap;
@@ -22,50 +23,39 @@ import rp.robotics.visualisation.MapVisualisationComponent;
 public class WarehouseGridSim {
 	
 	private GridMapVisualisation viz;
-	private ArrayList<Runnable> robotThreads;
 	
 	public WarehouseGridSim(Collection<Robot> collection) {
 		GridMap map = MapUtils.createRealWarehouse();
 		
 		MapBasedSimulation sim = new MapBasedSimulation(map);
 		
-		robotThreads = new ArrayList<>();
-		
 		for (Robot r : collection) {
 			GridPose gridStart = new GridPose(r.getX(), r.getY(), Heading.PLUS_Y);
 
-			MobileRobotWrapper<MovableRobot> wrapper = sim.addRobot(
-					SimulatedRobots.makeConfiguration(false, true),
-					map.toPose(gridStart));
+			MobileRobotConfiguration config = new MobileRobotConfiguration(0.2f, 0.2f); 
+			
+			MobileRobotWrapper<MovableRobot> wrapper = sim.addRobot(config, map.toPose(gridStart));
 
-			RangeFinder ranger = sim.getRanger(wrapper);
-
-			RandomGridWalk controller = new RandomGridWalk(wrapper.getRobot(),
-					map, gridStart, ranger);
+			WarehouseRobotSimController controller = new WarehouseRobotSimController(wrapper.getRobot(),
+					map, gridStart, r);
 
 			Thread bot = new Thread(controller);
 			bot.start();
-			robotThreads.add(controller);
 		}
 		
 		viz = new GridMapVisualisation(map, sim.getMap()) {
-
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public Dimension getPreferredSize() {
 			    return new Dimension(450, 400);
 			}
-			
 		};
+		
 		MapVisualisationComponent.populateVisualisation(viz, sim);
 	}
 	
 	public GridMapVisualisation getViz() {
 		return viz;
 	}
-	
-	public ArrayList<Runnable> getRobotThreads() {
-		return robotThreads;
-	}
+
 }
