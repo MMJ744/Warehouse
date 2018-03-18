@@ -14,10 +14,14 @@ import com.rp25.tools.Job;
 public class Cancellation {
 	
 	
-	private BigDecimal[] probGivenTypes;
-	private BigDecimal[] probGivenItems;
-	private BigDecimal[] probGivenWeight;
-	private BigDecimal[] probGivenReward;
+	private int[] probGivenTypes = new int[10];
+	private int[] probGivenItems = new int[10]; //goes up in twos
+	private int[] probGivenWeight = new int[10]; //round to int 
+	private int[] probGivenReward = new int[10]; //Divide by 4 and round
+	private int[] probYesGivenTypes = new int[10];
+	private int[] probYesGivenItems = new int[10]; //goes up in twos
+	private int[] probYesGivenWeight = new int[10]; //round to int 
+	private int[] probYesGivenReward = new int[10]; //Divide by 4 and round
 	private ArrayList<TestJob> allTestJobs = new ArrayList<TestJob>();
 	private ArrayList<Item> allItems = new ArrayList<Item>();
 	private BigDecimal probYes;
@@ -79,7 +83,16 @@ public class Cancellation {
 		probYes = new BigDecimal(yesesInTest).divide(new BigDecimal(trainingSetSize));
 		probNo = new BigDecimal(1).subtract(probYes);
 		for(TestJob testJob: allTestJobs) {
-			
+			probGivenTypes[testJob.getNumOfItemTypes() - 1] += 1;
+			probGivenItems[testJob.getNumOfItems()/2 - 1] += 1;
+			probGivenWeight[testJob.getWeight().intValue() - 1] += 1;
+			probGivenReward[testJob.getReward().divide(new BigDecimal("4")).intValue() - 1] += 1;
+			if(testJob.isCancelled == 1) {
+				probYesGivenTypes[testJob.getNumOfItemTypes() - 1] += 1;
+				probYesGivenItems[testJob.getNumOfItems()/2 - 1] += 1;
+				probYesGivenWeight[testJob.getWeight().intValue() - 1] += 1;
+				probYesGivenReward[testJob.getReward().divide(new BigDecimal("4")).intValue() - 1] += 1;
+			}
 		}
 		
 	}
@@ -96,12 +109,11 @@ public class Cancellation {
 			weight = weight.add(part.getWeight());
 			reward = reward.add(part.getReward());
 		}
-		
-		probGivenTypes = new BigDecimal(numCancelledMatchingTypes).divide(new BigDecimal(numMatchingTypes));
-		probGivenItems = new BigDecimal(numCancelledMatchingItems).divide(new BigDecimal(numMatchingItems));
-		probGivenWeight = new BigDecimal(numCancelledMatchingWeight).divide(new BigDecimal(numMatchingWeight));
-		probGivenReward = new BigDecimal(numCancelledMatchingReward).divide(new BigDecimal(numMatchingReward));
-		probOfCancellation = probGivenTypes.multiply(probYes).multiply(probGivenItems).multiply(probGivenWeight).multiply(probGivenReward);
+		BigDecimal typesProb = new BigDecimal(probYesGivenTypes[parts.size()-1]).divide(new BigDecimal(probGivenTypes[parts.size()-1]));
+		BigDecimal itemsProb = new BigDecimal(probYesGivenItems[numOfItems/2-1]).divide(new BigDecimal(probGivenItems[numOfItems/2-1]));
+		BigDecimal weightProb = new BigDecimal(probYesGivenWeight[weight.intValue()-1]).divide(new BigDecimal(probGivenTypes[weight.intValue()-1]));
+		BigDecimal rewardProb = new BigDecimal(probYesGivenReward[weight.divide(new BigDecimal("4")).intValue()-1]).divide(new BigDecimal(probGivenTypes[weight.divide(new BigDecimal("4")).intValue()-1]));
+		probOfCancellation = probYes.multiply(typesProb).multiply(itemsProb).multiply(weightProb).multiply(rewardProb);
 		return probOfCancellation;
 	}
 	
