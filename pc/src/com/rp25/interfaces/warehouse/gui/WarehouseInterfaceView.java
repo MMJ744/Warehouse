@@ -2,13 +2,18 @@ package com.rp25.interfaces.warehouse.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
 import com.rp25.interfaces.warehouse.WarehouseState;
 import com.rp25.tools.Robot;
 
-public class WarehouseInterfaceView{
+/**
+ * Handles the initialisation of the GUI
+ * @author ass782
+ *
+ */
+public class WarehouseInterfaceView {
+	
 	WarehouseInterfaceFrame frame;
 	WarehouseState warehouseState;
 		

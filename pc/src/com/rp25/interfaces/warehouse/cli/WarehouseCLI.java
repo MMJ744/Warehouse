@@ -1,6 +1,5 @@
 package com.rp25.interfaces.warehouse.cli;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;

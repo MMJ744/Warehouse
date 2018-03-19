@@ -9,10 +9,14 @@ import rp.robotics.navigation.Heading;
 import rp.robotics.simulation.MovableRobot;
 import rp.systems.StoppableRunnable;
 
+/**
+ * The controller for each robot in the warehouse simulation.
+ * @author ass782
+ *
+ */
 public class WarehouseRobotSimController implements StoppableRunnable {
 
 	private final GridMap m_map;
-	private final GridPilot m_pilot;
 
 	private boolean m_running = true;
 	private final MovableRobot m_robot;
@@ -20,7 +24,6 @@ public class WarehouseRobotSimController implements StoppableRunnable {
 	
 	public WarehouseRobotSimController(MovableRobot _robot, GridMap _map, GridPose _start, Robot _interfaceBot) {
 		m_map = _map;
-		m_pilot = new GridPilot(_robot.getPilot(), _map, _start);
 		m_robot = _robot;
 		m_interfaceBot = _interfaceBot;
 	}

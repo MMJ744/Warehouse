@@ -1,6 +1,5 @@
 package com.rp25.interfaces.warehouse.gui;
 
-import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +11,14 @@ import javax.swing.JTextArea;
 
 import com.rp25.tools.Robot;
 
+/**
+ * JPanel that holds the information of the robots inside the warehouse. 
+ * @author ass782
+ *
+ */
 public class InfoPanel extends JPanel {
+	
+	private static final long serialVersionUID = 1L;
 	
 	Map<Integer, RobotInfoPanel> robots;
 	JScrollPane pane;

@@ -1,7 +1,5 @@
 package com.rp25.interfaces.warehouse;
 
-import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 
 import com.rp25.interfaces.warehouse.cli.WarehouseCLI;

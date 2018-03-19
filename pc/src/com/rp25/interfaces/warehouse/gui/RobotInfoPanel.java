@@ -9,7 +9,16 @@ import javax.swing.JTextArea;
 
 import com.rp25.tools.Robot;
 
+/**
+ * JPanel that holds information about a single robot.
+ * Also allows for cancellation of that robot's job.
+ * @author ass782
+ *
+ */
 public class RobotInfoPanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+	
 	JTextArea textArea;
 	JButton cancelButton;
 	
