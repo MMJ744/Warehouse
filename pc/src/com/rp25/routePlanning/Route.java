@@ -17,7 +17,7 @@ public class Route {
 	public Optional<RouteAction> getNextAction() {
 		if(isRouteEmpty()) return Optional.empty();
 		
-		return Optional.of(routePlan.removeFirst());
+		return Optional.of(routePlan.remove(0));
 	}
 	
 	public void addToRoute(RouteAction action) {
