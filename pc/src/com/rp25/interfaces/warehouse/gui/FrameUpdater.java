@@ -5,6 +5,12 @@ import com.rp25.tools.Robot;
 
 import lejos.util.Delay;
 
+/**
+ * Thread that runs in the background which checks the warehouse state
+ * and then updates the GUI.
+ * @author ass782
+ *
+ */
 public class FrameUpdater extends Thread {
 	
 	private final int TIME_PER_UPDATE = 1000;
