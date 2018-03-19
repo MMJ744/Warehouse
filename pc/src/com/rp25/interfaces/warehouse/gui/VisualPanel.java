@@ -12,25 +12,6 @@ import rp.robotics.visualisation.GridMapVisualisation;
 
 public class VisualPanel extends JPanel {
 	
-	GridMap map = MapUtils.createRealWarehouse();
-	
-	GridMapVisualisation v = new GridMapVisualisation(map, map, 150f) {
-		
-		private static final long serialVersionUID = 1L;
+	public VisualPanel(WarehouseGridSim sim) { add(sim.getViz()); }
 
-		@Override
-		public Dimension getPreferredSize() {
-		    return new Dimension(450, 400);
-		}
-	};
-	
-	public VisualPanel() {
-		add(v);
-	}
-	
-	public VisualPanel(WarehouseGridSim sim) {
-		add(sim.getViz());
-	}
-	
-	
 }

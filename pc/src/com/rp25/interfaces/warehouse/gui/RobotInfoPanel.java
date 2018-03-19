@@ -1,5 +1,6 @@
 package com.rp25.interfaces.warehouse.gui;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -13,6 +14,8 @@ public class RobotInfoPanel extends JPanel {
 	JButton cancelButton;
 	
 	RobotInfoPanel(Robot r) {
+		setLayout(new FlowLayout(FlowLayout.LEFT));
+		
 		textArea = new JTextArea(3, 16);
 		textArea.setText(r.toString());
 		textArea.setEditable(false);
@@ -25,6 +28,7 @@ public class RobotInfoPanel extends JPanel {
 	public void addCancelListener(ActionListener listener) {
 		cancelButton.addActionListener(listener);
 	}
+	
 	JTextArea getTextArea() { return textArea; }
 	JButton   getButton()   { return cancelButton; }
 }
