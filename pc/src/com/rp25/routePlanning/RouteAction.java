@@ -23,6 +23,10 @@ public class RouteAction {
 		return point;
 	}
 	
+	public ACTION getAction() {
+		return action;
+	}
+	
 	@Override
 	public String toString() {
 		return robotID + " -> ACTION: " + enumToString(action) + " x: " + point.x + ", y: " + point.y;
