@@ -106,6 +106,42 @@ public class AStarSearch {
 	}
 
 	public static void main(String[] args) {		
+		warehouseTest();
+	}
+
+	public static void warehouseTest() {
+		Point[] obstacleArray = new Point[] {
+			new Point(1, 2),	
+			new Point(1, 3),	
+			new Point(1, 4),	
+			new Point(1, 5),	
+			new Point(1, 6),	
+			new Point(4, 2),	
+			new Point(4, 3),	
+			new Point(4, 4),	
+			new Point(4, 5),	
+			new Point(4, 6),
+			new Point(7, 2),	
+			new Point(7, 3),	
+			new Point(7, 4),	
+			new Point(7, 5),	
+			new Point(7, 6),
+			new Point(10, 2),	
+			new Point(10, 3),	
+			new Point(10, 4),	
+			new Point(10, 5),	
+			new Point(10, 6)
+		};
+		
+		List<Point> obstacles = new ArrayList<>(Arrays.asList(obstacleArray));
+		Grid grid = new Grid(12, 8, obstacles);
+		grid.outputRightWayUp();
+
+		AStarSearch search = AStarSearch.getInstance();
+		search.setGrid(grid);
+	}
+	
+	public static void test() {
 		Point start1 = new Point(1, 2);
 		Point start2 = new Point(0, 0);
 		
@@ -153,7 +189,7 @@ public class AStarSearch {
 			System.out.println(e.getMessage());
 		}
 	}
-
+	
 	private class AStar {
 		private Grid grid;
 

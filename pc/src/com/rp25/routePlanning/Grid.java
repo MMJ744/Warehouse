@@ -85,6 +85,18 @@ public class Grid {
 		}
 	}
 
+	public void outputRightWayUp() {
+		for(int y = height - 1; y >= 0; y--) {
+			for(int x = 0; x < width; x++) {
+				if(obstacles.contains(new Point(x, y))) System.out.print("[#]");
+				else if(items.contains(new Point(x, y))) System.out.print("[I]");
+				else System.out.print("[ ]");
+			}
+
+			System.out.println();
+		}
+	}
+	
 	public void outputWithMarker(Point markerPos, String marker) {
 		for(int y = -1; y < height; y++) {
 			if(y == -1) System.out.print("[   ]");
