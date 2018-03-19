@@ -79,7 +79,7 @@ public class AStarSearch {
 		Queue<Point> queueHistory = new Queue<Point>();
 		queueHistory = traceRoute(node);
 		
-		ArrayList<Point> history = new ArrayList<Point>(queueHistory);
+		ArrayList<Point> history = queueToList(queueHistory);
 				
 		Collections.sort(history, new NodeComparatorPoint());
 		
@@ -87,6 +87,14 @@ public class AStarSearch {
 			if (history.get(i).equals(history.get(i+1))) return true;
 		}
 		return false;
+	}
+	
+	private ArrayList<Point> queueToList(Queue<Point> q) {
+		ArrayList<Point> list = new ArrayList<Point>();
+		for (int i = 0; i < q.size(); i++) {
+			list.add((Point) q.pop());
+		}
+		return list;
 	}
 	
 	private boolean checkOpen(Node node) {
