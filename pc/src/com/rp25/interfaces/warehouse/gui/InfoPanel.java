@@ -42,12 +42,13 @@ public class InfoPanel extends JPanel {
 		JTextField coordinates = robot.getCoorField();
 		JTextField currentJob = robot.getJobField();
 		JTextArea textArea = robot.getTextArea();
+		JTextField currentAction = robot.getActionField();
 		
 		name.setText(r.nameString());
 		coordinates.setText(r.posString());
 		currentJob.setText(r.jobString());
 		textArea.setText(r.jobPartString());
-		textArea.setEditable(false);
+		currentAction.setText(r.getCurrentAction());
 	}
 	
 	public void addButtonListeners(int id, ActionListener listener) {

@@ -22,9 +22,11 @@ public class WHIMainWithSimulation {
 		
 		Job j2 = new Job("job 2");
 		
-		Robot r1 = new Robot(j1, 1, 3, 0);
-		Robot r2 = new Robot(j2, 2, 2, 4);
-		Robot r3 = new Robot(null, 3,3,1);
+		Robot r1 = new Robot(1, 3, 0);
+		r1.setCurrentJob(j1);
+		Robot r2 = new Robot(2, 2, 4);
+		r2.setCurrentJob(j2);
+		Robot r3 = new Robot(3, 3, 1);
 		
 		WarehouseState state = new WarehouseState();
 		state.addRobot(r1.getID(), r1);

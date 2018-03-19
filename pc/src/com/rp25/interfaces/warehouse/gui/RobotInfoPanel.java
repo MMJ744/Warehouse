@@ -21,7 +21,7 @@ public class RobotInfoPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	JTextField name, coordinates, currentJob;
+	JTextField name, coordinates, currentJob, currentAction;
 	JTextArea textArea;
 	JButton cancelButton;
 	
@@ -44,6 +44,10 @@ public class RobotInfoPanel extends JPanel {
 		textArea.setEditable(false);
 		add(textArea);
 		
+		currentAction = new JTextField(r.getCurrentAction());
+		currentAction.setEditable(false);
+		add(currentAction);
+		
 		cancelButton = new JButton("Cancel Current Job");
 		add(cancelButton);
 	}
@@ -57,4 +61,5 @@ public class RobotInfoPanel extends JPanel {
 	JTextField getCoorField() { return coordinates; }
 	JTextField getJobField()  { return currentJob; }
 	JButton    getButton()    { return cancelButton; }
+	JTextField getActionField() { return currentAction; }
 }
