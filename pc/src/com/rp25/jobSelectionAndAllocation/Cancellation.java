@@ -26,6 +26,7 @@ public class Cancellation {
 	private ArrayList<Item> allItems = new ArrayList<Item>();
 	private BigDecimal probYes;
 	private BigDecimal probNo;
+	private int timesLearnt = 0;
 	
 	public Cancellation(String cancellations, String testJobs, ArrayList<Item> items) {
 		try {
@@ -82,7 +83,8 @@ public class Cancellation {
 		}
 		probYes = new BigDecimal(yesesInTest).divide(new BigDecimal(trainingSetSize));
 		probNo = new BigDecimal(1).subtract(probYes);
-		for(TestJob testJob: allTestJobs) {
+		for(int i = 0; i<trainingSetSize; i++) {
+			TestJob testJob = allTestJobs.get(i);
 			probGivenTypes[testJob.getNumOfItemTypes() - 1] += 1;
 			probGivenItems[testJob.getNumOfItems()/2 - 1] += 1;
 			probGivenWeight[testJob.getWeight().intValue() - 1] += 1;
@@ -94,7 +96,37 @@ public class Cancellation {
 				probYesGivenReward[testJob.getReward().divide(new BigDecimal("4")).intValue() - 1] += 1;
 			}
 		}
+		int correctPredicts = 0;
+		for(int i = trainingSetSize; i<allTestJobs.size(); i++) {
+			TestJob testJob = allTestJobs.get(i);
+			int thisCancellation = testJob.getIsCancelled();
+			BigDecimal calculatedCancelltion = testProbOfCancellation(testJob);
+			if((thisCancellation == 1 && calculatedCancelltion.compareTo(new BigDecimal("0.5"))>-1)||(thisCancellation == 0 && calculatedCancelltion.compareTo(new BigDecimal("0.5"))<1)) {
+				correctPredicts += 1;
+			}
+		}
+		timesLearnt += 1;
+		if(correctPredicts<(allTestJobs.size()-trainingSetSize)*0.7) {
+			System.out.println("This was inaccurate, change parameters considered");
+			if(timesLearnt<3) {
+				learn();
+			}
+		}
 		
+	}
+	
+	public BigDecimal testProbOfCancellation(TestJob job) {
+		BigDecimal probOfCancellation = new BigDecimal("0");
+		
+		int numOfItems = job.getNumOfItems();
+		BigDecimal weight = job.getWeight();
+		BigDecimal reward = job.getReward();
+		BigDecimal typesProb = new BigDecimal(probYesGivenTypes[parts.size()-1]).divide(new BigDecimal(probGivenTypes[parts.size()-1]));
+		BigDecimal itemsProb = new BigDecimal(probYesGivenItems[numOfItems/2-1]).divide(new BigDecimal(probGivenItems[numOfItems/2-1]));
+		BigDecimal weightProb = new BigDecimal(probYesGivenWeight[weight.intValue()-1]).divide(new BigDecimal(probGivenTypes[weight.intValue()-1]));
+		BigDecimal rewardProb = new BigDecimal(probYesGivenReward[weight.divide(new BigDecimal("4")).intValue()-1]).divide(new BigDecimal(probGivenTypes[weight.divide(new BigDecimal("4")).intValue()-1]));
+		probOfCancellation = probYes.multiply(typesProb).multiply(itemsProb).multiply(weightProb).multiply(rewardProb);
+		return probOfCancellation;
 	}
 	
 	public BigDecimal probOfCancellation(Job job) {

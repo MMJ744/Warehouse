@@ -33,15 +33,23 @@ public class JobAllocation {
 		logger.debug("Current Job: " + nextJob.getName());
 	}
 	
-	public static JobPart getNextJobPart(int robotID) {
-		JobPart nextJob;
+	public static Job getNextJobPart(int robotID) {
+		Job nextJob;
 		switch(robotID) {
 		case 1:
-			nextJob = robot1Parts.get(0);
-			robot1Parts.remove(0);
-			return nextJob;
+			nextJob = robot1Jobs.get(0);
+			robot1Jobs.remove(0);
+			break;
+		case 2:
+			nextJob = robot2Jobs.get(0);
+			robot2Jobs.remove(0);
+			break;
+		case 3:
+			nextJob = robot3Jobs.get(0);
+			robot3Jobs.remove(0);
+			break;
 		}
-		return null;
+		return nextJob;
 		
 	}
 	
