@@ -133,7 +133,11 @@ public class AStarSearch {
 			new Point(10, 6)
 		};
 		
-		List<Point> obstacles = new ArrayList<>(Arrays.asList(obstacleArray));
+		List<Point> obstacles = new ArrayList<>();
+		for(Point p : obstacleArray) {
+			obstacles.add(p);
+		}
+		
 		Grid grid = new Grid(12, 8, obstacles);
 		grid.outputRightWayUp();
 
@@ -153,8 +157,15 @@ public class AStarSearch {
 		Point goal1 = new Point(3, 3);
 		Point goal2 = new Point(5, 1);
 
-		List<Point> obstacles = new ArrayList<>(Arrays.asList(new Point(0, 3), new Point(1, 3), new Point(2, 3), new Point(4, 3)));
-		List<Point> items = new ArrayList<>(Arrays.asList(item1, item2, item3, item4));
+		List<Point> obstacles = new ArrayList<>();
+		for(Point p : new Point[] {new Point(0, 3), new Point(1, 3), new Point(2, 3), new Point(4, 3)}) {
+			obstacles.add(p);
+		}
+		
+		List<Point> items = new ArrayList<>();
+		for(Point p : new Point[] {item1, item2, item3, item4}) {
+			items.add(p);
+		}
 		
 		Grid grid = new Grid(8, 8, obstacles, items);
 		grid.reserveCell(new Cell(start1, 0), 1);
@@ -164,9 +175,9 @@ public class AStarSearch {
 		search.setGrid(grid);
 
 		try {
-			RouteDesc desc1 = new RouteDesc(start1, Arrays.asList(item1, item2), goal1, 1);
+			RouteDesc desc1 = new RouteDesc(start1, new ArrayList<Point>() {{add(item1); add(item2);}}, goal1, 1);
 			Route route1 = search.getFullRoute(desc1);
-			RouteDesc desc2 = new RouteDesc(start2, Arrays.asList(item3, item4), goal2, 2);
+			RouteDesc desc2 = new RouteDesc(start2, new ArrayList<Point>() {{add(item3); add(item4);}}, goal2, 2);
 			Route route2 = search.getFullRoute(desc2);
 
 			int i = 0;
