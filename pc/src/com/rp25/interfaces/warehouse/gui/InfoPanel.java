@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import com.rp25.tools.Robot;
 
@@ -36,9 +37,18 @@ public class InfoPanel extends JPanel {
 	
 	public void update(Robot r) {
 		RobotInfoPanel robot = robots.get(r.getID());
+		
+		JTextField name = robot.getNameField();
+		JTextField coordinates = robot.getCoorField();
+		JTextField currentJob = robot.getJobField();
 		JTextArea textArea = robot.getTextArea();
-		textArea.setText(r.toString());
-		textArea.setEditable(false);
+		JTextField currentAction = robot.getActionField();
+		
+		name.setText(r.nameString());
+		coordinates.setText(r.posString());
+		currentJob.setText(r.jobString());
+		textArea.setText(r.jobPartString());
+		currentAction.setText(r.getCurrentAction());
 	}
 	
 	public void addButtonListeners(int id, ActionListener listener) {

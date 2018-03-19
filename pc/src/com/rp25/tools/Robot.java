@@ -11,19 +11,9 @@ import org.apache.log4j.Logger;
 
 public class Robot {
 	
-	/**
-	 * The identification number of the robot.
-	 */
 	private final int id;
-	
-	/**
-	 * The current job the robot is assigned to.
-	 */
 	private Job currentJob;
-	
-	/**
-	 * Coordinates of the robot.
-	 */
+	private String currentAction;
 	private int x, y;
 	
 	private final static Logger logger = Logger.getLogger(Robot.class);
@@ -35,26 +25,17 @@ public class Robot {
 	 * @param xCoor X-coordinate of the robot.
 	 * @param yCoor Y-coordinate of the robot.
 	 */
-	public Robot(Job j, int idNumber, int xCoor, int yCoor) {
-		currentJob = j;
+	public Robot(int idNumber, int xCoor, int yCoor) {
 		id = idNumber;
 		x = xCoor;
 		y = yCoor;
 	}
 	
-	/**
-	 * @return ID number of the robot
-	 */
-	public int getID() {
-		return id;
-	}
+	/** @return ID number of the robot */
+	public int getID() { return id; }
 
-	/**
-	 * @return Current assigned job.
-	 */
-	public Job getCurrentJob() {
-		return currentJob;
-	}
+	/** @return Current assigned job. */
+	public Job getCurrentJob() { return currentJob; }
 
 	/**
 	 * Allows for updating the current job of the robot.
@@ -66,19 +47,20 @@ public class Robot {
 		
 	}
 	
-	/**
-	 * @return x-coordinate.
-	 */
-	public int getX() {
-		return x;
-	}
+	/** @return String of the current action. */
+	public String getCurrentAction() { return currentAction; }
 	
 	/**
-	 * @return y-coordinate.
+	 * Updates the current action.
+	 * @param s String of the new action.
 	 */
-	public int getY() {
-		return y;
-	}
+	public void setCurrentAction(String s) { currentAction = s; }
+	
+	/** @return x-coordinate.*/
+	public int getX() { return x; }
+	
+	/** @return y-coordinate.*/
+	public int getY() { return y; }
 	
 	/**
 	 * Allows for updating the coordinates of the robot.
@@ -90,24 +72,27 @@ public class Robot {
 		y = newY;
 	}
 	
-	/*
-	 * toString() method for interface purposes
-	 */
-	public String toString() {
-		StringBuilder output = new StringBuilder();
+	public String nameString() { return "ID Number: " + getID(); }
+	
+	public String posString() { return "Position: (" + getX() + ", " + getY() + ")"; }
+	
+	public String actionString() { return (currentAction == null) ? "Current Action: NONE" : "Current Action: " + getCurrentAction(); }
+	
+	public String jobString() { return (currentJob == null) ? "Current Job: NONE" : "CurrentJob: " + currentJob.getName(); }
+	
+	public String jobPartString() {
+		StringBuilder parts = new StringBuilder();
 		
-			String strID  = "Robot ID: " + this.getID();
-			String strPos = "Position: (" + this.getX() + ", " + this.getY() + ")";
-			String strJob =	(this.getCurrentJob() == null) ?
-								"Current Job: NONE" :
-								"CurrentJob: " + this.getCurrentJob().getName();
-			
-			output.append(strID)
-				  .append("\r\n")
-				  .append(strPos)
-				  .append("\r\n")
-				  .append(strJob);
+		if(currentJob == null || currentJob.getParts().isEmpty()) return "NO PARTS";
 		
-		return output.toString();
+		for (JobPart part : currentJob.getParts()) {
+			parts.append(part.getName()).append(": get ")
+				  .append(part.getNumOfItems())
+				  .append(" at position ")
+				  .append("(" + part.getX() + ", " + part.getY() + ")")
+				  .append("\r\n");
+		}
+		
+		return parts.toString();
 	}
 }
