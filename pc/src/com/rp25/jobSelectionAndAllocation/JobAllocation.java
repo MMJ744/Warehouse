@@ -34,7 +34,7 @@ public class JobAllocation {
 	}
 	
 	public static Job getNextJob(int robotID) {
-		Job nextJob;
+		Job nextJob = null;
 		switch(robotID) {
 		case 1:
 			nextJob = robot1Jobs.get(0);
