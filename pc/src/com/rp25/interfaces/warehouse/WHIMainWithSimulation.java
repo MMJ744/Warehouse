@@ -6,6 +6,7 @@ import com.rp25.interfaces.warehouse.cli.WarehouseCLI;
 import com.rp25.interfaces.warehouse.gui.WarehouseInterfaceView;
 import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
 import com.rp25.tools.Job;
+import com.rp25.tools.JobPart;
 import com.rp25.tools.Robot;
 
 public class WHIMainWithSimulation {
@@ -15,6 +16,10 @@ public class WHIMainWithSimulation {
 	public static void main(String[] args) {
 		
 		Job j1 = new Job("job 1");
+		j1.addPart(new JobPart("Thing-A", 4, 4, 8));
+		j1.addPart(new JobPart("Thing-B", 3, 1, 10));
+		j1.addPart(new JobPart("Thing-C", 2, 1, 7));
+		
 		Job j2 = new Job("job 2");
 		
 		Robot r1 = new Robot(j1, 1, 3, 0);

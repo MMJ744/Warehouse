@@ -1,5 +1,7 @@
 package com.rp25.tools;
 
+import org.apache.log4j.Logger;
+
 /**
  * A class to hold information about the coordinates and current job of
  * each robot such that it can be referenced in other classes. 
@@ -23,6 +25,8 @@ public class Robot {
 	 * Coordinates of the robot.
 	 */
 	private int x, y;
+	
+	private final static Logger logger = Logger.getLogger(Robot.class);
 	
 	/**
 	 * Constructor to initialize the robot class.
@@ -58,6 +62,8 @@ public class Robot {
 	 */
 	public void setCurrentJob(Job newJob) {
 		currentJob = newJob;
+		logger.debug("Job set to: " + getCurrentJob().getName());
+		
 	}
 	
 	/**
@@ -84,24 +90,32 @@ public class Robot {
 		y = newY;
 	}
 	
-	/*
-	 * toString() method for interface purposes
-	 */
-	public String toString() {
-		StringBuilder output = new StringBuilder();
+	public String nameString() {
+		return "ID: " + getID();
+	}
+	
+	public String posString() {
+		return "Pos: (" + getX() + ", " + getY() + ")";
+	}; 
+	
+	public String jobString() {
+		String output = (currentJob == null) ? "CurrentJob: NONE" : "CurrentJob: " + currentJob.getName();
+		return output;
+	}
+	
+	public String jobPartString() {
+		StringBuilder parts = new StringBuilder();
 		
-			String strID  = "Robot ID: " + this.getID();
-			String strPos = "Position: (" + this.getX() + ", " + this.getY() + ")";
-			String strJob =	(this.getCurrentJob() == null) ?
-								"Current Job: NONE" :
-								"CurrentJob: " + this.getCurrentJob().getName();
-			
-			output.append(strID)
-				  .append("\r\n")
-				  .append(strPos)
-				  .append("\r\n")
-				  .append(strJob);
+		if(currentJob == null || currentJob.getParts().isEmpty()) return "NO PARTS";
 		
-		return output.toString();
+		for (JobPart part : currentJob.getParts()) {
+			parts.append(part.getName()).append(": get ")
+				  .append(part.getNumOfItems())
+				  .append(" at position ")
+				  .append("(" + part.getX() + ", " + part.getY() + ")")
+				  .append("\r\n");
+		}
+		
+		return parts.toString();
 	}
 }
