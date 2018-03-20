@@ -46,6 +46,6 @@ public class routeTesting {
 		}
 		Command c = (Orientation.rotate(d, desired)); // sends the command to point the robot in the right
 		d = desired;
-		return c;
+		return c; // e
 	}
 }
