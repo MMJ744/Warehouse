@@ -100,8 +100,9 @@ public class RouteExecutor {
 		}
 
 		void Run() {
-			Point point = a.getPoint();
+			
 			if (a.getAction() != WAIT) {
+				Point point = a.getPoint();
 				orientate(point, r, d);
 			}
 			switch (a.getAction()) {
