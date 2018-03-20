@@ -17,6 +17,7 @@ import lejos.geom.Point;
 public class Main {
 
 	public static void main(String[] args) {
+		JobSelection selection = new JobSelection("jobs.txt", "items.txt", "locations.txt", "cancellations.txt", "training_jobs.txt");
 		Point r1Start = new Point(4,7);
 		Robot r1 = new Robot(1, (int) r1Start.getX(), (int) r1Start.getY());
 		Point r2Start = new Point(0,1);
@@ -26,7 +27,6 @@ public class Main {
 		RouteIntegration routeStuff = new RouteIntegration();
 		RouteExecutor executor = new RouteExecutor(r1, r2, r3, routeStuff);
 		WarehouseState state = new WarehouseState();
-		JobSelection selection = new JobSelection("jobs.txt", "items.txt", "locations.txt", "cancellations.txt", "training_jobs.txt");
 		state.setExecutor(executor);
 		state.addRobot(r1.getID(), r1);
 		state.addRobot(r2.getID(), r2);
