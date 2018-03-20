@@ -57,7 +57,7 @@ public class RouteIntegration {
 	
 	
 	
-	public Route planRoute (Robot r, int currentStep) throws PathNotFoundException {
+	public Route planRoute (Robot r, int s) throws PathNotFoundException {
 		Robot robot = r;
 		
 		//get robot's current location
@@ -79,9 +79,8 @@ public class RouteIntegration {
 		//death statement just gets the x & y coordinates of the final job part to be conducted
 		
 		
-		//get the current step (& add 1)
-		//how???
-		int nextStep = currentStep + 1;
+		//get the step the robot will start the route on (passed in)
+		int nextStep = s;
 		
 		//make an empty route to hold the plan
 		Route route = new Route(robot.getID());
