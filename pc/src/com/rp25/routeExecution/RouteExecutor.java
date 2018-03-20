@@ -56,11 +56,27 @@ public class RouteExecutor {
 			route2 = null;// how ever to get a new route
 		if (route3.isRouteEmpty() || c3)
 			route3 = null;// how ever to get a new route
-		c1 = false;
-		c2 = false;
-		c3 = false;
+		if(c1) {
+			sendInterface("cancel", 1);
+			c1 = false;
+		}
+		if(c2) {
+			sendInterface("cancel", 2);
+			c2 = true;
+		}
+		if(c3) {
+			sendInterface("cancel", 3);
+		}
 	}
-
+	
+	private boolean sendInterface(String action, int id) {
+		boolean r = false;
+		// r = how ever to send the action
+		if (action.equalsIgnoreCase("pickup")) {
+			// send the number of items to pickup
+		}
+		return r;
+	}
 	public void cancel(int id) {
 		switch (id) {
 		case 1:
@@ -90,16 +106,16 @@ public class RouteExecutor {
 			}
 			switch (a.getAction()) {
 			case PICKUP:
-				tellInterface("pickup");
+				tellInterface("pickup", r.getID());
 				break;
 			case DROPOFF:
-				tellInterface("finished");
+				tellInterface("finished", r.getID());
 				break;
 			default: break;
 			}
 		}
 		
-		private boolean tellInterface(String action) {
+		private boolean tellInterface(String action, int id) {
 			boolean r = false;
 			// r = how ever to send the action
 			if (action.equalsIgnoreCase("pickup")) {
