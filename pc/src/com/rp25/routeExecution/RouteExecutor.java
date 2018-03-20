@@ -162,6 +162,8 @@ public class RouteExecutor {
 			boolean r = false;
 			if (Sender.sendMove(id, c) == 0)
 				r = true;
+			else
+				logger.error("robot failed motion");
 			return r;
 		}
 	}
