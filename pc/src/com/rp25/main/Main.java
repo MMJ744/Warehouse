@@ -23,15 +23,15 @@ public class Main {
 		Robot r3 = new Robot(3, (int) r3Start.getX(), (int) r3Start.getY());
 		RoutePlan route = new RoutePlan();
 		RouteExecutor executor = new RouteExecutor(r1, r2, r3);
-		executor.Execute();
-		route.start();
-		WarehouseState state = new WarehouseState();
+		WarehouseState state = new WarehouseState(executor);
 		state.addRobot(r1.getID(), r1);
 		state.addRobot(r2.getID(), r2);
 		state.addRobot(r3.getID(), r3);
 		WarehouseGridSim simulation = new WarehouseGridSim(state.getAllRobots());
 		new WarehouseInterfaceView(state, simulation);
 		PCMain.main(args);
+		executor.Execute();
+		route.start();
 	}
 
 }

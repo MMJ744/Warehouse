@@ -30,6 +30,9 @@ public class RouteExecutor {
 		r1 = _r1;
 		r2 = _r2;
 		r3 = _r3;
+		c1 = false;
+		c2 = false;
+		c3 = false;
 	}
 
 	public void Execute() {
@@ -45,31 +48,32 @@ public class RouteExecutor {
 				t1.join();
 				t2.join();
 				t3.join();
-			} catch (InterruptedException e) {}
+			} catch (InterruptedException e) {
+			}
 		}
 	}
 
 	private void checkRoutes() {
-		if (route1.isRouteEmpty() || c1)
+		if (route1 == null || route1.isRouteEmpty() || c1)
 			route1 = null;// how ever i get a new route
-		if (route2.isRouteEmpty() || c2)
+		if (route2 == null || route2.isRouteEmpty() || c2)
 			route2 = null;// how ever to get a new route
-		if (route3.isRouteEmpty() || c3)
+		if (route3 == null || route3.isRouteEmpty() || c3)
 			route3 = null;// how ever to get a new route
-		if(c1) {
+		if (c1) {
 			sendInterface("cancel", 1);
 			c1 = false;
 		}
-		if(c2) {
+		if (c2) {
 			sendInterface("cancel", 2);
 			c2 = false;
 		}
-		if(c3) {
-			sendInterface("cancel", 3);	
+		if (c3) {
+			sendInterface("cancel", 3);
 			c3 = false;
 		}
 	}
-	
+
 	private boolean sendInterface(String action, int id) {
 		boolean r = false;
 		// r = how ever to send the action
@@ -78,6 +82,7 @@ public class RouteExecutor {
 		}
 		return r;
 	}
+
 	public void cancel(int id) {
 		switch (id) {
 		case 1:
@@ -112,10 +117,11 @@ public class RouteExecutor {
 			case DROPOFF:
 				tellInterface("finished", r.getID());
 				break;
-			default: break;
+			default:
+				break;
 			}
 		}
-		
+
 		private boolean tellInterface(String action, int id) {
 			boolean r = false;
 			// r = how ever to send the action
@@ -128,7 +134,7 @@ public class RouteExecutor {
 		private void updatePosition(Point next, Robot r) {
 			r.updateCoordinates((int) next.getX(), (int) next.getY());
 		}
-		
+
 		private void orientate(Point next, Robot r, Orientation d) {
 			Orientation desired;
 			if (next.x > r.getX())
