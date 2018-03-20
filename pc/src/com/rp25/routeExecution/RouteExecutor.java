@@ -9,6 +9,7 @@ import com.rp25.interfaces.warehouse.WarehouseState;
 import com.rp25.networkCommunication.Sender;
 import com.rp25.routePlanning.Route;
 import com.rp25.routePlanning.RouteAction;
+import com.rp25.routePlanning.RouteIntegration;
 import com.rp25.tools.Robot;
 import static com.rp25.routePlanning.RouteAction.ACTION.DROPOFF;
 import static com.rp25.routePlanning.RouteAction.ACTION.PICKUP;
@@ -23,10 +24,12 @@ public class RouteExecutor {
 	Boolean c1, c2, c3;
 	int items;
 	Thing t1, t2, t3;
-	WarehouseState state;
+	Integer currentStep = -1;
+	RouteIntegration routePlanner;
 	final static Logger logger = Logger.getLogger(RouteExecutor.class);
 
-	public RouteExecutor(Robot _r1, Robot _r2, Robot _r3) {
+	public RouteExecutor(Robot _r1, Robot _r2, Robot _r3, RouteIntegration _routePlanner) {
+		routePlanner = _routePlanner;
 		r1 = _r1;
 		r2 = _r2;
 		r3 = _r3;
@@ -37,6 +40,7 @@ public class RouteExecutor {
 
 	public void Execute() {
 		while (true) {
+			++currentStep;
 			checkRoutes();
 			t1 = new Thing(route1.getNextAction().get(), r1, d1);
 			t2 = new Thing(route2.getNextAction().get(), r2, d2);
@@ -55,11 +59,11 @@ public class RouteExecutor {
 
 	private void checkRoutes() {
 		if (route1 == null || route1.isRouteEmpty() || c1)
-			route1 = null;// how ever i get a new route
+			route1 = routePlanner.planRoute(r1, currentStep);
 		if (route2 == null || route2.isRouteEmpty() || c2)
-			route2 = null;// how ever to get a new route
+			route2 = routePlanner.planRoute(r2, currentStep);
 		if (route3 == null || route3.isRouteEmpty() || c3)
-			route3 = null;// how ever to get a new route
+			route3 = routePlanner.planRoute(r3, currentStep);
 		if (c1) {
 			sendInterface("cancel", 1);
 			c1 = false;

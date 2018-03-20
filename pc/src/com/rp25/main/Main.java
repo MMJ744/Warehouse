@@ -23,8 +23,8 @@ public class Main {
 		Robot r2 = new Robot(2, (int) r2Start.getX(), (int) r2Start.getY());
 		Point r3Start = new Point(0,0);
 		Robot r3 = new Robot(3, (int) r3Start.getX(), (int) r3Start.getY());
-		RoutePlan route = new RoutePlan();
-		RouteExecutor executor = new RouteExecutor(r1, r2, r3);
+		RouteIntegration routeStuff = new RouteIntegration();
+		RouteExecutor executor = new RouteExecutor(r1, r2, r3, routeStuff);
 		WarehouseState state = new WarehouseState();
 		state.setExecutor(executor);
 		state.addRobot(r1.getID(), r1);
@@ -34,7 +34,6 @@ public class Main {
 		new WarehouseInterfaceView(state, simulation);
 		PCMain.main(args);
 		executor.Execute();
-		route.start();
 	}
 
 }
