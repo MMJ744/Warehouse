@@ -34,7 +34,6 @@ public class Main {
 		new WarehouseInterfaceView(state, simulation);
 		PCMain.main(args);
 		executor.Execute();
-		route.start();
 	}
 
 }
