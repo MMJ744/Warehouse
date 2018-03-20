@@ -58,12 +58,14 @@ public class RouteExecutor {
 	}
 
 	private void checkRoutes() {
-		if (route1 == null || route1.isRouteEmpty() || c1)
-			route1 = routePlanner.planRoute(r1, currentStep);
-		if (route2 == null || route2.isRouteEmpty() || c2)
-			route2 = routePlanner.planRoute(r2, currentStep);
-		if (route3 == null || route3.isRouteEmpty() || c3)
-			route3 = routePlanner.planRoute(r3, currentStep);
+		try {
+			if (route1 == null || route1.isRouteEmpty() || c1)
+				route1 = routePlanner.planRoute(r1, currentStep);
+			if (route2 == null || route2.isRouteEmpty() || c2)
+				route2 = routePlanner.planRoute(r2, currentStep);
+			if (route3 == null || route3.isRouteEmpty() || c3)
+				route3 = routePlanner.planRoute(r3, currentStep);
+		} catch (Exception e) {}
 		if (c1) {
 			sendInterface("cancel", 1);
 			c1 = false;
