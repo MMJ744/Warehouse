@@ -20,7 +20,6 @@ import com.rp25.motion.detector.ReadSensors;
 
 public class Controller{
 	
-	
 	public static void main(String[] args){
 		//Run main
 		boolean run = true;
