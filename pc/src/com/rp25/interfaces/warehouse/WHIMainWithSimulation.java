@@ -16,10 +16,6 @@ public class WHIMainWithSimulation {
 	public static void main(String[] args) {
 		
 		Job j1 = new Job("job 1");
-		j1.addPart(new JobPart("Thing-A", 4, 4, 8));
-		j1.addPart(new JobPart("Thing-B", 3, 1, 10));
-		j1.addPart(new JobPart("Thing-C", 2, 1, 7));
-		
 		Job j2 = new Job("job 2");
 		
 		Robot r1 = new Robot(1, 3, 0);
