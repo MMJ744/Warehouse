@@ -4,6 +4,8 @@ package com.rp25.main;
 import com.rp25.interfaces.warehouse.WarehouseState;
 import com.rp25.interfaces.warehouse.gui.WarehouseInterfaceView;
 import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
+import com.rp25.jobSelectionAndAllocation.Cancellation;
+import com.rp25.jobSelectionAndAllocation.JobSelection;
 import com.rp25.networkCommunication.PCMain;
 import com.rp25.routeExecution.RouteExecutor;
 import com.rp25.routePlanning.RoutePlan;
