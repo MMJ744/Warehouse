@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -41,10 +42,14 @@ public class RobotInfoPanel extends JPanel {
 		add(currentJob);
 		
 		textArea = new JTextArea(r.jobPartString());
+		textArea.setRows(3);
 		textArea.setEditable(false);
-		add(textArea);
+		JScrollPane scroll = new JScrollPane(textArea);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		add(scroll);
 		
-		currentAction = new JTextField(r.getCurrentAction());
+		currentAction = new JTextField(r.actionString());
 		currentAction.setEditable(false);
 		add(currentAction);
 		

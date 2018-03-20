@@ -5,6 +5,7 @@ import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 import com.rp25.interfaces.warehouse.WarehouseState;
+import com.rp25.tools.Job;
 import com.rp25.tools.Robot;
 
 public class WarehouseCLI implements Runnable {
@@ -59,6 +60,25 @@ public class WarehouseCLI implements Runnable {
 					warehouseState.updateBotPos(botid, current.getX() + 1, current.getY());
 					break;
 				}
+				logger.debug(warehouseState.getRobot(botid).posString());
+				break;
+				
+			case "job":
+				int botid2 = Integer.parseInt(getInput());
+				Robot current2 = warehouseState.getRobot(botid2);
+				String job = getInput();
+				Job j = new Job(job);
+				current2.setCurrentJob(j);
+				logger.debug(warehouseState.getRobot(botid2).jobString());
+				break;
+			
+			
+			case "action":
+				int botid3 = Integer.parseInt(getInput());
+				Robot current3 = warehouseState.getRobot(botid3);
+				String action = getInput();
+				current3.setCurrentAction(action);
+				logger.debug(warehouseState.getRobot(botid3).actionString());
 				break;
 			}
 		}
