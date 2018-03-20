@@ -26,6 +26,7 @@ public class Main {
 		RouteIntegration routeStuff = new RouteIntegration();
 		RouteExecutor executor = new RouteExecutor(r1, r2, r3, routeStuff);
 		WarehouseState state = new WarehouseState();
+		JobSelection selection = new JobSelection("jobs.txt", "items.txt", "locations.txt", "cancellations.txt", "training_jobs.txt");
 		state.setExecutor(executor);
 		state.addRobot(r1.getID(), r1);
 		state.addRobot(r2.getID(), r2);

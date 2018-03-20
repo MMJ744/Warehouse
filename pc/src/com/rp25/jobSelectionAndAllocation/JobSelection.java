@@ -24,9 +24,8 @@ public class JobSelection {
 	private final static Logger logger = Logger.getLogger(JobSelection.class);
 	private Cancellation cancel;
 	
-	public JobSelection(String jobLocation, String itemsLocation, String locationLocation, Cancellation cancel) {
+	public JobSelection(String jobLocation, String itemsLocation, String locationLocation, String cancelLocation, String testLocation) {
 		try {
-			this.cancel = cancel;
 			brJobs = new BufferedReader(new FileReader(jobLocation));
 			brItems = new BufferedReader(new FileReader(itemsLocation));
 			brLocation = new BufferedReader(new FileReader(locationLocation));
@@ -59,6 +58,8 @@ public class JobSelection {
 					}
 				}
 			}
+			this.cancel = new Cancellation(cancelLocation, testLocation, items);
+			calculatePriority();
 		}
 		catch(FileNotFoundException e) {
 			logger.debug("File not found", e);
