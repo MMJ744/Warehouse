@@ -25,7 +25,8 @@ public class Main {
 		Robot r3 = new Robot(3, (int) r3Start.getX(), (int) r3Start.getY());
 		RoutePlan route = new RoutePlan();
 		RouteExecutor executor = new RouteExecutor(r1, r2, r3);
-		WarehouseState state = new WarehouseState(executor);
+		WarehouseState state = new WarehouseState();
+		state.setExecutor(executor);
 		state.addRobot(r1.getID(), r1);
 		state.addRobot(r2.getID(), r2);
 		state.addRobot(r3.getID(), r3);

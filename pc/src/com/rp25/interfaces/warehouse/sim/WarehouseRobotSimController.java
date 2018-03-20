@@ -2,6 +2,7 @@ package com.rp25.interfaces.warehouse.sim;
 
 import com.rp25.tools.Robot;
 
+import lejos.util.Delay;
 import rp.robotics.mapping.GridMap;
 import rp.robotics.navigation.GridPilot;
 import rp.robotics.navigation.GridPose;
@@ -36,6 +37,8 @@ public class WarehouseRobotSimController implements StoppableRunnable {
 			m_robot.setPose(m_map.toPose(new GridPose(m_interfaceBot.getX(),
 					m_interfaceBot.getY(),
 					Heading.PLUS_Y)));
+			
+			Delay.msDelay(1000);
 
 		}
 	}
