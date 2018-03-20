@@ -62,10 +62,11 @@ public class RouteExecutor {
 		}
 		if(c2) {
 			sendInterface("cancel", 2);
-			c2 = true;
+			c2 = false;
 		}
 		if(c3) {
 			sendInterface("cancel", 3);	
+			c3 = false;
 		}
 	}
 	
@@ -88,7 +89,7 @@ public class RouteExecutor {
 		}
 	}
 
-	class Thing extends Thread {
+	private class Thing extends Thread {
 		RouteAction a;
 		Robot r;
 		Orientation d;
@@ -100,7 +101,6 @@ public class RouteExecutor {
 		}
 
 		void Run() {
-			
 			if (a.getAction() != WAIT) {
 				Point point = a.getPoint();
 				orientate(point, r, d);
@@ -143,12 +143,12 @@ public class RouteExecutor {
 				logger.debug("robot has been told to go to the location it is already at");
 				return;
 			}
+			updatePosition(next, r); // direction
 			if (desired == d) {
 				tellRobot(Command.FORWARD, r.getID());
 				return;
 			}
 			tellRobot(Orientation.rotate(d, desired), r.getID()); // sends the command to point the robot in the right
-			updatePosition(next, r); // direction
 			d = desired;
 		}
 
