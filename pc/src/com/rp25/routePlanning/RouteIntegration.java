@@ -3,6 +3,7 @@ package com.rp25.routePlanning;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -52,7 +53,7 @@ public class RouteIntegration {
 	
 	
 	
-	public void notRun (Robot r) {
+	public List<Route> planRoute (Robot r) {
 		Robot robot = r;
 		
 		//get robot's current location
@@ -70,6 +71,10 @@ public class RouteIntegration {
 		JobPart[] orderedParts = orderParts(jobParts, start);
 		
 		//get the current step (& add 1)
+		//how???
+		
+		//make an empty list to hold the return values
+		List<Route> routePlan= new LinkedList<Route>();
 		
 		//actually plot the route
 		Point goal;
@@ -77,19 +82,21 @@ public class RouteIntegration {
 		
 		for (JobPart part : orderedParts) {
 			goal = new Point(part.getX(), part.getY());
-			itemCount = part.getNumOfItems();
+			itemCount = part.getNumOfItems(); //don't forget to sort out drop off points
 			//get the route here
 				//AStar ultimately returns a list of Points
-			//add it to something???
+			//add it to routePlan
 			start = goal;
 		}
+		
+		return routePlan;
 			
 	}
 	
 private static JobPart[] orderParts(JobPart[] unordered, Point start) {
 		
 		JobPart[] ordered = new JobPart[unordered.length];
-		Point startPoint = start; //need to sort this out!!!
+		Point startPoint = start;
 		for (int i = 0; i < ordered.length; i++) {
 			JobPart compPart = unordered[0];
 			int compDist = Math.abs(startPoint.x - compPart.getX()) + Math.abs(startPoint.y - compPart.getY());

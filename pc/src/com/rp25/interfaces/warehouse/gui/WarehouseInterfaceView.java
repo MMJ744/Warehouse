@@ -34,12 +34,7 @@ public class WarehouseInterfaceView {
 			frame.addListeners(r.getID(), new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					try {
-						warehouseState.getCancellations().put(r.getID());
-					} 
-					catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
+					warehouseState.getExecutor().cancel(r.getID());
 				}
 			});
 		}
