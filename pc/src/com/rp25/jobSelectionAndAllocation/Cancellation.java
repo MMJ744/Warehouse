@@ -121,10 +121,10 @@ public class Cancellation {
 		int numOfItems = job.getNumOfItems();
 		BigDecimal weight = job.getWeight();
 		BigDecimal reward = job.getReward();
-		BigDecimal typesProb = new BigDecimal(probYesGivenTypes[job.numOfItemTypes-1]).divide(new BigDecimal(probGivenTypes[parts.size()-1]));
+		BigDecimal typesProb = new BigDecimal(probYesGivenTypes[job.numOfItemTypes-1]).divide(new BigDecimal(probGivenTypes[job.getNumOfItemTypes()-1]));
 		BigDecimal itemsProb = new BigDecimal(probYesGivenItems[numOfItems/2-1]).divide(new BigDecimal(probGivenItems[numOfItems/2-1]));
 		BigDecimal weightProb = new BigDecimal(probYesGivenWeight[weight.intValue()-1]).divide(new BigDecimal(probGivenTypes[weight.intValue()-1]));
-		BigDecimal rewardProb = new BigDecimal(probYesGivenReward[weight.divide(new BigDecimal("4")).intValue()-1]).divide(new BigDecimal(probGivenTypes[weight.divide(new BigDecimal("4")).intValue()-1]));
+		BigDecimal rewardProb = new BigDecimal(probYesGivenReward[reward.divide(new BigDecimal("4")).intValue()-1]).divide(new BigDecimal(probGivenTypes[weight.divide(new BigDecimal("4")).intValue()-1]));
 		probOfCancellation = probYes.multiply(typesProb).multiply(itemsProb).multiply(weightProb).multiply(rewardProb);
 		return probOfCancellation;
 	}
