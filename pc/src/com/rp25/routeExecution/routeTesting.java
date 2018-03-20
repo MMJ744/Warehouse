@@ -17,10 +17,12 @@ public class routeTesting {
 	ArrayList<Command> transalte(Point p, Orientation or, Route r) {
 		ArrayList<Command> list = new ArrayList<Command>();
 		while(!r.isRouteEmpty()) {
-			a = r.getNextAction().get();
+			a = r.getNextAction();
 			if (a.getAction() != WAIT) {
 				Point point = a.getPoint();
 				list.add(orientate(point, d));
+			} else {
+				
 			}
 		}
 		return list;
