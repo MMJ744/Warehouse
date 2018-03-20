@@ -10,6 +10,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import com.rp25.jobSelectionAndAllocation.JobAllocation;
+import com.rp25.routePlanning.RouteAction.ACTION;
 import com.rp25.tools.Job;
 import com.rp25.tools.JobPart;
 import com.rp25.tools.Robot;
@@ -52,8 +53,11 @@ public class RouteIntegration {
 	Grid grid = new Grid(height, width, obstacles);
 	
 	
+	static final Point[] DROPOFFLOCATIONS = {new Point(4, 7), new Point(6, 5)};
 	
-	public List<Route> planRoute (Robot r) {
+	
+	
+	public Route planRoute (Robot r, int currentStep) throws PathNotFoundException {
 		Robot robot = r;
 		
 		//get robot's current location
@@ -70,26 +74,66 @@ public class RouteIntegration {
 		//order the parts according to location
 		JobPart[] orderedParts = orderParts(jobParts, start);
 		
+		//find the nearest drop off location using the final point
+		Point dropPoint = findClosestDropOff(new Point(orderedParts[orderedParts.length - 1].getX(), orderedParts[orderedParts.length - 1].getY()));
+		//death statement just gets the x & y coordinates of the final job part to be conducted
+		
+		
 		//get the current step (& add 1)
 		//how???
+		int nextStep = currentStep + 1;
 		
-		//make an empty list to hold the return values
-		List<Route> routePlan= new LinkedList<Route>();
+		//make an empty route to hold the plan
+		Route route = new Route(robot.getID());
 		
 		//actually plot the route
 		Point goal;
 		int itemCount = 0;
 		
-		for (JobPart part : orderedParts) {
-			goal = new Point(part.getX(), part.getY());
-			itemCount = part.getNumOfItems(); //don't forget to sort out drop off points
+		
+		for (int i = 0; i <= orderedParts.length; i++) {
+			
+			if (i == orderedParts.length) {
+				goal = dropPoint;
+				itemCount = 0;
+			}
+			else {
+				JobPart part = orderedParts[i]; //some form of pickup
+				goal = new Point(part.getX(), part.getY());
+				itemCount = part.getNumOfItems(); 
+			}
+			
 			//get the route here
-				//AStar ultimately returns a list of Points
-			//add it to routePlan
+			List<Point> path = AStarSearch.getInstance().getPath(start, goal, 0, nextStep);
+			
+			
+			
+			//for each coordinate in the list, create an action and add to the route
+			
+			for (int j = 0; j < path.size(); j++) {
+				Point point = path.get(j);
+				ACTION action;
+				if (j + 1 == path.size()) {
+					//this is the end of the route
+					if (itemCount == 0) action = ACTION.DROPOFF;
+					else action = ACTION.PICKUP;
+					//need to change something to allow number of items to be stored
+				}
+				else {
+					Point next = path.get(j+1);
+					if (point.equals(next)) action = ACTION.WAIT;
+					else action = ACTION.MOVE;
+				}
+				
+				route.addToRoute(new RouteAction(action, point, robot.getID()));
+			}
 			start = goal;
 		}
 		
-		return routePlan;
+		
+		
+		
+		return route;
 			
 	}
 	
@@ -123,6 +167,19 @@ private static JobPart[] orderParts(JobPart[] unordered, Point start) {
 			if (i != index) newArrayList.add(original[i]);
 		}
 		return newArrayList.toArray(new JobPart[original.length -1]);
+	}
+	
+	private static Point findClosestDropOff(Point point) {
+		Point closestPoint = DROPOFFLOCATIONS[0];
+		int lowestDist = Math.abs(closestPoint.x - point.x) + Math.abs(closestPoint.y - point.y);
+		for (Point dropPoint : DROPOFFLOCATIONS) {
+			int dist =  Math.abs(dropPoint.x - point.x) + Math.abs(dropPoint.y - point.y);
+			if (dist < lowestDist) {
+				lowestDist = dist;
+				closestPoint = dropPoint;
+			}
+		}
+		return closestPoint;
 	}
 	
 }
