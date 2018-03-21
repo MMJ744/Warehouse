@@ -1,4 +1,4 @@
-package com.rp25.routeExecution;
+/* package com.rp25.routeExecution; // Class not in use 
 
 import static com.rp25.routePlanning.RouteAction.ACTION.WAIT;
 
@@ -48,4 +48,4 @@ public class routeTesting {
 		d = desired;
 		return c; // e
 	}
-}
+} */

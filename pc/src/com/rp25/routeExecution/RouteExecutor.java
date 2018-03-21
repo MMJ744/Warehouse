@@ -23,7 +23,7 @@ public class RouteExecutor {
 	Route route1, route2, route3;
 	Boolean c1, c2, c3;
 	int items;
-	Thing t1, t2, t3;
+	Navigator n1, n2, n3;
 	Integer currentStep = -1;
 	RouteIntegration routePlanner;
 	final static Logger logger = Logger.getLogger(RouteExecutor.class);
@@ -42,16 +42,16 @@ public class RouteExecutor {
 		while (true) {
 			++currentStep;
 			checkRoutes();
-			t1 = new Thing(route1.getNextAction().get(), r1, d1);
-			t2 = new Thing(route2.getNextAction().get(), r2, d2);
-			t3 = new Thing(route3.getNextAction().get(), r3, d3);
-			t1.start();
-			t2.start();
-			t3.start();
+			n1 = new Navigator(route1.getNextAction().get(), r1, d1);
+			n2 = new Navigator(route2.getNextAction().get(), r2, d2);
+			n3 = new Navigator(route3.getNextAction().get(), r3, d3);
+			n1.start();
+			n2.start();
+			n3.start();
 			try {
-				t1.join();
-				t2.join();
-				t3.join();
+				n1.join();
+				n2.join();
+				n3.join();
 			} catch (InterruptedException e) {
 			}
 		}
@@ -100,12 +100,12 @@ public class RouteExecutor {
 		}
 	}
 
-	private class Thing extends Thread {
+	private class Navigator extends Thread {
 		RouteAction a;
 		Robot r;
 		Orientation d;
 
-		Thing(RouteAction _a, Robot _r, Orientation _d) {
+		Navigator(RouteAction _a, Robot _r, Orientation _d) {
 			a = _a;
 			r = _r;
 			d = _d;
