@@ -257,7 +257,7 @@ public class Cancellation {
 				}
 			}
 			else if(probGivenItems[numOfItems/2-1]==0) {
-				itemsProb = new BigDecimal("0.0001")
+				itemsProb = new BigDecimal("0.0001");
 			}
 			else {
 				itemsProb = new BigDecimal(probYesGivenItems[numOfItems/2-1]).divide(new BigDecimal(probGivenItems[numOfItems/2-1]), RoundingMode.HALF_UP);
