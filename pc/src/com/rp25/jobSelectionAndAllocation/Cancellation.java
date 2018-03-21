@@ -199,7 +199,7 @@ public class Cancellation {
 			weightProb = new BigDecimal("0.001");
 		}
 		else {
-			weightProb = new BigDecimal(probYesGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]).divide(new BigDecimal(probGivenTypes[weight.divide(new BigDecimal("10")).intValue()-1]), RoundingMode.HALF_UP);
+			weightProb = new BigDecimal(probYesGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]).divide(new BigDecimal(probGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]), RoundingMode.HALF_UP);
 		}
 		BigDecimal rewardProb;
 		if(reward.divide(new BigDecimal("4")).intValue()-1<0) {
@@ -257,7 +257,7 @@ public class Cancellation {
 				}
 			}
 			else if(probGivenItems[numOfItems/2-1]==0) {
-				itemsProb = new BigDecimal("0.0001")
+				itemsProb = new BigDecimal("0.0001");
 			}
 			else {
 				itemsProb = new BigDecimal(probYesGivenItems[numOfItems/2-1]).divide(new BigDecimal(probGivenItems[numOfItems/2-1]), RoundingMode.HALF_UP);
