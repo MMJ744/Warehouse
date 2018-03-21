@@ -78,8 +78,6 @@ public class NavigateJunction implements Behavior {
 			while(pilot.isMoving() && !suppressed)
 				Thread.yield();
 		}
-		
-		
 	}
 
 	@Override
