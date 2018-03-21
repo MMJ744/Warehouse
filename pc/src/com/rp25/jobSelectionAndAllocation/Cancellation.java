@@ -158,7 +158,12 @@ public class Cancellation {
 		BigDecimal reward = job.getReward();
 		BigDecimal typesProb;
 		if(job.getNumOfItemTypes()-1<0) {
-			typesProb = new BigDecimal(probYesGivenTypes[0]).divide(new BigDecimal(probGivenTypes[0]), RoundingMode.HALF_UP);
+			if(probGivenTypes[0] == 0) {
+				typesProb = new BigDecimal("0.001");
+			}
+			else {
+				typesProb = new BigDecimal(probYesGivenTypes[0]).divide(new BigDecimal(probGivenTypes[0]), RoundingMode.HALF_UP);
+			}
 		}
 		else if(probYesGivenTypes[job.getNumOfItemTypes()-1] == 0) {
 			typesProb = new BigDecimal("0.001");
@@ -168,7 +173,12 @@ public class Cancellation {
 		}
 		BigDecimal itemsProb;
 		if(numOfItems/2-1<0) {
-			itemsProb = new BigDecimal(probYesGivenItems[0]).divide(new BigDecimal(probGivenItems[0]), RoundingMode.HALF_UP);
+			if(probGivenItems[0]==0) {
+				itemsProb = new BigDecimal("0.001");
+			}
+			else {
+				itemsProb = new BigDecimal(probYesGivenItems[0]).divide(new BigDecimal(probGivenItems[0]), RoundingMode.HALF_UP);
+			}
 		}
 		else if(probYesGivenItems[numOfItems/2-1] == 0) {
 			itemsProb = new BigDecimal("0.001");
@@ -178,7 +188,12 @@ public class Cancellation {
 		}
 		BigDecimal weightProb;
 		if(weight.divide(new BigDecimal("10")).intValue()-1<0){
-			weightProb = new BigDecimal(probYesGivenWeight[0]).divide(new BigDecimal(probGivenTypes[0]), RoundingMode.HALF_UP);
+			if(probGivenWeight[0]==0) {
+				weightProb = new BigDecimal("0.001");
+			}
+			else {
+				weightProb = new BigDecimal(probYesGivenWeight[0]).divide(new BigDecimal(probGivenWeight[0]), RoundingMode.HALF_UP);
+			}			
 		}
 		else if(probYesGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1] == 0) {
 			weightProb = new BigDecimal("0.001");
@@ -188,7 +203,12 @@ public class Cancellation {
 		}
 		BigDecimal rewardProb;
 		if(reward.divide(new BigDecimal("4")).intValue()-1<0) {
-			rewardProb = new BigDecimal(probYesGivenReward[0]).divide(new BigDecimal(probGivenTypes[0]), RoundingMode.HALF_UP);
+			if(probGivenReward[0]==0) {
+				rewardProb = new BigDecimal("0.001");
+			}
+			else {
+				rewardProb = new BigDecimal(probYesGivenReward[0]).divide(new BigDecimal(probGivenReward[0]), RoundingMode.HALF_UP);
+			}
 		}
 		else if(probYesGivenWeight[reward.divide(new BigDecimal("4")).intValue()-1] == 0) {
 			rewardProb = new BigDecimal("0.001");
