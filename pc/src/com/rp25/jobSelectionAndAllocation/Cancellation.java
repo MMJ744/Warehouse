@@ -51,13 +51,13 @@ public class Cancellation {
 							numOfTypes += 1;
 							weight = weight.add(checkItem.getWeight());
 							reward = reward.add(checkItem.getReward());
-							break;
 						}
 					}
 				}
 				allTestJobs.add(new TestJob(itemName, numOfItems, numOfTypes, reward, weight, Integer.parseInt(cancelInfo[1])));
-				this.learn();
+				
 			}
+			this.learn();
 			
 		} 
 		catch (FileNotFoundException e) {
@@ -80,8 +80,10 @@ public class Cancellation {
 				yesesInTest += 1;
 			}
 		}
-		probYes = new BigDecimal(yesesInTest).divide(new BigDecimal(trainingSetSize));
-		probNo = new BigDecimal(1).subtract(probYes);
+		if(trainingSetSize>0) {
+			probYes = (new BigDecimal(yesesInTest)).divide(new BigDecimal(trainingSetSize));
+			probNo = new BigDecimal(1).subtract(probYes);
+		}
 		for(int i = 0; i<trainingSetSize; i++) {
 			TestJob testJob = allTestJobs.get(i);
 			probGivenTypes[testJob.getNumOfItemTypes() - 1] += 1;
