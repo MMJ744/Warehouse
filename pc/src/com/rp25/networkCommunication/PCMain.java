@@ -37,7 +37,7 @@ public class PCMain {
 				Sender.channels[i] = (new Channel(in,out));
 
 			}
-			System.out.println(Arrays.toString(Sender.channels));
+			//System.out.println(Arrays.toString(Sender.channels));
 
 				//Sender sender = new Sender();
 				// pass sender object to RouteExecution class {Sender is now static}
@@ -46,12 +46,12 @@ public class PCMain {
 			// TODO Auto-generated catch block
 			logger.debug("\n\nError using Bluetooth Drivers", e);
 		}
-		System.out.println(Sender.sendMove(1, Command.FORWARD));
-		System.out.println(Sender.sendMove(2, Command.LEFT));
-		System.out.println(Sender.sendMove(3, Command.UTURN));
-		Sender.sendMove(1,Command.LEFT);
-		Sender.sendMove(2, Command.FORWARD);
-		Sender.sendMove(3,Command.FORWARD);
+		//System.out.println(Sender.sendMove(1, Command.FORWARD));
+		//System.out.println(Sender.sendMove(2, Command.LEFT));
+		//System.out.println(Sender.sendMove(3, Command.UTURN));
+		//Sender.sendMove(1,Command.LEFT);
+		//Sender.sendMove(2, Command.FORWARD);
+		//Sender.sendMove(3,Command.FORWARD);
 
 	}
 	
