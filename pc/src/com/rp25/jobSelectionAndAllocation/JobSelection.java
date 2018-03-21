@@ -87,7 +87,7 @@ public class JobSelection {
 				weight.add(currentItem.getWeight());
 				reward.add(currentItem.getReward());
 			}
-			BigDecimal priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).multiply(cancel.probOfCancellation(job));
+			BigDecimal priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).divide(cancel.probOfCancellation(job));
 			job.setPriority(priority);
 		}
 		Collections.sort(allJobs, (a, b) -> b.getPriority().compareTo(a.getPriority()));
