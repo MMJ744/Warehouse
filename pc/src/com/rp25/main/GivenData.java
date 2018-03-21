@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.rp25.tools.HelperMethods;
+
 public class GivenData {
 	public static ArrayList<Point> read(String fileName) {
 		ArrayList<Point> output = new ArrayList<>();
@@ -16,7 +18,7 @@ public class GivenData {
 			reader =  new BufferedReader(new FileReader(fileName));
 			String line = "";
 			while((line = reader.readLine()) != null) {
-				String[] components = line.split(",");
+				String[] components = HelperMethods.split(line, ",", 0);//line.split(",");
 				int x = Integer.parseInt(components[0]);
 				int y = Integer.parseInt(components[1]);
 				
