@@ -10,6 +10,7 @@ import lejos.geom.Point;
 import rp.robotics.mapping.IGridMap;
 import rp.robotics.mapping.LineMap;
 import rp.robotics.visualisation.GridMapVisualisation;
+import rp.robotics.visualisation.MapVisualisationComponent;
 
 /**
  * Effectively a copy of rp.robotics.visualisation.GridMapVisualsation,
@@ -18,19 +19,17 @@ import rp.robotics.visualisation.GridMapVisualisation;
  *
  */
 
-public class WarehouseGridViz extends GridMapVisualisation {
+public class WarehouseGridViz extends MapVisualisationComponent {
 
 	private static final long serialVersionUID = 1L;
+	protected IGridMap m_gridMap;
 	private ArrayList<java.awt.Point> pickUpPoints;
 	private ArrayList<java.awt.Point> dropOffPoints;
 	
-	public WarehouseGridViz(IGridMap _gridMap, LineMap _lineMap) {
-		super(_gridMap, _lineMap);
-	}
-	
 	public WarehouseGridViz(IGridMap _gridMap, LineMap _lineMap, float _scaleFactor, 
 			ArrayList<java.awt.Point> _pickupPoints, ArrayList<java.awt.Point> _dropOffPoints) {
-		super(_gridMap, _lineMap, _scaleFactor);
+		super(_lineMap, _scaleFactor);
+		m_gridMap = _gridMap;
 		pickUpPoints = _pickupPoints;
 		dropOffPoints = _dropOffPoints;
 	}

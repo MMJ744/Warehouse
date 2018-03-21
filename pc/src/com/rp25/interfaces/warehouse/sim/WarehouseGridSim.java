@@ -25,7 +25,7 @@ import rp.robotics.visualisation.MapVisualisationComponent;
  */
 public class WarehouseGridSim {
 	
-	private GridMapVisualisation viz;
+	private WarehouseGridViz viz;
 	
 	public WarehouseGridSim(Collection<Robot> collection,
 			ArrayList<Point> pickups, ArrayList<Point> drops) {
@@ -52,7 +52,7 @@ public class WarehouseGridSim {
 		MapVisualisationComponent.populateVisualisation(viz, sim);
 	}
 	
-	public GridMapVisualisation getViz() {
+	public WarehouseGridViz getViz() {
 		return viz;
 	}
 
