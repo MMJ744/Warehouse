@@ -19,6 +19,7 @@ public class Dispatcher extends Thread {
 	
 	public Dispatcher(DataInputStream in, DataOutputStream out, BlockingQueue<Command> moveQueue,
 			BlockingQueue<String> jobQueue,	BlockingQueue<Integer> feedBackQueue) {
+		this.setDaemon(true);
 		this.in = in;
 		this.out = out;
 		this.moves = moveQueue;
@@ -42,7 +43,7 @@ public class Dispatcher extends Thread {
 					out.flush();
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				//Do nothing -readInt isn't blocking
 			}
 		}
 	}

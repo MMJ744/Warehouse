@@ -19,8 +19,9 @@ public class Sender  {
 
 
 	public static int sendJob(int i, Job j) {
+		--i;
 		try {
-			DataOutputStream out = new DataOutputStream(channels[i].getOutput()); //gets output stream for that robot.
+			DataOutputStream out = channels[i].getOutput(); //gets output stream for that robot.
 			out.writeInt(Purpose.JOB.ordinal()); //writes the enum int to stream
 			logger.debug("Job int sent: " + Purpose.JOB.ordinal());
 			out.flush();
@@ -36,13 +37,14 @@ public class Sender  {
 		
 	}
 	public static int sendMove(int i, Command c ) {
+		--i;
 		try {
-			DataOutputStream out = new DataOutputStream(channels[i].getOutput()); //gets output stream for that robot.
+			DataOutputStream out = channels[i].getOutput(); //gets output stream for that robot.
 			out.writeInt(Purpose.MOVE.ordinal()); //writes the enum int to stream
 			out.writeInt(c.ordinal()); // writes move enum int to stream
 			logger.debug("Command int sent: " + c.ordinal());
 			out.flush();
-			return (new DataInputStream(channels[i].getInput())).readInt();
+			return channels[i].getInput().readInt();
 		}
 		
 		catch(Exception e){
