@@ -14,14 +14,7 @@ public class GivenData {
 		
 		try {
 			reader =  new BufferedReader(new FileReader(fileName));
-		}
-		catch (FileNotFoundException e){
-			System.err.println("File: " + fileName + " was not found!");
-		}
-		
-		String line = "";
-		
-		try {
+			String line = "";
 			while((line = reader.readLine()) != null) {
 				String[] components = line.split(",");
 				int x = Integer.parseInt(components[0]);
@@ -29,8 +22,13 @@ public class GivenData {
 				
 				output.add(new Point(x, y));
 			}
+		}
+		catch (FileNotFoundException e){
+			System.err.println("File: " + fileName + " was not found!");
+		} catch (NumberFormatException e) {
+			System.err.println("File: " + fileName + " has the wrong format!");
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("IOException: " + e.getMessage());
 		}
 		
 		return output;
