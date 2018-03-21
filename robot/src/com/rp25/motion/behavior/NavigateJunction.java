@@ -16,6 +16,8 @@ public class NavigateJunction implements Behavior {
 	private boolean acting = false;
 	private boolean suppressed = false;
 	
+	boolean flag = false;
+	
 	private BlockingQueue<Command> moveQueue;
 	private BlockingQueue<Integer> feedbackQueue;
 	
@@ -36,6 +38,11 @@ public class NavigateJunction implements Behavior {
 
 	@Override
 	public void action() {
+		if(!flag) {
+			feedbackQueue.push(0);
+			flag = true;
+		}
+		
 		Command c = moveQueue.take();
 		
 		if(c.equals(Command.FORWARD)) {
@@ -72,7 +79,7 @@ public class NavigateJunction implements Behavior {
 				Thread.yield();
 		}
 		
-		feedbackQueue.push(0);
+		
 	}
 
 	@Override
