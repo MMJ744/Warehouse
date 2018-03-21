@@ -35,8 +35,7 @@ public class Cancellation {
 			allItems = items;
 			String line1;
 			String line2;
-			while((line1 = testsReader.readLine()) != null) {
-				line2 = cancellationReader.readLine();
+			while((line1 = testsReader.readLine()) != null && (line2 = testsReader.readLine()) != null) {
 				String[] testInfo = HelperMethods.split(line1, ",", 0);
 				String[] cancelInfo = HelperMethods.split(line2, ",", 0);
 				String itemName = null;
