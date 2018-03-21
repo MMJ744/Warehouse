@@ -199,7 +199,7 @@ public class Cancellation {
 			weightProb = new BigDecimal("0.001");
 		}
 		else {
-			weightProb = new BigDecimal(probYesGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]).divide(new BigDecimal(probGivenTypes[weight.divide(new BigDecimal("10")).intValue()-1]), RoundingMode.HALF_UP);
+			weightProb = new BigDecimal(probYesGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]).divide(new BigDecimal(probGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]), RoundingMode.HALF_UP);
 		}
 		BigDecimal rewardProb;
 		if(reward.divide(new BigDecimal("4")).intValue()-1<0) {
