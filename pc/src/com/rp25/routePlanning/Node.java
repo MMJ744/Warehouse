@@ -1,73 +1,61 @@
 package com.rp25.routePlanning;
 
 import java.awt.Point;
+import java.util.Optional;
 
-import com.rp25.routePlanning.Location.STATE;
-
-public class Node {
-	private double f;
-	private double h;
-	private double g;
-	private Node parent;
+public class Node implements Comparable<Node> {	
+	private Point xy;
+	private Point goal;
 	
-	Location location;
+	private int step;
 	
-	Point coordinate;
-	Point goal;
+	private Optional<Node> parent;
+	private Grid grid;
 	
-	//constructor for root node only
-	Node (Location location, Point goal) {
-		parent = null;
-		
-		this.location = location;
+	private int f;
+	private int g;
+	private int h;
+	
+	public Node(Point xy, Point goal, int step, Node parent, Grid grid) {
+		this.xy = xy;
 		this.goal = goal;
-		coordinate = location.coordinate;
 		
-		g = 0;
-		h = heuristic();
-		f = g + h;
+		this.step = step;
 		
-	}
-	
-	//general constructor
-	Node (Location location, Point goal, Node p) {
-		parent = p;
+		this.parent = Optional.ofNullable(parent);
+		this.grid = grid;
 		
-		this.location = location;
-		this.goal = goal;
-		coordinate = location.coordinate;
-		
-		g = parent.getG() + 1;
-		h = heuristic();
+		g = this.parent.isPresent() ? parent.g + 1 : 0;
+		h = calcH();
 		f = g + h;
 	}
 	
-	public Node getParent() {
-		return parent;
-	}
-	
-	public Point getCoordinate() {
-		return this.coordinate;
-	}
-	
-	public double getF() {
+	public int getF() {
 		return f;
 	}
 	
-	public double getG() {
-		return g;
+	public int getStep() {
+		return step;
 	}
 	
-	public boolean isGoal() {
-		if (coordinate.equals(goal)) return true;
-		else return false;
+	public Point getXY() {
+		return xy;
 	}
 	
-	private double heuristic() {
-		if(location.state != STATE.EMPTY) return Integer.MAX_VALUE;
+	public Optional<Node> getParent() {
+		return parent;
+	}
+	
+	private int calcH() {
+		if(grid.isCellReserved(new Cell(xy, step)) || grid.isObstacle(xy)) return Integer.MAX_VALUE;
 		
-		double x = Math.abs(goal.getX() - coordinate.getX());
-		double y = Math.abs(goal.getY() - coordinate.getY());
-		return (x + y);
+		int x = (int) Math.abs(xy.getX() - goal.getX());
+		int y = (int) Math.abs(xy.getY() - goal.getY());
+		return x + y;
+	}
+	
+	@Override
+	public int compareTo(Node o) {
+		return f - o.getF();
 	}
 }

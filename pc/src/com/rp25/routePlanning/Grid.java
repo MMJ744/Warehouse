@@ -1,51 +1,182 @@
 package com.rp25.routePlanning;
 
 import java.awt.Point;
-
-import com.rp25.routePlanning.Location.STATE;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 public class Grid {
-	/*needs:
-		2D array of nodes
-		actual nodes call from node class (remember that internal walls)
-		methods for generating surrounding nodes
-	*/
+	private int width;
+	private int height;
 
-	int width;
-	int height;
-	
-	Location[][] locations;
-	
-	public Grid() {
-		this(6, 6);
-	}
-	
+	private int step = 0;
+
+	private List<Point> obstacles;
+	private List<Point> items;
+
 	public Grid(int width, int height) {
-		this(width, height, new Point[0]);
+		this(width, height, new ArrayList<Point>());
 	}
-	
-	public Grid(int width, int height, Point[] obstacles) {
+
+	public Grid(int width, int height, List<Point> obstacles) {
+		this(width, height, obstacles, new ArrayList<Point>());
+	}
+
+	public Grid(int width, int height, List<Point> obstacles, List<Point> items) {
 		this.width = width;
 		this.height = height;
-		
-		locations = new Location[width][height];
-		for(int i = 0; i < width; i++)
-			for(int j = 0; j < height; j++)
-				locations[i][j] = new Location(new Point(i, j));
-		
-		for(Point p : obstacles)
-			locations[p.x][p.y].state = STATE.OBSTACLE;
+
+		this.obstacles = obstacles;
+		this.items = items;
+	}
+
+	private HashMap<Cell, Integer> reservationTable = new HashMap<>();
+
+	public boolean containsXY(Point xy) {
+		return (xy.getX() >= 0 && xy.getX() < width && xy.getY() >= 0 && xy.getY() < height);
+	}
+
+	public int getStep() {
+		return step;
+	}
+
+	public boolean isObstacle(Point xy) {
+		return obstacles.contains(xy);
+	}
+
+	public boolean reserveCell(Cell cell, int priority) {
+		return !Optional.ofNullable(reservationTable.put(cell, priority)).isPresent();
+	}
+
+	public boolean reserveCellForDuration(Cell cell, int duration, int priority) {
+		Point p = cell.getXY();
+		int startStep = cell.getStep();
+
+		for(int i = 0; i < duration; i++) {
+			reservationTable.put(new Cell(p, startStep + i), priority);
+		}
+
+		return true;
+	}
+
+	public boolean isCellReserved(Cell cell) {
+		return reservationTable.containsKey(cell);
+	}
+
+	public boolean isCellReservedHigherPriority(Cell cell, int priority) {
+		Optional<Integer> reservedPriority = Optional.of(reservationTable.get(cell));
+
+		if(reservedPriority.isPresent())
+			return reservedPriority.get() >= priority;
+
+			return false;
+	}
+
+	public void output() {
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				if(obstacles.contains(new Point(x, y))) System.out.print("[#]");
+				else if(items.contains(new Point(x, y))) System.out.print("[I]");
+				else System.out.print("[ ]");
+			}
+
+			System.out.println();
+		}
+	}
+
+	public void outputRightWayUp() {
+		for(int y = height - 1; y >= 0; y--) {
+			for(int x = 0; x < width; x++) {
+				if(obstacles.contains(new Point(x, y))) System.out.print("[#]");
+				else if(items.contains(new Point(x, y))) System.out.print("[I]");
+				else System.out.print("[ ]");
+			}
+
+			System.out.println();
+		}
 	}
 	
-	public Location getLocation(Point loc) {
-		return locations[loc.x][loc.y];
+	public void outputWithMarker(Point markerPos, String marker) {
+		for(int y = -1; y < height; y++) {
+			if(y == -1) System.out.print("[   ]");
+			else System.out.print("[ " + y + " ]");
+			for(int x = 0; x < width; x++) {
+				if(y == -1) {
+					System.out.print("[ " + x + " ]");
+				} else {
+					if(markerPos.equals(new Point(x, y))) System.out.print("[" + marker + "]");
+					else if(obstacles.contains(new Point(x, y))) System.out.print("[ # ]");
+					else if(items.contains(new Point(x, y))) System.out.print("[ I ]");
+					else System.out.print("[   ]");
+				}
+			}
+
+			System.out.println();
+		}
 	}
-	
-	public boolean isOnGrid(Point point) {
-		return point.x >= 0 && point.x < width && point.y >= 0 && point.y < height;
+
+	public void outputWithPath(List<Point> path) {
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				if(obstacles.contains(new Point(x, y))) System.out.print("[#]");
+				else if(path.contains(new Point(x, y))) System.out.print("[P]");
+				else if(items.contains(new Point(x, y))) System.out.print("[I]");
+				else System.out.print("[ ]");
+			}
+
+			System.out.println();
+		}
 	}
-	
-	public boolean isEmpty(Point point) {
-		return getLocation(point).state == STATE.EMPTY;
+
+	public void outputAtStep(int step) {
+		for(int y = 0; y < height; y++) {
+			for(int x = 0; x < width; x++) {
+				if(obstacles.contains(new Point(x, y))) {
+					System.out.print("[ # ]");
+				} else {
+					Optional<Integer> prio = Optional.ofNullable(reservationTable.get(new Cell(new Point(x, y), step)));
+
+					if(prio.isPresent()) {
+						System.out.print("[ " + prio.get() + " ]");
+					} else if(items.contains(new Point(x, y))) {
+						System.out.print("[ I ]");
+					} else {
+						System.out.print("[   ]");
+					}
+				}
+
+			}
+
+			System.out.println();
+		}
+	}
+
+	public void outputWithMarkerAtStep(Point markerPos, String marker, int step) {
+		for(int y = -1; y < height; y++) {
+			if(y == -1) System.out.print("[   ]");
+			else System.out.print("[ " + y + " ]");
+			for(int x = 0; x < width; x++) {
+				if(y == -1) {
+					System.out.print("[ " + x + " ]");
+				} else {
+					if(markerPos.equals(new Point(x, y))) System.out.print("[" + marker + "]");
+					else if(obstacles.contains(new Point(x, y))) System.out.print("[ # ]");
+					else {
+						Optional<Integer> prio = Optional.ofNullable(reservationTable.get(new Cell(new Point(x, y), step)));
+
+						if(prio.isPresent()) {
+							System.out.print("[ " + prio.get() + " ]");
+						} else if(items.contains(new Point(x, y))) {
+							System.out.print("[ I ]");
+						} else {
+							System.out.print("[   ]");
+						}
+					}
+				}
+			}
+
+			System.out.println();
+		}
 	}
 }

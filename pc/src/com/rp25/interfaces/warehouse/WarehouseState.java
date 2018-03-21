@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import com.rp25.routeExecution.RouteExecutor;
 import com.rp25.tools.Job;
 import com.rp25.tools.Robot;
 
@@ -24,7 +25,15 @@ public class WarehouseState {
 	 */
 	HashMap<Integer, Robot> robotList = new HashMap<>(); 
 	BlockingQueue<Integer> cancellations = new LinkedBlockingQueue<>();
+	RouteExecutor executor = null;
 	
+	public void setExecutor(RouteExecutor e) {
+		executor = e;
+	}
+	
+	public RouteExecutor getExecutor() {
+		return executor;
+	}
 	
 	/**
 	 * Returns a collection of all robots inside the warehouse.

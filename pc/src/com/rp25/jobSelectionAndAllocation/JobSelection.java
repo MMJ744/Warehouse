@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -24,9 +25,8 @@ public class JobSelection {
 	private final static Logger logger = Logger.getLogger(JobSelection.class);
 	private Cancellation cancel;
 	
-	public JobSelection(String jobLocation, String itemsLocation, String locationLocation, Cancellation cancel) {
+	public JobSelection(String jobLocation, String itemsLocation, String locationLocation, String cancelLocation, String testLocation) {
 		try {
-			this.cancel = cancel;
 			brJobs = new BufferedReader(new FileReader(jobLocation));
 			brItems = new BufferedReader(new FileReader(itemsLocation));
 			brLocation = new BufferedReader(new FileReader(locationLocation));
@@ -59,6 +59,8 @@ public class JobSelection {
 					}
 				}
 			}
+			this.cancel = new Cancellation(cancelLocation, testLocation, items);
+			calculatePriority();
 		}
 		catch(FileNotFoundException e) {
 			logger.debug("File not found", e);
@@ -86,7 +88,13 @@ public class JobSelection {
 				weight.add(currentItem.getWeight());
 				reward.add(currentItem.getReward());
 			}
-			BigDecimal priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).multiply(cancel.probOfCancellation(job));
+			BigDecimal priority;
+			if(cancel.probOfCancellation(job).compareTo(new BigDecimal(0))>0) {
+				priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).divide(cancel.probOfCancellation(job), RoundingMode.HALF_EVEN);
+			}
+			else {
+				priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).divide(new BigDecimal("0.001"), RoundingMode.HALF_EVEN);
+			}
 			job.setPriority(priority);
 		}
 		Collections.sort(allJobs, (a, b) -> b.getPriority().compareTo(a.getPriority()));

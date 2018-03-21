@@ -6,98 +6,171 @@ import java.util.Queue;
 import org.apache.log4j.Logger;
 
 import com.rp25.interfaces.warehouse.WarehouseState;
-import com.rp25.interfaces.warehouse.sim.WarehouseGridSim;
 import com.rp25.networkCommunication.Sender;
 import com.rp25.routePlanning.Route;
-import com.rp25.routePlanning.Route.ACTION;
+import com.rp25.routePlanning.RouteAction;
+import com.rp25.routePlanning.RouteIntegration;
+import com.rp25.tools.Robot;
+import static com.rp25.routePlanning.RouteAction.ACTION.DROPOFF;
+import static com.rp25.routePlanning.RouteAction.ACTION.PICKUP;
+import static com.rp25.routePlanning.RouteAction.ACTION.MOVE;
+import static com.rp25.routePlanning.RouteAction.ACTION.WAIT;
 
 public class RouteExecutor {
 
-	final int robotID;
-	Point current = new Point(0,0);
-	Orientation direction;
-	Queue<Point> path;
-	Boolean cancled;
-	ACTION action;
+	Robot r1, r2, r3;
+	Orientation d1, d2, d3;
+	Route route1, route2, route3;
+	Boolean c1, c2, c3;
 	int items;
-	WarehouseState state;
+	Navigator n1, n2, n3;
+	Integer currentStep = -1;
+	RouteIntegration routePlanner;
 	final static Logger logger = Logger.getLogger(RouteExecutor.class);
 
-	public RouteExecutor(int robotNumber, int startingX, int startingY, WarehouseState _state) {
-		robotID = robotNumber;
-		current.setLocation(startingX, startingY);
-		current.y = startingY;
-		direction = Orientation.N;
-		cancled = false;
-		state = _state;
+	public RouteExecutor(Robot _r1, Robot _r2, Robot _r3, RouteIntegration _routePlanner) {
+		routePlanner = _routePlanner;
+		r1 = _r1;
+		r2 = _r2;
+		r3 = _r3;
+		c1 = false;
+		c2 = false;
+		c3 = false;
 	}
 
-	public boolean execute(Route route) {
-		Point next;
-		path = route.getPath();
-		action = route.getAction();
-		items = route.getItemCount();
-		while (!path.isEmpty() && !cancled) {
-			next = (Point) path.pop();
-			orentate(next);
-			updatePosition(next);
-			logger.debug("moved to next point");
+	public void Execute() {
+		while (true) {
+			++currentStep;
+			checkRoutes();
+			n1 = new Navigator(route1.getNextAction().get(), r1, d1);
+			n2 = new Navigator(route2.getNextAction().get(), r2, d2);
+			n3 = new Navigator(route3.getNextAction().get(), r3, d3);
+			n1.start();
+			n2.start();
+			n3.start();
+			try {
+				n1.join();
+				n2.join();
+				n3.join();
+			} catch (InterruptedException e) {
+			}
 		}
-		if (cancled) {
-			logger.debug("job cancled");
-			tellInterface(action.toString());
-			cancled = false;
-			return false;
+	}
+
+	private void checkRoutes() {
+		try {
+			if (route1 == null || route1.isRouteEmpty() || c1)
+				route1 = routePlanner.planRoute(r1, currentStep);
+			if (route2 == null || route2.isRouteEmpty() || c2)
+				route2 = routePlanner.planRoute(r2, currentStep);
+			if (route3 == null || route3.isRouteEmpty() || c3)
+				route3 = routePlanner.planRoute(r3, currentStep);
+		} catch (Exception e) {}
+		if (c1) {
+			sendInterface("cancel", 1);
+			c1 = false;
 		}
-		tellInterface(action.toString());
-		logger.debug("path done");
-		return true;
-	}
-
-	private void orentate(Point next) {
-		Orientation desired;
-		if (next.x > current.x)
-			desired = Orientation.E;
-		else if (next.x < current.x)
-			desired = Orientation.W;
-		else if (next.y > current.y)
-			desired = Orientation.S;
-		else if (next.y < current.y)
-			desired = Orientation.N;
-		else {
-			logger.debug("robot has been told to go to the location it is already at");
-			return;
+		if (c2) {
+			sendInterface("cancel", 2);
+			c2 = false;
 		}
-		if (desired == direction) {
-			tellRobot(Command.FORWARD);
-			return;
+		if (c3) {
+			sendInterface("cancel", 3);
+			c3 = false;
 		}
-		tellRobot(Orientation.rotate(direction, desired)); // sends the command to point the robot in the right
-															// direction
-		direction = desired;
 	}
 
-	private boolean tellRobot(Command c) {
-		boolean r = false;
-		if(Sender.sendMove(robotID, c) == 0)
-			r = true;
-		return r;
-	}
-
-	public void cancel() {
-		cancled = true;
-	}
-
-	private boolean tellInterface(String action) {
+	private boolean sendInterface(String action, int id) {
 		boolean r = false;
 		// r = how ever to send the action
-		if(action.equalsIgnoreCase("pickup")){
-			//send the number of items to pickup
+		if (action.equalsIgnoreCase("pickup")) {
+			// send the number of items to pickup
 		}
 		return r;
 	}
 
-	private void updatePosition(Point next) {
-		state.updateBotPos(robotID, (int) next.getX(), (int) next.getY());
+	public void cancel(int id) {
+		switch (id) {
+		case 1:
+			c1 = true;
+		case 2:
+			c2 = true;
+		case 3:
+			c3 = true;
+		}
+	}
+
+	private class Navigator extends Thread {
+		RouteAction a;
+		Robot r;
+		Orientation d;
+
+		Navigator(RouteAction _a, Robot _r, Orientation _d) {
+			a = _a;
+			r = _r;
+			d = _d;
+		}
+
+		void Run() {
+			if (a.getAction() != WAIT) {
+				Point point = a.getPoint();
+				orientate(point, r, d);
+			}
+			switch (a.getAction()) {
+			case PICKUP:
+				tellInterface("pickup", r.getID());
+				break;
+			case DROPOFF:
+				tellInterface("finished", r.getID());
+				break;
+			default:
+				break;
+			}
+		}
+
+		private boolean tellInterface(String action, int id) {
+			boolean r = false;
+			// r = how ever to send the action
+			if (action.equalsIgnoreCase("pickup")) {
+				// send the number of items to pickup
+			}
+			return r;
+		}
+
+		private void updatePosition(Point next, Robot r) {
+			r.updateCoordinates((int) next.getX(), (int) next.getY());
+		}
+
+		private void orientate(Point next, Robot r, Orientation d) {
+			Orientation desired;
+			if (next.x > r.getX())
+				desired = Orientation.E;
+			else if (next.x < r.getX())
+				desired = Orientation.W;
+			else if (next.y > r.getY())
+				desired = Orientation.S;
+			else if (next.y < r.getY())
+				desired = Orientation.N;
+			else {
+				logger.debug("robot has been told to go to the location it is already at");
+				return;
+			}
+			updatePosition(next, r); // direction
+			if (desired == d) {
+				tellRobot(Command.FORWARD, r.getID());
+				return;
+			}
+			tellRobot(Orientation.rotate(d, desired), r.getID()); // sends the command to point the robot in the right
+			d = desired;
+		}
+
+		private boolean tellRobot(Command c, int id) {
+			boolean r = false;
+			if (Sender.sendMove(id, c) == 0)
+				r = true;
+			else
+				logger.error("robot failed motion");
+			return r;
+		}
 	}
 }
