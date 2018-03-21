@@ -31,10 +31,11 @@ public class Main {
 		state.addRobot(r1.getID(), r1);
 		state.addRobot(r2.getID(), r2);
 		state.addRobot(r3.getID(), r3);
-		WarehouseGridSim simulation = new WarehouseGridSim(state.getAllRobots());
+		WarehouseGridSim simulation = new WarehouseGridSim(state.getAllRobots(), 
+										  GivenData.read("locations.csv"), 
+										  GivenData.read("drops.csv"));
 		new WarehouseInterfaceView(state, simulation);
 		PCMain.main(args);
 		//executor.Execute();
 	}
-
 }
