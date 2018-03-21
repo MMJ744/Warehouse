@@ -1,6 +1,8 @@
 package com.rp25.interfaces.warehouse.sim;
 
 import java.awt.Dimension;
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.rp25.tools.Robot;
@@ -25,10 +27,13 @@ public class WarehouseGridSim {
 	
 	private GridMapVisualisation viz;
 	
-	public WarehouseGridSim(Collection<Robot> collection) {
+	public WarehouseGridSim(Collection<Robot> collection,
+			ArrayList<Point> pickups, ArrayList<Point> drops) {
 		GridMap map = MapUtils.createRealWarehouse();
 		
 		MapBasedSimulation sim = new MapBasedSimulation(map);
+		
+		viz = new WarehouseGridViz(map, sim.getMap(), 150, pickups, drops);
 		
 		for (Robot r : collection) {
 			GridPose gridStart = new GridPose(r.getX(), r.getY(), Heading.PLUS_Y);
@@ -42,15 +47,7 @@ public class WarehouseGridSim {
 
 			Thread bot = new Thread(controller);
 			bot.start();
-		}
-		
-		viz = new GridMapVisualisation(map, sim.getMap(), 150) {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public Dimension getPreferredSize() {
-			    return new Dimension(650,600);
-			}
-		};
+		}		
 		
 		MapVisualisationComponent.populateVisualisation(viz, sim);
 	}

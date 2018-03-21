@@ -1,5 +1,8 @@
 package com.rp25.interfaces.warehouse;
 
+import java.awt.Point;
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 
 import com.rp25.interfaces.warehouse.cli.WarehouseCLI;
@@ -37,7 +40,35 @@ public class WHIMainWithSimulation {
 		logger.debug("Robot " + state.getRobot(r2.getID()).getID() + " added");
 		logger.debug("Robot " + state.getRobot(r3.getID()).getID() + " added");
 		
-		WarehouseGridSim simulation = new WarehouseGridSim(state.getAllRobots());
+		ArrayList<Point> picks = new ArrayList<>();
+		picks.add(new Point(2,1));
+		picks.add(new Point(2,2));
+		picks.add(new Point(2,3));
+		picks.add(new Point(2,4));
+		picks.add(new Point(2,5));
+		picks.add(new Point(3,1));
+		picks.add(new Point(3,2));
+		picks.add(new Point(3,3));
+		picks.add(new Point(5,1));
+		picks.add(new Point(5,2));
+		picks.add(new Point(6,1));
+		picks.add(new Point(6,2));
+		picks.add(new Point(6,3));
+		picks.add(new Point(6,4));
+		picks.add(new Point(6,5));
+		picks.add(new Point(8,1));
+		picks.add(new Point(8,2));
+		picks.add(new Point(8,3));
+		picks.add(new Point(8,4));
+		picks.add(new Point(8,5));
+		
+		
+		ArrayList<Point> drops = new ArrayList<>();
+		drops.add(new Point(4,7));
+		drops.add(new Point(7,7));
+		
+		
+		WarehouseGridSim simulation = new WarehouseGridSim(state.getAllRobots(), picks, drops);
 		new WarehouseInterfaceView(state, simulation);
 		(new Thread(new WarehouseCLI(state))).start();
 		
