@@ -15,9 +15,16 @@ import com.rp25.routePlanning.*;
 import lejos.geom.Point;
 
 public class Main {
+	
+	static final String JOBS = "jobs.csv";
+	static final String ITEMS = "items.csv";
+	static final String LOCATIONS = "locations.csv";
+	static final String CANCELLATIONS = "cancellations.csv";
+	static final String TRAINING_SET = "training_jobs.csv";
+	static final String DROP_LOCATIONS = "drops.csv";
 
 	public static void main(String[] args) {
-		JobSelection selection = new JobSelection("jobs.csv", "items.csv", "locations.csv", "cancellations.csv", "training_jobs.csv");
+		JobSelection selection = new JobSelection(JOBS, ITEMS, LOCATIONS, CANCELLATIONS, TRAINING_SET);
 		Point r1Start = new Point(4,7);
 		Robot r1 = new Robot(1, (int) r1Start.getX(), (int) r1Start.getY());
 		Point r2Start = new Point(0,1);
@@ -32,8 +39,8 @@ public class Main {
 		state.addRobot(r2.getID(), r2);
 		state.addRobot(r3.getID(), r3);
 		WarehouseGridSim simulation = new WarehouseGridSim(state.getAllRobots(), 
-										  GivenData.read("locations.csv"), 
-										  GivenData.read("drops.csv"));
+										  GivenData.read(LOCATIONS), 
+										  GivenData.read(DROP_LOCATIONS));
 		new WarehouseInterfaceView(state, simulation);
 		PCMain.main(args);
 		//executor.Execute();
