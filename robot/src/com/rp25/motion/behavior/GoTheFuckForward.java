@@ -1,4 +1,4 @@
-package com.rp25.motion.DAN.behavior;
+package com.rp25.motion.behavior;
 
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;

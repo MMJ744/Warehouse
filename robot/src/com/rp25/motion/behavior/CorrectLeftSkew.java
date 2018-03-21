@@ -1,45 +1,45 @@
-package com.rp25.motion.DAN.behavior;
+package com.rp25.motion.behavior;
 
-import com.rp25.motion.DAN.detector.LineDetector;
+import static com.rp25.motion.behavior.GoTheFuckForward.SPTS;
+
+import com.rp25.motion.detector.LineDetector;
 
 import lejos.nxt.Motor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
 
-import static com.rp25.motion.DAN.behavior.GoTheFuckForward.SPTS;
-
-public class CorrectRightSkew implements Behavior {
+public class CorrectLeftSkew implements Behavior {
 	private DifferentialPilot pilot;
 	private LineDetector detector;
 	
 	private boolean suppressed = false;
 	
-	public CorrectRightSkew(DifferentialPilot pilot, LineDetector detector) {
+	public CorrectLeftSkew(DifferentialPilot pilot, LineDetector detector) {
 		this.pilot = pilot;
 		this.detector = detector;
 	}
 	
 	@Override
 	public boolean takeControl() {
-		return detector.isLeftOnLine();
+		return detector.isRightOnLine();
 	}
 
 	@Override
 	public void action() {
 		suppressed = false;
 		
-		System.out.println("ROTLFT");
-//		pilot.setRotateSpeed(50);
-//		pilot.rotateLeft();
+		System.out.println("ROTRGHT");
+		//pilot.setRotateSpeed(50);
+		//pilot.rotateRight();
 		
 		if(!pilot.isMoving()) {
 			pilot.forward();
 			SPTS(pilot);
 		}
 		
-		Motor.B.setSpeed(Motor.B.getSpeed() * 1.3f);
+		Motor.C.setSpeed(Motor.C.getSpeed() * 1.3f);
 		
-		while(detector.isLeftOnLine() && !detector.isRightOnLine())
+		while(detector.isRightOnLine() && !detector.isLeftOnLine())
 			Thread.yield();
 	}
 

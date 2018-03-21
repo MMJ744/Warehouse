@@ -1,14 +1,13 @@
-package com.rp25.motion.DAN.behavior;
+package com.rp25.motion.behavior;
 
-import java.util.ArrayList;
-import java.util.List;
+import static com.rp25.motion.behavior.GoTheFuckForward.SPTS;
 
-import com.rp25.motion.DAN.detector.JunctionDetector;
+import com.rp25.motion.detector.JunctionDetector;
+import com.rp25.tools.BlockingQueue;
+import com.rp25.tools.Command;
 
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
-
-import static com.rp25.motion.DAN.behavior.GoTheFuckForward.SPTS;
 
 public class NavigateJunction implements Behavior {
 	private DifferentialPilot pilot;
@@ -16,31 +15,18 @@ public class NavigateJunction implements Behavior {
 
 	private boolean acting = false;
 	private boolean suppressed = false;
-
-	List<String> route = new ArrayList<String>() {{
-		add("fwd");
-		add("lft");
-		add("fwd");
-		add("fwd");
-		add("fwd");
-		add("fwd");
-		add("fwd");
-		add("lft");
-		add("fwd");
-		add("lft");
-		add("fwd");
-		add("fwd");
-		add("fwd");
-		add("fwd");
-		add("fwd");
-		add("lft");
-	}};
-
+	
+	private BlockingQueue<Command> moveQueue;
+	private BlockingQueue<Integer> feedbackQueue;
+	
 	int curAction = 0;
 
-	public NavigateJunction(DifferentialPilot pilot, JunctionDetector detector) {
+	public NavigateJunction(DifferentialPilot pilot, JunctionDetector detector, BlockingQueue<Command> moveQueue, BlockingQueue<Integer> feedbackQueue) {
 		this.pilot = pilot;
 		this.detector = detector;
+		
+		this.moveQueue = moveQueue;
+		this.feedbackQueue = feedbackQueue;
 	}
 
 	@Override
@@ -50,11 +36,9 @@ public class NavigateJunction implements Behavior {
 
 	@Override
 	public void action() {
-		System.out.println("JUNCT " + curAction);
-
-		String action = route.get((curAction++) % route.size());
+		Command c = moveQueue.take();
 		
-		if(action.equals("fwd")) {
+		if(c.equals(Command.FORWARD)) {
 			pilot.forward();
 			SPTS(pilot);
 			try {
@@ -63,7 +47,7 @@ public class NavigateJunction implements Behavior {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if(action.equals("lft")) {
+		} else if(c.equals(Command.LEFT)) {
 			pilot.travel(75);
 			SPTS(pilot);
 			pilot.setRotateSpeed(pilot.getMaxRotateSpeed());
@@ -72,7 +56,7 @@ public class NavigateJunction implements Behavior {
 			while(pilot.isMoving() && !suppressed)
 				Thread.yield();
 			
-		} else if(action.equals("rght")) {
+		} else if(c.equals(Command.RIGHT)) {
 			pilot.travel(75);
 			SPTS(pilot);
 			pilot.setRotateSpeed(pilot.getMaxRotateSpeed());
@@ -80,7 +64,15 @@ public class NavigateJunction implements Behavior {
 			
 			while(pilot.isMoving() && !suppressed)
 				Thread.yield();
+		} else if(c.equals(Command.UTURN)) {
+			pilot.setRotateSpeed(pilot.getMaxRotateSpeed() / 2);
+			pilot.rotate(185);
+			
+			while(pilot.isMoving() && !suppressed)
+				Thread.yield();
 		}
+		
+		feedbackQueue.push(0);
 	}
 
 	@Override

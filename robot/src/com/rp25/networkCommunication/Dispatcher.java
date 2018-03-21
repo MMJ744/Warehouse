@@ -5,11 +5,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import tools.BlockingQueue;
+import com.rp25.tools.BlockingQueue;
+import com.rp25.tools.Command;
+
 
 public class Dispatcher extends Thread {
 	public static enum Purpose{JOB,MOVE}
-	public enum Command {FORWARD, LEFT, RIGHT, UTURN}
 
 	DataInputStream in;
 	DataOutputStream out;

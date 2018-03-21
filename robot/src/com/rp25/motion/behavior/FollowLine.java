@@ -1,6 +1,6 @@
-package com.rp25.motion.DAN.behavior;
+package com.rp25.motion.behavior;
 
-import com.rp25.motion.DAN.detector.LineDetector;
+import com.rp25.motion.detector.LineDetector;
 
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
