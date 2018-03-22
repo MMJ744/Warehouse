@@ -45,7 +45,7 @@ public class NavigateJunction implements Behavior {
 		
 		if(action.equals(Command.FORWARD)) {
 			try {
-				Thread.sleep(1100);
+				Thread.sleep(1075);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -62,7 +62,7 @@ public class NavigateJunction implements Behavior {
 		} else if(action.equals(Command.LEFT)) {
 			pilot.travel(70);
 			SPTS(pilot);
-			pilot.setRotateSpeed(pilot.getMaxRotateSpeed() / 2);
+			pilot.setRotateSpeed(pilot.getMaxRotateSpeed() / 1.75);
 			pilot.rotateLeft();
 			
 			try{Thread.sleep(175);}catch(Exception e){}
@@ -77,7 +77,7 @@ public class NavigateJunction implements Behavior {
 		} else if(action.equals(Command.RIGHT)) {
 			pilot.travel(70);
 			SPTS(pilot);
-			pilot.setRotateSpeed(pilot.getMaxRotateSpeed() / 2);
+			pilot.setRotateSpeed(pilot.getMaxRotateSpeed() / 1.75);
 			pilot.rotateRight();
 			
 			try{Thread.sleep(175);}catch(Exception e){}

@@ -1,6 +1,8 @@
 package com.rp25.networkCommunication;
+import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.OutputStreamWriter;
 
 import org.apache.log4j.Logger;
 
@@ -11,7 +13,7 @@ import com.rp25.tools.Job;
 
 public class Sender  {
 
-	public static enum Purpose{JOB,MOVE}
+	public static enum Purpose{JOB,MOVE, POLL}
 
 	private final static Logger logger = Logger.getLogger(Sender.class);
 	
@@ -23,25 +25,25 @@ public class Sender  {
 	public static int pollButton(int i){
 		
 		try {
+			DataOutputStream out = channels[i].getOutput(); //gets output stream for that robot.
+			out.writeInt(Purpose.POLL.ordinal()); //writes the enum int to stream
+			logger.debug("Button poll sent: " + Purpose.POLL.ordinal());
+			out.flush();
 			return (new DataInputStream(channels[i].getInput())).readInt();
 		}
-		
 		catch(Exception e){
-			logger.info("Job send failed", e);
+			logger.info("Poll failed", e);
 			return -1;
-		}
-		
-	}
-	
-	public static int sendJob(int i, Job j) {
+		}	
+	}	
+	public static int sendJob(int i, String s) {
 		--i;
 		
 		try {
 			DataOutputStream out = channels[i].getOutput(); //gets output stream for that robot.
 			out.writeInt(Purpose.JOB.ordinal()); //writes the enum int to stream
 			logger.debug("Job int sent: " + Purpose.JOB.ordinal());
-			out.flush();
-			//send interface shizzle
+			new BufferedWriter(new OutputStreamWriter(System.out)).write(s);
 			out.flush();
 			return (new DataInputStream(channels[i].getInput())).readInt();
 		}

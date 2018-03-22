@@ -10,7 +10,7 @@ import com.rp25.tools.Command;
 
 
 public class Dispatcher extends Thread {
-	public static enum Purpose{JOB,MOVE}
+	public static enum Purpose{JOB,MOVE,POLL}
 
 	DataInputStream in;
 	DataOutputStream out;
@@ -38,8 +38,12 @@ public class Dispatcher extends Thread {
 					out.writeInt(0);
 					out.flush();
 				}
-				else { //dispatching a movement
+				else if (purpose == Purpose.MOVE) { //dispatching a movement
 					moves.push(Command.values()[in.readInt()]);
+					out.writeInt(feedBack.take());
+					out.flush();
+				}
+				else{ //returning poll of the button
 					out.writeInt(feedBack.take());
 					out.flush();
 				}
