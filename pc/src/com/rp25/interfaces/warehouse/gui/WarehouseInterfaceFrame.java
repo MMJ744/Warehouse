@@ -20,6 +20,7 @@ public class WarehouseInterfaceFrame extends JFrame {
 	
 	VisualPanel visualPanel;
 	InfoPanel infoPanel;
+	CompletedJobsPanel completedJobsPanel;
 
 	public WarehouseInterfaceFrame(String title, WarehouseGridSim sim) {
 		//JFrame setup
@@ -37,7 +38,10 @@ public class WarehouseInterfaceFrame extends JFrame {
 		infoPanel = new InfoPanel();
 		add(infoPanel);
 
-		setMinimumSize(new Dimension(1000, 500));
+		completedJobsPanel = new CompletedJobsPanel();
+		add(completedJobsPanel);
+		
+		setMinimumSize(new Dimension(1300, 500));
 		setResizable(false);
 	}
 	
@@ -47,6 +51,10 @@ public class WarehouseInterfaceFrame extends JFrame {
 	
 	public void updateInfo(Robot r) {
 		infoPanel.update(r);
+	}
+	
+	public void updateCompletedJobs(String s) {
+		completedJobsPanel.updateCompletedJobs(s);
 	}
 	
 	public void addListeners(int id, ActionListener listener) {

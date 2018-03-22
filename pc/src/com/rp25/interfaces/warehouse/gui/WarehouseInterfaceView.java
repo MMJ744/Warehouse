@@ -39,8 +39,4 @@ public class WarehouseInterfaceView {
 			});
 		}
 	}
-	
-	public void update(int id) {
-		warehouseState.getRobot(id);
-	}
 }

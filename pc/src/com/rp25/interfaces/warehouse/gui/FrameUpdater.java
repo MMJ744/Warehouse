@@ -30,6 +30,8 @@ public class FrameUpdater extends Thread {
 				frame.updateInfo(bot);
 			}
 			
+			frame.updateCompletedJobs(warehouseState.completedJobsString());
+			
 			Delay.msDelay(TIME_PER_UPDATE);
 		}
 	}

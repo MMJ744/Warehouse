@@ -1,5 +1,6 @@
 package com.rp25.interfaces.warehouse;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
@@ -24,7 +25,16 @@ public class WarehouseState {
 	 * Value: Robot Object
 	 */
 	HashMap<Integer, Robot> robotList = new HashMap<>(); 
+	Collection<Job> completedJobs = new ArrayList<>();
 	RouteExecutor executor = null;
+	
+	public void addCompletedJob(Job j) {
+		completedJobs.add(j);
+	}
+	
+	public Collection<Job> getAllCompletedJobs() {
+		return completedJobs;
+	}
 	
 	public void setExecutor(RouteExecutor e) {
 		executor = e;
@@ -58,5 +68,16 @@ public class WarehouseState {
 	 */
 	public Robot getRobot(int id) {
 		return robotList.get(id);
+	}
+
+	public String completedJobsString() {
+		StringBuilder output = new StringBuilder();
+		
+		for (Job j : getAllCompletedJobs()) {
+			output.append(j.getName())
+				  .append("\r\n");
+		}
+		
+		return output.toString();
 	}
 }
