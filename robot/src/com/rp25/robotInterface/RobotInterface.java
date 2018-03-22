@@ -5,9 +5,10 @@ import lejos.nxt.ButtonListener;
 import lejos.nxt.Sound;
 import lejos.util.Delay;
 import java.util.*;
+
+import com.rp25.tools.BlockingQueue;
+
 import java.io.*;
-import com.rp25.networkCommunication.BlockingQueue;
-// blockingQueue.take();
 
 class RobotInterface extends Thread{
 

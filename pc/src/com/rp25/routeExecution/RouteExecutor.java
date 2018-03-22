@@ -31,7 +31,6 @@ public class RouteExecutor {
 	RouteIntegration routePlanner;
 	final static Logger logger = Logger.getLogger(RouteExecutor.class);
 
-	private boolean halt;
 	
 	public RouteExecutor(Robot _r1, Robot _r2, Robot _r3, RouteIntegration _routePlanner) {
 		routePlanner = _routePlanner;
