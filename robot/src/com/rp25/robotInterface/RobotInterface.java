@@ -18,12 +18,13 @@ class RobotInterface extends Thread {
 	int itemsCollected;
 	boolean itemsDelivered;
 	String function;
-	java.util.concurrent.BlockingQueue<String> queue;
-
-	public RobotInterface(BlockingQueue<String> jobQueue) { // id of robot (1/2/3)
+	BlockingQueue<String> queue;
+	java.util.concurrent.BlockingQueue<Integer> feedback;
+	public RobotInterface(BlockingQueue<String> jobQueue, BlockingQueue<Integer> feedback;) { // id of robot (1/2/3)
 		jobComplete = false;
 		itemsCollected = 0;
 		itemsDelivered = false;
+		this.feedback = feedback;
 		queue = jobQueue;
 		run();
 	}
@@ -47,26 +48,11 @@ class RobotInterface extends Thread {
 					System.out.println("Job has been cancelled, dropping items");
 					break;
 				}
+				sendData();
 			// send back 1 for true.
 		}
 	}
 
-	private void perform() {
-
-		if (function.equals("pickup")) {
-			pickingUp();
-		}
-
-		while (!itemsDelivered) {
-			if (function.equals("finished")) {
-				System.out.println("Job " + itemCode + " has been completed");
-				itemsDelivered = true;
-			} else if (function.equals("cancelled")) {
-				System.out.println("Job " + itemCode + "has been cancelled");
-				break;
-			}
-		}
-	}
 
 	/**
 	 * Checks whether the button has been pressed the correct number of times, to
@@ -95,7 +81,7 @@ class RobotInterface extends Thread {
 				System.out.println("All items have been collected");
 				buttonPressed = 0;
 				itemsCollected = 1;
-				sendData();
+				
 			} else if (function.equals("cancelled")) {
 				System.out.println("Job has been cancelled");
 				break;
@@ -104,7 +90,7 @@ class RobotInterface extends Thread {
 	}
 
 	public void sendData() {
-		// Need to show when the robot has collected up the correct number of items.
+		feedback.put(1);
 	}
 
 	/**

@@ -10,10 +10,20 @@ import com.rp25.tools.Robot;
 public class Route {
 	private LinkedList<RouteAction> routePlan;
 	int robotID;
-
+	String jobID;
+	
 	public Route(int robotID) {
+		this(robotID, null);
+	}
+
+	public Route(int robotID, String jobID) {
 		routePlan = new LinkedList<>();
 		this.robotID = robotID;
+		this.jobID = jobID;
+	}
+	
+	public String getJobID() {
+		return jobID;
 	}
 	
 	public Optional<RouteAction> getNextAction() {
