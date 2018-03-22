@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import com.rp25.tools.HelperMethods;
 
 public class GivenData {
-	public static ArrayList<Point> read(String fileName) {
+	public ArrayList<Point> read(String fileName) {
 		ArrayList<Point> output = new ArrayList<>();
 		BufferedReader reader = null;
 		

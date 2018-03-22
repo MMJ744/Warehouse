@@ -1,10 +1,6 @@
 package com.rp25.jobSelectionAndAllocation;
 
 import java.io.BufferedReader;
-import com.rp25.tools.*;
-
-import java.util.Collections;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
