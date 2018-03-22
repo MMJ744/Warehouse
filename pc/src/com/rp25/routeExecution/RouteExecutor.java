@@ -168,11 +168,11 @@ public class RouteExecutor {
 		private boolean tellInterface(int id, String action, String itemID, int numberOfItem) {
 			// either: cancelled. finished. pickup.
 			boolean r = false;
-			// r = Sender.sendJob(id, action);
-			// if (action.equalsIgnoreCase("pickup")) {
-			// Sender.sendJob(id, itemID);
-			// Sender.sendJob(id, numberOfItem.toString);
-			// }
+			r = Sender.sendJob(id, action);
+			if (action.equalsIgnoreCase("pickup")) {
+				Sender.sendJob(id, itemID);
+				Sender.sendJob(id, numberOfItem.toString);
+			}
 			return r;
 		}
 
