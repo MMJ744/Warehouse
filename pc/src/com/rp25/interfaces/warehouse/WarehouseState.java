@@ -28,8 +28,8 @@ public class WarehouseState {
 	Collection<Job> completedJobs = new ArrayList<>();
 	RouteExecutor executor = null;
 	
-	public void addCompletedJob(Job j) {
-		completedJobs.add(j);
+	public void setCompletedJobs(Collection<Job> js) {
+		completedJobs = js;
 	}
 	
 	public Collection<Job> getAllCompletedJobs() {
