@@ -8,6 +8,7 @@ import com.rp25.motion.behavior.GoTheFuckForward;
 import com.rp25.motion.behavior.NavigateJunction;
 import com.rp25.motion.detector.JunctionDetector;
 import com.rp25.motion.detector.LineDetector;
+import com.rp25.robotInterface.RobotInterface;
 import com.rp25.tools.BlockingQueue;
 import com.rp25.tools.Command;
 
@@ -37,7 +38,7 @@ public class BotMain {
 		DataInputStream in = connection.openDataInputStream();
 		DataOutputStream out = connection.openDataOutputStream();
 		(new Dispatcher(in, out, moveQueue, jobQueue,feedbackQueue)).start();		
-		RobotInterface interface = new RobotInterface();
+		(new RobotInterface(jobQueue, feedbackQueue)).start();  
 		initRobot(moveQueue, feedbackQueue);
 
 		//pass Robot interface jobQueue

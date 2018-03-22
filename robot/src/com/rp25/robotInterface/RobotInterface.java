@@ -3,13 +3,11 @@ package com.rp25.robotInterface;
 import lejos.nxt.Button;
 import lejos.nxt.ButtonListener;
 import lejos.nxt.Sound;
-import lejos.util.Delay;
-import java.util.*;
+
 import com.rp25.tools.BlockingQueue;
 
-import java.io.*;
 
-class RobotInterface extends Thread {
+public class RobotInterface extends Thread {
 
 	String itemCode;
 	int noOfItems;
@@ -20,40 +18,37 @@ class RobotInterface extends Thread {
 	String function;
 	BlockingQueue<String> queue;
 	BlockingQueue<Integer> feedback;
-	
-	public RobotInterface(BlockingQueue<String> jobQueue, BlockingQueue<Integer> feedback;) { // id of robot (1/2/3)
+
+	public RobotInterface(BlockingQueue<String> jobQueue, BlockingQueue<Integer> feedback) { // id of robot (1/2/3)
 		jobComplete = false;
 		itemsCollected = 0;
 		itemsDelivered = false;
 		this.feedback = feedback;
 		queue = jobQueue;
-		run();
 	}
-
 
 	@Override
 	public void run() {
 		while (true) {
 			function = queue.take();
-			if function.equals("pickup") {
+			if (function.equals("pickup")) {
 				itemCode = queue.take();
 				String noOfItemsString = queue.take();
-				noOfItems.valueOf(noOfItemsString);
+				noOfItems = Integer.valueOf(noOfItemsString);
 				pickingUp();
 			}
-			
-				if (function.equals("finished")) {
-					System.out.println("Job " + itemCode + " has been completed");
-					itemsDelivered = true;
-				} else if (function.equals("cancelled")) {
-					System.out.println("Job has been cancelled, dropping items");
-					break;
-				}
-				sendData();
+
+			if (function.equals("finished")) {
+				System.out.println("Job " + itemCode + " has been completed");
+				itemsDelivered = true;
+			} else if (function.equals("cancelled")) {
+				System.out.println("Job has been cancelled, dropping items");
+				break;
+			}
+			sendData();
 			// send back 1 for true.
 		}
 	}
-
 
 	/**
 	 * Checks whether the button has been pressed the correct number of times, to
@@ -73,7 +68,7 @@ class RobotInterface extends Thread {
 
 				@Override
 				public void buttonPressed(Button _b) {
-					
+
 				}
 			});
 
@@ -82,7 +77,7 @@ class RobotInterface extends Thread {
 				System.out.println("All items have been collected");
 				buttonPressed = 0;
 				itemsCollected = 1;
-				
+
 			} else if (function.equals("cancelled")) {
 				System.out.println("Job has been cancelled");
 				break;
@@ -91,7 +86,7 @@ class RobotInterface extends Thread {
 	}
 
 	public void sendData() {
-		feedback.put(1);
+		feedback.push(1);
 	}
 
 	/**
