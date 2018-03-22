@@ -82,7 +82,7 @@ public class RouteIntegration {
 		int nextStep = s;
 		
 		//make an empty route to hold the plan
-		Route route = new Route(robot.getID(), job.getName());
+		Route route = new Route(robot.getID(), job);
 		
 		//actually plot the route
 		Point goal;

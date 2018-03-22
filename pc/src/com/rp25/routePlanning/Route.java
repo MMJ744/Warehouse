@@ -5,25 +5,26 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Optional;
 
+import com.rp25.tools.Job;
 import com.rp25.tools.Robot;
 
 public class Route {
 	private LinkedList<RouteAction> routePlan;
 	int robotID;
-	String jobID;
+	Job job;
 	
 	public Route(int robotID) {
 		this(robotID, null);
 	}
 
-	public Route(int robotID, String jobID) {
+	public Route(int robotID, Job job) {
 		routePlan = new LinkedList<>();
 		this.robotID = robotID;
-		this.jobID = jobID;
+		this.job = job;
 	}
 	
-	public String getJobID() {
-		return jobID;
+	public Job getJob() {
+		return job;
 	}
 	
 	public Optional<RouteAction> getNextAction() {
