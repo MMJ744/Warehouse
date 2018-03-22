@@ -23,7 +23,7 @@ public class JobAllocation {
 		for(JobPart part: nextJob.getParts()) {
 			totalWeight = totalWeight.add(part.getWeight());
 		}
-		ArrayList<Job> splitJobs;
+		ArrayList<Job> splitJobs = null;
 		while(totalWeight.compareTo(new BigDecimal("50")) > 0) {
 			jobIsSplit = true;
 			splitJobs = splitUpJob(nextJob);

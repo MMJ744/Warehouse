@@ -69,8 +69,9 @@ public class RouteExecutor {
 
 	private void checkRoutes() {
 		try {
-			if (route1 == null || route1.isRouteEmpty() || c1)
-				System.out.println((route1 = routePlanner.planRoute(r1, currentStep)).toString());
+			if (route1 == null || route1.isRouteEmpty() || c1) {
+				route1 = routePlanner.planRoute(r1, currentStep);
+			}
 			if (route2 == null || route2.isRouteEmpty() || c2)
 				System.out.println((route2 = routePlanner.planRoute(r2, currentStep)).toString());
 			
@@ -134,10 +135,11 @@ public class RouteExecutor {
 			}
 			switch (a.getAction()) {
 			case PICKUP:
-				tellInterface(r.getID(), "pickup", // some way to get item and amount);
+
+				tellInterface(r.getID(), "pickup", a.getItemID(), a.getItemCount());
 				break;
 			case DROPOFF:
-				tellInterface("finished", r.getID());
+				tellInterface(r.getID(), "finished", "", 0);
 				break;
 			default:
 				break;
