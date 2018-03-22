@@ -36,7 +36,7 @@ public class JobSelection {
 			String line;
 			String line2;
 			while((line = brLocation.readLine()) != null) {
-				logger.debug("Location = " + line);
+				logger.trace("Location = " + line);
 				brItems.close();
 				brItems = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(itemsLocation)));
 				String[] locationParts = HelperMethods.split(line, ",", 0);
@@ -50,7 +50,7 @@ public class JobSelection {
 				}
 			}
 			while((line = brJobs.readLine()) != null) {
-				logger.debug("Job = " + line);
+				logger.trace("Job = " + line);
 				String[] jobParts = HelperMethods.split(line, ",", 0);
 				Job job = new Job(jobParts[0]);
 				allJobs.add(job);
@@ -74,7 +74,6 @@ public class JobSelection {
 	}
 	
 	public void calculatePriority() {
-		System.out.println( "test: " + allJobs.size());
 		for(Job job: allJobs) {
 			BigDecimal reward = new BigDecimal("0");
 			BigDecimal weight = new BigDecimal("0");
@@ -98,7 +97,7 @@ public class JobSelection {
 			else {
 				priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).divide(new BigDecimal("0.001"), RoundingMode.HALF_EVEN);
 			}
-			logger.debug("Priority: " + priority);
+			logger.trace("Priority: " + priority);
 			job.setPriority(priority);
 		}
 		Collections.sort(allJobs, (a, b) -> b.getPriority().compareTo(a.getPriority()));

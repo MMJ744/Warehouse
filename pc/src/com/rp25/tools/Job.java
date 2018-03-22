@@ -33,7 +33,7 @@ public class Job {
 	
 	public ArrayList<JobPart> getParts(){
 		for(int i = 0; i < parts.size(); i++) {
-			logger.debug("Part " + i + ": " + parts.get(i).getName());
+			logger.trace("Part " + i + ": " + parts.get(i).getName());
 		}
 		return parts;
 	}
@@ -41,9 +41,9 @@ public class Job {
 	public JobPart getPart(String name) {
 		for (JobPart jobPart : parts) {
 			String jobName = jobPart.getName();
-			logger.debug("Job Part Recieved: " + jobName);
+			logger.trace("Job Part Recieved: " + jobName);
 			if(name.equals(jobName)) {
-				logger.debug("Job Part Returned: " + jobName);
+				logger.trace("Job Part Returned: " + jobName);
 				return jobPart;
 			}
 		}
