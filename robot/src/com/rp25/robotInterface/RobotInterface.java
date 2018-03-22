@@ -19,7 +19,8 @@ class RobotInterface extends Thread {
 	boolean itemsDelivered;
 	String function;
 	BlockingQueue<String> queue;
-	java.util.concurrent.BlockingQueue<Integer> feedback;
+	BlockingQueue<Integer> feedback;
+	
 	public RobotInterface(BlockingQueue<String> jobQueue, BlockingQueue<Integer> feedback;) { // id of robot (1/2/3)
 		jobComplete = false;
 		itemsCollected = 0;

@@ -37,7 +37,7 @@ public class BotMain {
 		DataInputStream in = connection.openDataInputStream();
 		DataOutputStream out = connection.openDataOutputStream();
 		(new Dispatcher(in, out, moveQueue, jobQueue,feedbackQueue)).start();		
-
+		RobotInterface interface = new RobotInterface();
 		initRobot(moveQueue, feedbackQueue);
 
 		//pass Robot interface jobQueue
