@@ -1,6 +1,8 @@
 package com.rp25.routeExecution;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Queue;
 
 import org.apache.log4j.Logger;
@@ -10,6 +12,7 @@ import com.rp25.networkCommunication.Sender;
 import com.rp25.routePlanning.Route;
 import com.rp25.routePlanning.RouteAction;
 import com.rp25.routePlanning.RouteIntegration;
+import com.rp25.tools.Job;
 import com.rp25.tools.Robot;
 
 import lejos.util.Delay;
@@ -30,7 +33,7 @@ public class RouteExecutor {
 	Integer currentStep = -1;
 	RouteIntegration routePlanner;
 	final static Logger logger = Logger.getLogger(RouteExecutor.class);
-
+	Collection<Job> completed = new ArrayList<Job>();
 	
 	public RouteExecutor(Robot _r1, Robot _r2, Robot _r3, RouteIntegration _routePlanner) {
 		routePlanner = _routePlanner;
@@ -44,7 +47,10 @@ public class RouteExecutor {
 		d2 = Orientation.N;
 		d3 = Orientation.N;
 	}
-
+	
+	public Collection<Job> getCompletedJobs(){
+		return completed;
+	}
 	public void Execute() {
 		while (true) {
 			++currentStep;
@@ -70,13 +76,23 @@ public class RouteExecutor {
 	private void checkRoutes() {
 		try {
 			if (route1 == null || route1.isRouteEmpty() || c1) {
+				if(!c1 && route1 != null)
+				//	completed.add(route1.getJob());
 				route1 = routePlanner.planRoute(r1, currentStep);
+				//r1.setCurrentJob(route1);
 			}
-			if (route2 == null || route2.isRouteEmpty() || c2)
-				System.out.println((route2 = routePlanner.planRoute(r2, currentStep)).toString());
-			
-			if (route3 == null || route3.isRouteEmpty() || c3)
-				System.out.println((route3 = routePlanner.planRoute(r3, currentStep)).toString());
+			if (route2 == null || route2.isRouteEmpty() || c2) {
+				if(!c2 && route2 != null)
+					//	completed.add(route2.getJob());
+				route2 = routePlanner.planRoute(r2, currentStep);
+				//r2.setCurrentJob(route2);
+			}
+			if (route3 == null || route3.isRouteEmpty() || c3){
+				if(!c3 && route3 != null)
+					//	completed.add(route3.getJob());
+				route3 = routePlanner.planRoute(r3, currentStep);
+				//r3.setCurrentJob(route3);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
