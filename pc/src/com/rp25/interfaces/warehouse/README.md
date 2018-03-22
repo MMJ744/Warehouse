@@ -18,8 +18,12 @@ public void updateBotPos(int id, int x, int y);
 public void updateBotJob(int id, Job j);
 ```
 
-## Getting Cancellations
-There are buttons on the GUI which allow the user to cancel jobs at will. The warehouse state contains a blocking queue which has the ID numbers of the robots whose jobs are to be cancelled. When a user presses the cancel button on a particular robot, the robot's ID will get passed into the blocking queue. This method from the Warehouse State can be called to get this queue:
+## Updating Completed Jobs Information
+There is a Collection of jobs stored in the warehouse state which can be obtained by calling:
 ```java
-public BlockingQueue<Integer> getCancellations();
+public Collection<Job> getAllCompletedJobs();
+```
+There is a method within the warehouse state to add a Job that has been completed to that collection by calling:
+```java
+public void addCompletedJob(Job j);
 ```
