@@ -1,19 +1,22 @@
 package com.rp25.jobSelectionAndAllocation;
 
 import java.io.BufferedReader;
-import com.rp25.tools.*;
-
-import rp.util.Collections;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 import org.apache.log4j.Logger;
+
+import com.rp25.tools.HelperMethods;
+import com.rp25.tools.Job;
+import com.rp25.tools.JobPart;
+
+import rp.util.Collections;
 
 public class JobSelection {
 	
@@ -27,15 +30,15 @@ public class JobSelection {
 	
 	public JobSelection(String jobLocation, String itemsLocation, String locationLocation, String cancelLocation, String testLocation) {
 		try {
-			brJobs = new BufferedReader(new FileReader(jobLocation));
-			brItems = new BufferedReader(new FileReader(itemsLocation));
-			brLocation = new BufferedReader(new FileReader(locationLocation));
+			brJobs = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(jobLocation)));
+			brItems = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(itemsLocation)));
+			brLocation = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(locationLocation)));
 			String line;
 			String line2;
 			while((line = brLocation.readLine()) != null) {
 				logger.debug("Location = " + line);
 				brItems.close();
-				brItems = new BufferedReader(new FileReader(itemsLocation));
+				brItems = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(itemsLocation)));
 				String[] locationParts = HelperMethods.split(line, ",", 0);
 				while((line2 = brItems.readLine()) != null) {
 					logger.debug("Item = " + line2);
@@ -71,7 +74,7 @@ public class JobSelection {
 	}
 	
 	public void calculatePriority() {
-		
+		System.out.println( "test: " + allJobs.size());
 		for(Job job: allJobs) {
 			BigDecimal reward = new BigDecimal("0");
 			BigDecimal weight = new BigDecimal("0");

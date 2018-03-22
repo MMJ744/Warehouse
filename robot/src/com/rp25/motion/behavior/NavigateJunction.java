@@ -13,14 +13,12 @@ public class NavigateJunction implements Behavior {
 	private DifferentialPilot pilot;
 	private JunctionDetector detector;
 
-	private boolean acting = false;
 	private boolean suppressed = false;
-	
-	boolean flag = false;
-	
-	private BlockingQueue<Command> moveQueue;
-	private BlockingQueue<Integer> feedbackQueue;
-	
+	private boolean flag = false;
+
+	BlockingQueue<Command> moveQueue = new BlockingQueue<>();
+	BlockingQueue<Integer> feedbackQueue = new BlockingQueue<>();
+
 	int curAction = 0;
 
 	public NavigateJunction(DifferentialPilot pilot, JunctionDetector detector, BlockingQueue<Command> moveQueue, BlockingQueue<Integer> feedbackQueue) {
@@ -38,44 +36,71 @@ public class NavigateJunction implements Behavior {
 
 	@Override
 	public void action() {
-		if(!flag) {
-			feedbackQueue.push(0);
-			flag = true;
-		}
+		if(flag) feedbackQueue.push(0);
 		
-		Command c = moveQueue.take();
+		if(!flag) flag = true;
 		
-		if(c.equals(Command.FORWARD)) {
-			pilot.forward();
-			SPTS(pilot);
+		pilot.stop();
+		Command action = moveQueue.take();
+		
+		if(action.equals(Command.FORWARD)) {
 			try {
-				Thread.sleep(100);
+				Thread.sleep(1100);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if(c.equals(Command.LEFT)) {
-			pilot.travel(75);
+			
+			pilot.forward();
 			SPTS(pilot);
-			pilot.setRotateSpeed(pilot.getMaxRotateSpeed());
-			pilot.rotate(92.5);
-			
-			while(pilot.isMoving() && !suppressed)
-				Thread.yield();
-			
-		} else if(c.equals(Command.RIGHT)) {
-			pilot.travel(75);
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if(action.equals(Command.LEFT)) {
+			pilot.travel(70);
 			SPTS(pilot);
-			pilot.setRotateSpeed(pilot.getMaxRotateSpeed());
-			pilot.rotate(-92.5);
-			
-			while(pilot.isMoving() && !suppressed)
-				Thread.yield();
-		} else if(c.equals(Command.UTURN)) {
 			pilot.setRotateSpeed(pilot.getMaxRotateSpeed() / 2);
-			pilot.rotate(185);
+			pilot.rotateLeft();
 			
-			while(pilot.isMoving() && !suppressed)
+			try{Thread.sleep(175);}catch(Exception e){}
+
+			while(!detector.isLeftOnLine() && !suppressed)
+				Thread.yield();
+			
+			pilot.rotate(15);
+			while(pilot.isMoving())
+				Thread.yield();
+					
+		} else if(action.equals(Command.RIGHT)) {
+			pilot.travel(70);
+			SPTS(pilot);
+			pilot.setRotateSpeed(pilot.getMaxRotateSpeed() / 2);
+			pilot.rotateRight();
+			
+			try{Thread.sleep(175);}catch(Exception e){}
+			
+			while(!detector.isRightOnLine() && !suppressed)
+				Thread.yield();
+			
+			pilot.rotate(-15);
+			while(pilot.isMoving())
+				Thread.yield();
+			
+		} else if(action.equals(Command.UTURN)) {
+			pilot.setRotateSpeed(pilot.getMaxRotateSpeed() / 2);
+			pilot.rotate(110);
+			pilot.rotateLeft();
+			
+			try{Thread.sleep(350);}catch(Exception e){}
+			
+			while(!detector.isLeftOnLine() && !suppressed)
+				Thread.yield();
+			
+			pilot.rotate(15);
+			while(pilot.isMoving())
 				Thread.yield();
 		}
 	}

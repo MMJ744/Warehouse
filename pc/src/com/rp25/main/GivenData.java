@@ -5,17 +5,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import com.rp25.tools.HelperMethods;
 
 public class GivenData {
-	public static ArrayList<Point> read(String fileName) {
+	public ArrayList<Point> read(String fileName) {
 		ArrayList<Point> output = new ArrayList<>();
 		BufferedReader reader = null;
 		
 		try {
-			reader =  new BufferedReader(new FileReader(fileName));
+			reader =   new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(fileName)));;
 			String line = "";
 			while((line = reader.readLine()) != null) {
 				String[] components = HelperMethods.split(line, ",", 0);//line.split(",");

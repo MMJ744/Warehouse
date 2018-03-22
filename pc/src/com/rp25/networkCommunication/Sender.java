@@ -17,7 +17,6 @@ public class Sender  {
 	
 	public static Channel[] channels = new Channel[PCMain.robotNo]; //keeps track of senders for each robot
 
-
 	public static int sendJob(int i, Job j) {
 		--i;
 		try {
@@ -51,6 +50,10 @@ public class Sender  {
 			logger.debug("Move send failed", e);
 			return -1;
 		}
-		
 	}
+}
+
+class SendCommand {
+	int i;
+	Command c;
 }
