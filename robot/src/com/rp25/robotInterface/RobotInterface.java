@@ -5,7 +5,6 @@ import lejos.nxt.ButtonListener;
 import lejos.nxt.Sound;
 import lejos.util.Delay;
 import java.util.*;
-
 import com.rp25.tools.BlockingQueue;
 
 import java.io.*;
@@ -26,16 +25,9 @@ class RobotInterface extends Thread {
 		itemsCollected = 0;
 		itemsDelivered = false;
 		queue = jobQueue;
-		getInfo();
-		perform();
+		run();
 	}
 
-	public void getInfo() {
-		// BufferedReader fromBT = new BufferedReader(new InputStreamReader(System.in));
-		// Will need to receive: itemCode, noOfItems, function
-		// (cancelled/finished/pickup) If pickup, send pickup, itemCode & no of items.
-
-	}
 
 	@Override
 	public void run() {
@@ -83,6 +75,7 @@ class RobotInterface extends Thread {
 	private void pickingUp() {
 		itemsCollected = 0;
 		itemsDelivered = false;
+		Sound.playTone(1000, 100, 100);
 		while (itemsCollected == 0) {
 			Button.ENTER.addButtonListener(new ButtonListener() {
 				@Override
@@ -93,7 +86,7 @@ class RobotInterface extends Thread {
 
 				@Override
 				public void buttonPressed(Button _b) {
-
+					
 				}
 			});
 
