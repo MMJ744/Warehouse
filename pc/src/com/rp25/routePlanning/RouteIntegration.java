@@ -23,35 +23,38 @@ public class RouteIntegration {
 	 */
 	
 	Point[] obstacleArray = new Point[] {
+			new Point(1, 1),	
 			new Point(1, 2),	
 			new Point(1, 3),	
 			new Point(1, 4),	
 			new Point(1, 5),	
-			new Point(1, 6),	
+			new Point(4, 1),	
 			new Point(4, 2),	
 			new Point(4, 3),	
 			new Point(4, 4),	
-			new Point(4, 5),	
-			new Point(4, 6),
+			new Point(4, 5),
+			new Point(7, 1),	
 			new Point(7, 2),	
 			new Point(7, 3),	
 			new Point(7, 4),	
-			new Point(7, 5),	
-			new Point(7, 6),
+			new Point(7, 5),
+			new Point(10, 1),	
 			new Point(10, 2),	
 			new Point(10, 3),	
-			new Point(10, 4),	
-			new Point(10, 5),	
-			new Point(10, 6)
+			new Point(10, 4),
+			new Point(10, 5)
 		};
 		
 		List<Point> obstacles = new ArrayList<>(Arrays.asList(obstacleArray));
 		
-		int height;
-		int width;
+		int height = 8;
+		int width = 12;
 	
-	Grid grid = new Grid(height, width, obstacles);
+	Grid grid = new Grid(width, height, obstacles);
 	
+	{
+		AStarSearch.getInstance().setGrid(grid);
+	};
 	
 	static final Point[] DROPOFFLOCATIONS = {new Point(4, 7), new Point(6, 5)};
 	
@@ -103,8 +106,8 @@ public class RouteIntegration {
 			}
 			
 			//get the route here
-			List<Point> path = AStarSearch.getInstance().getPath(start, goal, 0, nextStep);
-			
+			List<Point> path = AStarSearch.getInstance().getPath(r, start, goal, 0, nextStep);
+			nextStep += path.size();
 			
 			
 			//for each coordinate in the list, create an action and add to the route

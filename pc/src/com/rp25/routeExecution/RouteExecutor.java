@@ -11,6 +11,9 @@ import com.rp25.routePlanning.Route;
 import com.rp25.routePlanning.RouteAction;
 import com.rp25.routePlanning.RouteIntegration;
 import com.rp25.tools.Robot;
+
+import lejos.util.Delay;
+
 import static com.rp25.routePlanning.RouteAction.ACTION.DROPOFF;
 import static com.rp25.routePlanning.RouteAction.ACTION.PICKUP;
 import static com.rp25.routePlanning.RouteAction.ACTION.MOVE;
@@ -28,6 +31,8 @@ public class RouteExecutor {
 	RouteIntegration routePlanner;
 	final static Logger logger = Logger.getLogger(RouteExecutor.class);
 
+	private boolean halt;
+	
 	public RouteExecutor(Robot _r1, Robot _r2, Robot _r3, RouteIntegration _routePlanner) {
 		routePlanner = _routePlanner;
 		r1 = _r1;
@@ -36,36 +41,45 @@ public class RouteExecutor {
 		c1 = false;
 		c2 = false;
 		c3 = false;
+		d1 = Orientation.N;
+		d2 = Orientation.N;
+		d3 = Orientation.N;
 	}
 
 	public void Execute() {
 		while (true) {
 			++currentStep;
 			checkRoutes();
+			System.out.println("" + (route1 == null) + (r1 == null) + (d1 == null));
 			n1 = new Navigator(route1.getNextAction().get(), r1, d1);
 			n2 = new Navigator(route2.getNextAction().get(), r2, d2);
 			n3 = new Navigator(route3.getNextAction().get(), r3, d3);
 			n1.start();
 			n2.start();
 			n3.start();
+			
 			try {
 				n1.join();
 				n2.join();
 				n3.join();
 			} catch (InterruptedException e) {
 			}
+			
 		}
 	}
 
 	private void checkRoutes() {
 		try {
 			if (route1 == null || route1.isRouteEmpty() || c1)
-				route1 = routePlanner.planRoute(r1, currentStep);
+				System.out.println((route1 = routePlanner.planRoute(r1, currentStep)).toString());
 			if (route2 == null || route2.isRouteEmpty() || c2)
-				route2 = routePlanner.planRoute(r2, currentStep);
+				System.out.println((route2 = routePlanner.planRoute(r2, currentStep)).toString());
+			
 			if (route3 == null || route3.isRouteEmpty() || c3)
-				route3 = routePlanner.planRoute(r3, currentStep);
-		} catch (Exception e) {}
+				System.out.println((route3 = routePlanner.planRoute(r3, currentStep)).toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (c1) {
 			sendInterface("cancel", 1);
 			c1 = false;
@@ -111,9 +125,12 @@ public class RouteExecutor {
 			d = _d;
 		}
 
-		void Run() {
+		public void run() {	
 			if (a.getAction() != WAIT) {
 				Point point = a.getPoint();
+				
+				System.out.println(r.getID() + " going to " + point.toString());
+				
 				orientate(point, r, d);
 			}
 			switch (a.getAction()) {
@@ -147,9 +164,9 @@ public class RouteExecutor {
 				desired = Orientation.E;
 			else if (next.x < r.getX())
 				desired = Orientation.W;
-			else if (next.y > r.getY())
-				desired = Orientation.S;
 			else if (next.y < r.getY())
+				desired = Orientation.S;
+			else if (next.y > r.getY())
 				desired = Orientation.N;
 			else {
 				logger.debug("robot has been told to go to the location it is already at");
@@ -161,10 +178,15 @@ public class RouteExecutor {
 				return;
 			}
 			tellRobot(Orientation.rotate(d, desired), r.getID()); // sends the command to point the robot in the right
-			d = desired;
+			switch (r.getID()) {
+			case 1: d1 = desired; break;
+			case 2: d2 = desired; break;
+			case 3: d3 = desired; break;
+			}
 		}
 
 		private boolean tellRobot(Command c, int id) {
+			System.out.println("send command: " + c + " to " + id);
 			boolean r = false;
 			if (Sender.sendMove(id, c) == 0)
 				r = true;

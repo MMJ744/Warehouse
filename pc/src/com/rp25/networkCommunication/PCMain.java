@@ -19,8 +19,9 @@ public class PCMain {
 	private static String[][] robots = {
 			{"iRobot", "00:16:53:17:BA:74"},
 			{"Thunderbird 6","00:16:53:17:BD:EA"},
+			{"Spike","00:16:53:0A:A6:81"},
 			//{"Chappie","00:16:53:1A:F6:D6"}
-			{"Dave","00:16:53:08:DA:D2"}
+			//{"Dave","00:16:53:08:DA:D2"}
 			} ; //robots
 
 	public static void main(String[] args) {

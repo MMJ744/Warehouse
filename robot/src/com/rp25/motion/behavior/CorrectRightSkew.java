@@ -1,12 +1,12 @@
 package com.rp25.motion.behavior;
 
-import static com.rp25.motion.behavior.GoTheFuckForward.SPTS;
-
 import com.rp25.motion.detector.LineDetector;
 
 import lejos.nxt.Motor;
 import lejos.robotics.navigation.DifferentialPilot;
 import lejos.robotics.subsumption.Behavior;
+
+import static com.rp25.motion.behavior.GoTheFuckForward.SPTS;
 
 public class CorrectRightSkew implements Behavior {
 	private DifferentialPilot pilot;
@@ -28,7 +28,7 @@ public class CorrectRightSkew implements Behavior {
 	public void action() {
 		suppressed = false;
 		
-		System.out.println("ROTLFT");
+		//System.out.println("ROTLFT");
 //		pilot.setRotateSpeed(50);
 //		pilot.rotateLeft();
 		
@@ -37,9 +37,9 @@ public class CorrectRightSkew implements Behavior {
 			SPTS(pilot);
 		}
 		
-		Motor.B.setSpeed(Motor.B.getSpeed() * 1.3f);
+		Motor.A.setSpeed(Motor.A.getSpeed() * 1.25f);
 		
-		while(detector.isLeftOnLine() && !detector.isRightOnLine())
+		while(detector.isLeftOnLine() && !detector.isRightOnLine() && !suppressed)
 			Thread.yield();
 	}
 
@@ -49,3 +49,4 @@ public class CorrectRightSkew implements Behavior {
 	}
 
 }
+

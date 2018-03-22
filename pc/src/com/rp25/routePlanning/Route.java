@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Optional;
 
+import com.rp25.tools.Robot;
+
 public class Route {
 	private LinkedList<RouteAction> routePlan;
 	int robotID;
@@ -17,7 +19,7 @@ public class Route {
 	public Optional<RouteAction> getNextAction() {
 		if(isRouteEmpty()) return Optional.empty();
 		
-		return Optional.of(routePlan.remove(0));
+		return Optional.ofNullable(routePlan.remove(0));
 	}
 	
 	public void addToRoute(RouteAction action) {
@@ -31,15 +33,20 @@ public class Route {
 	public int size() {
 		return routePlan.size();
 	}
+	public String toString(){
+		return routePlan.toString();
+	}
 }
 
 class RouteDesc {
+	public Robot r;
 	public Point startXY;
 	public Collection<Point> itemXYs;
 	public Point goalXY;
 	public int priority;
 	
-	public RouteDesc(Point startXY, Collection<Point> itemXYs, Point goalXY, int priority) {
+	public RouteDesc(Robot r, Point startXY, Collection<Point> itemXYs, Point goalXY, int priority) {
+		this.r = r;
 		this.startXY = startXY;
 		this.itemXYs = itemXYs;
 		this.goalXY = goalXY;

@@ -24,7 +24,6 @@ public class WarehouseState {
 	 * Value: Robot Object
 	 */
 	HashMap<Integer, Robot> robotList = new HashMap<>(); 
-	BlockingQueue<Integer> cancellations = new LinkedBlockingQueue<>();
 	RouteExecutor executor = null;
 	
 	public void setExecutor(RouteExecutor e) {
@@ -59,34 +58,5 @@ public class WarehouseState {
 	 */
 	public Robot getRobot(int id) {
 		return robotList.get(id);
-	}
-	
-	/**
-	 * Updates a specific robot's coordinates
-	 * @param id ID number of the desired robot
-	 * @param x x-coordinate of the desired robot
-	 * @param y y-coordinate of the desired robot
-	 */
-	public void updateBotPos(int id, int x, int y) {
-		Robot bot = robotList.get(id);
-		bot.updateCoordinates(x, y);
-	}
-	
-	/**
-	 * Updates a specific robot's current Job
-	 * @param id ID number of the desired robot
-	 * @param j The new job
-	 */
-	public void updateBotJob(int id, Job j) {
-		Robot bot = robotList.get(id);
-		bot.setCurrentJob(j);
-	}
-	
-	/**
-	 * Get the queue of job cancellations from the warehouse interface
-	 * @return A BlockingQueue of job cancellations
-	 */
-	public BlockingQueue<Integer> getCancellations(){
-		return cancellations;
 	}
 }
