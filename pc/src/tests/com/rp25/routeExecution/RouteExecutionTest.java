@@ -1,4 +1,4 @@
-package tests;
+package tests.com.rp25.routeExecution;
 
 import org.junit.Assert;
 import org.junit.Test;
