@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.rp25.tools.HelperMethods;
+import com.rp25.tools.Job;
+import com.rp25.tools.JobPart;
 
 public class Cancellation {
 	
