@@ -3,12 +3,12 @@ package com.rp25.jobSelectionAndAllocation;
 
 
 
+
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
-import com.rp25.tools.*;
 
 public class Cancellation {
 	
@@ -83,7 +83,7 @@ public class Cancellation {
 			}
 		}
 		if(trainingSetSize>0) {
-			probYes = (new BigDecimal(yesesInTest)).divide(new BigDecimal(trainingSetSize), RoundingMode.HALF_UP);
+			probYes = (new BigDecimal(yesesInTest)).divide(new BigDecimal(trainingSetSize),5, RoundingMode.HALF_UP);
 			probNo = new BigDecimal(1).subtract(probYes);
 		}
 		else {
@@ -93,10 +93,13 @@ public class Cancellation {
 			TestJob testJob = allTestJobs.get(i);
 			probGivenTypes[testJob.getNumOfItemTypes() - 1] += 1;
 			if(testJob.getNumOfItems() == 1) {
-				probGivenItems[0] += 1;
+				probGivenTypes[0] += 1;
+				if(testJob.getIsCancelled()==1) {
+					probYesGivenTypes[0] += 1;
+				}
 			}
 			else {
-				probGivenItems[testJob.getNumOfItems()/2 - 1] += 1;
+				probGivenTypes[testJob.getNumOfItems()/2 - 1] += 1;
 			}
 			if(testJob.getWeight().divide(new BigDecimal("10")).intValue() - 1<0) {
 				probGivenWeight[0] += 1;
@@ -143,7 +146,6 @@ public class Cancellation {
 		}
 		timesLearnt += 1;
 		if(correctPredicts<(allTestJobs.size()-trainingSetSize)*0.7) {
-			System.out.println("This was inaccurate, change parameters considered");
 			if(timesLearnt<3) {
 				learn();
 			}
@@ -162,14 +164,14 @@ public class Cancellation {
 				typesProb = new BigDecimal("0.001");
 			}
 			else {
-				typesProb = new BigDecimal(probYesGivenTypes[0]).divide(new BigDecimal(probGivenTypes[0]), RoundingMode.HALF_UP);
+				typesProb = new BigDecimal(probYesGivenTypes[0]).divide(new BigDecimal(probGivenTypes[0]),5, RoundingMode.HALF_UP);
 			}
 		}
 		else if(probYesGivenTypes[job.getNumOfItemTypes()-1] == 0) {
 			typesProb = new BigDecimal("0.001");
 		}
 		else {
-			typesProb = new BigDecimal(probYesGivenTypes[job.getNumOfItemTypes()-1]).divide(new BigDecimal(probGivenTypes[job.getNumOfItemTypes()-1]), RoundingMode.HALF_UP);
+			typesProb = new BigDecimal(probYesGivenTypes[job.getNumOfItemTypes()-1]).divide(new BigDecimal(probGivenTypes[job.getNumOfItemTypes()-1]),5, RoundingMode.HALF_UP);
 		}
 		BigDecimal itemsProb;
 		if(numOfItems/2-1<0) {
@@ -177,14 +179,14 @@ public class Cancellation {
 				itemsProb = new BigDecimal("0.001");
 			}
 			else {
-				itemsProb = new BigDecimal(probYesGivenItems[0]).divide(new BigDecimal(probGivenItems[0]), RoundingMode.HALF_UP);
+				itemsProb = new BigDecimal(probYesGivenItems[0]).divide(new BigDecimal(probGivenItems[0]),5 , RoundingMode.HALF_UP);
 			}
 		}
-		else if(probYesGivenItems[numOfItems/2-1] == 0) {
+		else if(probGivenItems[numOfItems/2-1] == 0) {
 			itemsProb = new BigDecimal("0.001");
 		}
 		else {
-			itemsProb = new BigDecimal(probYesGivenItems[numOfItems/2-1]).divide(new BigDecimal(probGivenItems[numOfItems/2-1]), RoundingMode.HALF_UP);
+			itemsProb = new BigDecimal(probYesGivenItems[numOfItems/2-1]).divide(new BigDecimal(probGivenItems[numOfItems/2-1]),5 , RoundingMode.HALF_UP);
 		}
 		BigDecimal weightProb;
 		if(weight.divide(new BigDecimal("10")).intValue()-1<0){
@@ -192,14 +194,14 @@ public class Cancellation {
 				weightProb = new BigDecimal("0.001");
 			}
 			else {
-				weightProb = new BigDecimal(probYesGivenWeight[0]).divide(new BigDecimal(probGivenWeight[0]), RoundingMode.HALF_UP);
+				weightProb = new BigDecimal(probYesGivenWeight[0]).divide(new BigDecimal(probGivenWeight[0]),5 , RoundingMode.HALF_UP);
 			}			
 		}
 		else if(probYesGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1] == 0) {
 			weightProb = new BigDecimal("0.001");
 		}
 		else {
-			weightProb = new BigDecimal(probYesGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]).divide(new BigDecimal(probGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]), RoundingMode.HALF_UP);
+			weightProb = new BigDecimal(probYesGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]).divide(new BigDecimal(probGivenWeight[weight.divide(new BigDecimal("10")).intValue()-1]),5 , RoundingMode.HALF_UP);
 		}
 		BigDecimal rewardProb;
 		if(reward.divide(new BigDecimal("4")).intValue()-1<0) {
@@ -207,14 +209,14 @@ public class Cancellation {
 				rewardProb = new BigDecimal("0.001");
 			}
 			else {
-				rewardProb = new BigDecimal(probYesGivenReward[0]).divide(new BigDecimal(probGivenReward[0]), RoundingMode.HALF_UP);
+				rewardProb = new BigDecimal(probYesGivenReward[0]).divide(new BigDecimal(probGivenReward[0]),5, RoundingMode.HALF_UP);
 			}
 		}
 		else if(probYesGivenWeight[reward.divide(new BigDecimal("4")).intValue()-1] == 0) {
 			rewardProb = new BigDecimal("0.001");
 		}
 		else {
-			rewardProb = new BigDecimal(probYesGivenReward[reward.divide(new BigDecimal("4")).intValue()-1]).divide(new BigDecimal(probGivenTypes[reward.divide(new BigDecimal("4")).intValue()-1]), RoundingMode.HALF_UP);
+			rewardProb = new BigDecimal(probYesGivenReward[reward.divide(new BigDecimal("4")).intValue()-1]).divide(new BigDecimal(probGivenTypes[reward.divide(new BigDecimal("4")).intValue()-1]),5 , RoundingMode.HALF_UP);
 		}
 		probOfCancellation = probYes.multiply(typesProb).multiply(itemsProb).multiply(weightProb).multiply(rewardProb);
 		return probOfCancellation;
