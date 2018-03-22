@@ -24,15 +24,15 @@ public class JobAllocation {
 			totalWeight = totalWeight.add(part.getWeight());
 		}
 		ArrayList<Job> splitJobs = null;
-		while(totalWeight.compareTo(new BigDecimal("50")) > 0) {
+		/*if(totalWeight.compareTo(new BigDecimal("50")) > 0) {
 			jobIsSplit = true;
 			splitJobs = splitUpJob(nextJob);
-		}
+		} */
 		jobs.add(nextJob);
 		int numRobot1Jobs = robot1Jobs.size();
 		int numRobot2Jobs = robot2Jobs.size();
 		int numRobot3Jobs = robot3Jobs.size();
-		if(jobIsSplit) {
+		/*if(jobIsSplit) {
 			if(Math.max(numRobot1Jobs, Math.max(numRobot2Jobs, numRobot3Jobs))==numRobot1Jobs) {
 				robot1Jobs.addAll(splitJobs);
 			}
@@ -43,7 +43,7 @@ public class JobAllocation {
 				robot3Jobs.addAll(splitJobs);
 			}
 		}
-		else {
+		else { */
 			if(Math.max(numRobot1Jobs, Math.max(numRobot2Jobs, numRobot3Jobs))==numRobot1Jobs) {
 				robot1Jobs.add(nextJob);
 			}
@@ -53,7 +53,7 @@ public class JobAllocation {
 			else {
 				robot3Jobs.add(nextJob);
 			}
-		}
+		//}
 		logger.trace("Current Job: " + nextJob.getName());
 	}
 	
@@ -99,9 +99,8 @@ public class JobAllocation {
 		return nextJob;
 		
 	}
-	static int count = 0;
+	
 	public static Job getJob() {
-		System.out.println(count++);
 		return jobs.remove(0);
 	}
 

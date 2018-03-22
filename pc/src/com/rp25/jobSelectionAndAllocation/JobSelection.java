@@ -41,7 +41,7 @@ public class JobSelection {
 				brItems = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(itemsLocation)));
 				String[] locationParts = HelperMethods.split(line, ",", 0);
 				while((line2 = brItems.readLine()) != null) {
-					logger.debug("Item = " + line2);
+					logger.trace("Item = " + line2);
 					String itemParts[] = HelperMethods.split(line2, ",", 0);
 					if(itemParts[0].equals(locationParts[2])) {
 						Item item = new Item(itemParts[0], Integer.parseInt(locationParts[0]), Integer.parseInt(locationParts[1]), new BigDecimal(itemParts[1]), new BigDecimal(itemParts[2]));

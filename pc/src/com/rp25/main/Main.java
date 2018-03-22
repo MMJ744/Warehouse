@@ -25,6 +25,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		JobSelection selection = new JobSelection(JOBS, ITEMS, LOCATIONS, CANCELLATIONS, TRAINING_SET);
+		System.out.println("hi");
 		Point r1Start = new Point(0,7);
 		Robot r1 = new Robot(1, (int) r1Start.getX(), (int) r1Start.getY());
 		Point r2Start = new Point(1,7);
