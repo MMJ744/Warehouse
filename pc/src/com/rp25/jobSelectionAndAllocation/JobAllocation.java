@@ -54,7 +54,7 @@ public class JobAllocation {
 				robot3Jobs.add(nextJob);
 			}
 		}
-		logger.debug("Current Job: " + nextJob.getName());
+		logger.trace("Current Job: " + nextJob.getName());
 	}
 	
 	private static ArrayList<Job> splitUpJob(Job job){

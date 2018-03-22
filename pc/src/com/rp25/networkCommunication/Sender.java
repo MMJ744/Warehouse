@@ -16,9 +16,26 @@ public class Sender  {
 	private final static Logger logger = Logger.getLogger(Sender.class);
 	
 	public static Channel[] channels = new Channel[PCMain.robotNo]; //keeps track of senders for each robot
-
+	/**
+	 * Please don't use this in a different thread to where you use sendJob or sendMove for a single bot.
+	 * it'll mess everything up
+	 * */
+	public static int pollButton(int i){
+		
+		try {
+			return (new DataInputStream(channels[i].getInput())).readInt();
+		}
+		
+		catch(Exception e){
+			logger.info("Job send failed", e);
+			return -1;
+		}
+		
+	}
+	
 	public static int sendJob(int i, Job j) {
 		--i;
+		
 		try {
 			DataOutputStream out = channels[i].getOutput(); //gets output stream for that robot.
 			out.writeInt(Purpose.JOB.ordinal()); //writes the enum int to stream
@@ -32,8 +49,7 @@ public class Sender  {
 		catch(Exception e){
 			logger.info("Job send failed", e);
 			return -1;
-		}
-		
+		}		
 	}
 	public static int sendMove(int i, Command c ) {
 		--i;
