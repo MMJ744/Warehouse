@@ -87,15 +87,15 @@ public class JobSelection {
 						currentItem = item;
 					}
 				}
-				weight.add(currentItem.getWeight());
-				reward.add(currentItem.getReward());
+				weight = weight.add(currentItem.getWeight());
+				reward = reward.add(currentItem.getReward());
 			}
 			BigDecimal priority;
 			if(cancel.probOfCancellation(job).compareTo(new BigDecimal(0))>0) {
-				priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).divide(cancel.probOfCancellation(job), RoundingMode.HALF_EVEN);
+				priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces)), 5, RoundingMode.HALF_UP).divide(cancel.probOfCancellation(job), 5, RoundingMode.HALF_UP);
 			}
 			else {
-				priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).divide(new BigDecimal("0.001"), RoundingMode.HALF_EVEN);
+				priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces)), 5, RoundingMode.HALF_UP).divide(new BigDecimal("0.001"), 5, RoundingMode.HALF_UP);
 			}
 			logger.trace("Priority: " + priority);
 			job.setPriority(priority);
