@@ -48,16 +48,16 @@ public class WarehouseCLI implements Runnable {
 				String movement = getInput();
 				switch(movement) {
 				case "up":
-					warehouseState.updateBotPos(botid, current.getX(), current.getY() + 1);
+					current.updateCoordinates(current.getX(), current.getY() + 1);
 					break;
 				case "down":
-					warehouseState.updateBotPos(botid, current.getX(), current.getY() - 1);
+					current.updateCoordinates(current.getX(), current.getY() - 1);
 					break;
 				case "left":
-					warehouseState.updateBotPos(botid, current.getX() - 1, current.getY());
+					current.updateCoordinates(current.getX() - 1, current.getY());
 					break;
 				case "right":
-					warehouseState.updateBotPos(botid, current.getX() + 1, current.getY());
+					current.updateCoordinates(current.getX() + 1, current.getY());
 					break;
 				}
 				logger.debug(warehouseState.getRobot(botid).posString());

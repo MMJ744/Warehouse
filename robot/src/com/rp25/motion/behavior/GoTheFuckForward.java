@@ -19,9 +19,7 @@ public class GoTheFuckForward implements Behavior {
 	@Override
 	public void action() {
 		suppressed = false;
-		
-		System.out.println("FWD");
-		
+				
 		pilot.forward();
 		SPTS(pilot);
 
@@ -35,6 +33,7 @@ public class GoTheFuckForward implements Behavior {
 	}
 	
 	public static void SPTS(DifferentialPilot pilot) {
-		pilot.setTravelSpeed(pilot.getMaxTravelSpeed() / 1.5);
+		pilot.setTravelSpeed(pilot.getMaxTravelSpeed() / 2);
 	}
 }
+

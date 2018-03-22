@@ -5,22 +5,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import org.apache.log4j.Logger;
 
 import com.rp25.tools.HelperMethods;
 
 public class GivenData {
-	
-	private static final Logger logger = Logger.getLogger(GivenData.class);
-	
-	public static ArrayList<Point> read(String fileName) {
+	public ArrayList<Point> read(String fileName) {
 		ArrayList<Point> output = new ArrayList<>();
 		BufferedReader reader = null;
 		
 		try {
-			reader =  new BufferedReader(new FileReader(fileName));
+			reader =   new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(fileName)));;
 			String line = "";
 			while((line = reader.readLine()) != null) {
 				String[] components = HelperMethods.split(line, ",", 0);//line.split(",");
@@ -31,11 +27,11 @@ public class GivenData {
 			}
 		}
 		catch (FileNotFoundException e){
-			logger.info("File: " + fileName + " was not found!");
+			System.err.println("File: " + fileName + " was not found!");
 		} catch (NumberFormatException e) {
-			logger.info("File: " + fileName + " has the wrong format!");
+			System.err.println("File: " + fileName + " has the wrong format!");
 		} catch (IOException e) {
-			logger.info("IOException: " + e.getMessage());
+			System.err.println("IOException: " + e.getMessage());
 		}
 		
 		return output;

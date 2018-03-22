@@ -33,8 +33,8 @@ public class Cancellation {
 	
 	public Cancellation(String cancellations, String testJobs, ArrayList<Item> items) {
 		try {
-			BufferedReader testsReader = new BufferedReader(new FileReader(testJobs));
-			BufferedReader cancellationReader = new BufferedReader(new FileReader(cancellations));
+			BufferedReader testsReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(testJobs)));
+			BufferedReader cancellationReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(cancellations)));
 			allItems = items;
 			String line1;
 			String line2;

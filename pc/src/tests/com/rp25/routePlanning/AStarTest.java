@@ -1,4 +1,4 @@
-package com.rp25.routePlanning.tests;
+package tests.com.rp25.routePlanning;
 
 import java.awt.Point;
 import java.util.ArrayList;

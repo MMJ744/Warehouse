@@ -47,8 +47,16 @@ public class Node implements Comparable<Node> {
 	}
 	
 	private int calcH() {
-		if(grid.isCellReserved(new Cell(xy, step)) || grid.isObstacle(xy)) return Integer.MAX_VALUE;
+		if(grid.isObstacle(xy)) return Integer.MAX_VALUE;
 		
+		if(parent.isPresent()) {
+			Point pXY = parent.get().getXY();
+			Cell oldCell = new Cell(pXY, step - 1);
+			Cell newCell = new Cell(xy, step);
+			
+			if(grid.isCellUnavailable(oldCell, newCell)) return Integer.MAX_VALUE;
+		}
+				
 		int x = (int) Math.abs(xy.getX() - goal.getX());
 		int y = (int) Math.abs(xy.getY() - goal.getY());
 		return x + y;

@@ -45,8 +45,8 @@ public class Grid {
 		return obstacles.contains(xy);
 	}
 
-	public boolean reserveCell(Cell cell, int priority) {
-		return !Optional.ofNullable(reservationTable.put(cell, priority)).isPresent();
+	public boolean reserveCell(Cell cell, int id) {
+		return !Optional.ofNullable(reservationTable.put(cell, id)).isPresent();
 	}
 
 	public boolean reserveCellForDuration(Cell cell, int duration, int priority) {
@@ -60,19 +60,26 @@ public class Grid {
 		return true;
 	}
 
-	public boolean isCellReserved(Cell cell) {
+	private boolean isCellReserved(Cell cell) {
 		return reservationTable.containsKey(cell);
 	}
 
-	public boolean isCellReservedHigherPriority(Cell cell, int priority) {
-		Optional<Integer> reservedPriority = Optional.of(reservationTable.get(cell));
-
-		if(reservedPriority.isPresent())
-			return reservedPriority.get() >= priority;
-
-			return false;
+	public boolean isCellUnavailable(Cell oldCell, Cell newCell) {
+		if(reservationTable.containsKey(newCell)) return true;
+		
+		boolean isNextPosReservedLastStep = isCellReserved(new Cell(newCell.getXY(), oldCell.getStep()));
+		if(isNextPosReservedLastStep) {
+			int r1 = reservationTable.get(new Cell(newCell.getXY(), oldCell.getStep()));
+			boolean isLastPosReservedNextStep = isCellReserved(new Cell(oldCell.getXY(), newCell.getStep()));
+			
+			if(isLastPosReservedNextStep) {
+				int r2 = reservationTable.get(new Cell(oldCell.getXY(), newCell.getStep()));
+				
+				return r1 == r2;
+			} else return false;
+		} else return false;
 	}
-
+	
 	public void output() {
 		for(int y = 0; y < height; y++) {
 			for(int x = 0; x < width; x++) {

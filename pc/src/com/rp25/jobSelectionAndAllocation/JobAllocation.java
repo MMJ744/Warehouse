@@ -11,7 +11,7 @@ import com.rp25.tools.JobPart;
 
 public class JobAllocation {
 	
-	private static ArrayList<JobPart> robot1Parts = new ArrayList<JobPart>();
+	private static ArrayList<Job> jobs = new ArrayList<Job>();
 	private static ArrayList<Job> robot1Jobs = new ArrayList<Job>();
 	private static ArrayList<Job> robot2Jobs = new ArrayList<Job>();
 	private static ArrayList<Job> robot3Jobs = new ArrayList<Job>();
@@ -23,11 +23,12 @@ public class JobAllocation {
 		for(JobPart part: nextJob.getParts()) {
 			totalWeight = totalWeight.add(part.getWeight());
 		}
-		ArrayList<Job> splitJobs
+		ArrayList<Job> splitJobs;
 		while(totalWeight.compareTo(new BigDecimal("50")) > 0) {
 			jobIsSplit = true;
 			splitJobs = splitUpJob(nextJob);
 		}
+		jobs.add(nextJob);
 		int numRobot1Jobs = robot1Jobs.size();
 		int numRobot2Jobs = robot2Jobs.size();
 		int numRobot3Jobs = robot3Jobs.size();
@@ -52,7 +53,7 @@ public class JobAllocation {
 			else {
 				robot3Jobs.add(nextJob);
 			}
-		}	
+		}
 		logger.debug("Current Job: " + nextJob.getName());
 	}
 	
@@ -98,9 +99,10 @@ public class JobAllocation {
 		return nextJob;
 		
 	}
-	
+	static int count = 0;
 	public static Job getJob() {
-		return getNextJob(1);
+		System.out.println(count++);
+		return jobs.remove(0);
 	}
 
 }
