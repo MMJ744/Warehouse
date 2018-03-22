@@ -58,7 +58,7 @@ public class JobAllocation {
 	}
 	
 	private static ArrayList<Job> splitUpJob(Job job){
-		ArrayList<Job> splitJobs = new ArrayList<Job>;
+		ArrayList<Job> splitJobs = new ArrayList<Job>();
 		BigDecimal weight = BigDecimal.ZERO;
 		int partsSplit = 0;
 		ArrayList<JobPart> parts = new ArrayList<JobPart>();
