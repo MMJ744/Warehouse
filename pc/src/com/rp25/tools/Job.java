@@ -9,9 +9,18 @@ public class Job {
 	private String name;
 	private BigDecimal priority = new BigDecimal("0");
 	private final static Logger logger = Logger.getLogger(Job.class);
+	private boolean isPart = false;
 	
 	public Job(String name) {
 		this.name = name;
+	}
+	
+	public void setIsSplit() {
+		isPart = true;
+	}
+	
+	public boolean getIsSplit() {
+		return isPart;
 	}
 	
 	public void addPart(JobPart part) {
