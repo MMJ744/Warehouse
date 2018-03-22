@@ -16,7 +16,7 @@ public class AStarSearch {
 	private Grid grid;
 
 	private static AStarSearch instance;
-	private AStarSearch() {}
+	public AStarSearch() {}
 
 	public static AStarSearch getInstance() {
 		if(instance == null)

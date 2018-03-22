@@ -17,8 +17,8 @@ public class JobSelectionAndAllocationTest {
 	JobSelection getJobs;
 	
 	@Before
-	public void initialiseJobSelection(String jobFilePath, String itemFilePath, String locationFilePath) {
-		getJobs = new JobSelection(jobFilePath, itemFilePath, locationFilePath);
+	public void initialiseJobSelection(String jobFilePath, String itemFilePath, String locationFilePath, String cancelLocation, String testLocation) {
+		getJobs = new JobSelection(jobFilePath, itemFilePath, locationFilePath, cancelLocation, testLocation);
 	}
 	
 	@Test

@@ -3,7 +3,7 @@ package com.rp25.jobSelectionAndAllocation;
 import java.io.BufferedReader;
 import com.rp25.tools.*;
 
-import rp.util.Collections;
+import java.util.Collections;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -63,10 +63,10 @@ public class JobSelection {
 			calculatePriority();
 		}
 		catch(FileNotFoundException e) {
-			logger.debug("File not found", e);
+			logger.info("File not found", e);
 		}
 		catch(IOException e) {
-			logger.debug("Data Streams Broke", e);
+			logger.info("Data Streams Broke", e);
 		}
 	}
 	
@@ -95,6 +95,7 @@ public class JobSelection {
 			else {
 				priority = reward.divide(weight.add(new BigDecimal(numberOfPlaces))).divide(new BigDecimal("0.001"), RoundingMode.HALF_EVEN);
 			}
+			logger.debug("Priority: " + priority);
 			job.setPriority(priority);
 		}
 		Collections.sort(allJobs, (a, b) -> b.getPriority().compareTo(a.getPriority()));

@@ -37,18 +37,18 @@ public class PCMain {
 				Sender.channels[i] = (new Channel(in,out));
 
 			}
-			//System.out.println(Arrays.toString(Sender.channels));
+			logger.debug(Arrays.toString(Sender.channels));
 
 				//Sender sender = new Sender();
 				// pass sender object to RouteExecution class {Sender is now static}
 				
 		}catch (NXTCommException e) {
 			// TODO Auto-generated catch block
-			logger.debug("\n\nError using Bluetooth Drivers", e);
+			logger.info("\n\nError using Bluetooth Drivers", e);
 		}
-		//System.out.println(Sender.sendMove(1, Command.FORWARD));
-		//System.out.println(Sender.sendMove(2, Command.LEFT));
-		//System.out.println(Sender.sendMove(3, Command.UTURN));
+		logger.debug(Sender.sendMove(1, Command.FORWARD));
+		logger.debug(Sender.sendMove(2, Command.LEFT));
+		logger.debug(Sender.sendMove(3, Command.UTURN));
 		//Sender.sendMove(1,Command.LEFT);
 		//Sender.sendMove(2, Command.FORWARD);
 		//Sender.sendMove(3,Command.FORWARD);

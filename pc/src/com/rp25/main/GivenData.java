@@ -7,9 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 import com.rp25.tools.HelperMethods;
 
 public class GivenData {
+	
+	private static final Logger logger = Logger.getLogger(GivenData.class);
+	
 	public static ArrayList<Point> read(String fileName) {
 		ArrayList<Point> output = new ArrayList<>();
 		BufferedReader reader = null;
@@ -26,11 +31,11 @@ public class GivenData {
 			}
 		}
 		catch (FileNotFoundException e){
-			System.err.println("File: " + fileName + " was not found!");
+			logger.info("File: " + fileName + " was not found!");
 		} catch (NumberFormatException e) {
-			System.err.println("File: " + fileName + " has the wrong format!");
+			logger.info("File: " + fileName + " has the wrong format!");
 		} catch (IOException e) {
-			System.err.println("IOException: " + e.getMessage());
+			logger.info("IOException: " + e.getMessage());
 		}
 		
 		return output;

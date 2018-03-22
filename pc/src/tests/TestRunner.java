@@ -13,7 +13,7 @@ public class TestRunner {
 		Result result = JUnitCore.runClasses(TestHarness.class);
 		
 		for (Failure failure : result.getFailures()) {
-			logger.debug(failure.toString());
+			logger.info(failure.toString());
 		}
 		
 		logger.debug(result.wasSuccessful());

@@ -31,7 +31,7 @@ public class Sender  {
 		}
 		
 		catch(Exception e){
-			logger.debug("Job send failed", e);
+			logger.info("Job send failed", e);
 			return -1;
 		}
 		
