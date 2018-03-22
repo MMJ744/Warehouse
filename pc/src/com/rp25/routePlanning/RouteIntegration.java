@@ -3,11 +3,7 @@ package com.rp25.routePlanning;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import com.rp25.jobSelectionAndAllocation.JobAllocation;
 import com.rp25.routePlanning.RouteAction.ACTION;
@@ -16,7 +12,7 @@ import com.rp25.tools.JobPart;
 import com.rp25.tools.Robot;
 
 public class RouteIntegration {
-	/* read in jobs from Katie (how???)
+	/* read in jobs from job allocation
 	 * is this running as a thread? 
 	 * set up grid once at the start
 	 * 
@@ -91,6 +87,7 @@ public class RouteIntegration {
 		//actually plot the route
 		Point goal;
 		int itemCount = 0;
+		String itemID = null;
 		
 		
 		for (int i = 0; i <= orderedParts.length; i++) {
@@ -103,6 +100,7 @@ public class RouteIntegration {
 				JobPart part = orderedParts[i]; //some form of pickup
 				goal = new Point(part.getX(), part.getY());
 				itemCount = part.getNumOfItems(); 
+				itemID = part.getName();
 			}
 			
 			//get the route here
@@ -119,7 +117,6 @@ public class RouteIntegration {
 					//this is the end of the route
 					if (itemCount == 0) action = ACTION.DROPOFF;
 					else action = ACTION.PICKUP;
-					//need to change something to allow number of items to be stored
 				}
 				else {
 					Point next = path.get(j+1);
@@ -127,7 +124,8 @@ public class RouteIntegration {
 					else action = ACTION.MOVE;
 				}
 				
-				route.addToRoute(new RouteAction(action, point, robot.getID()));
+				if (action.equals(ACTION.PICKUP)) route.addToRoute(new RouteAction(action, point, robot.getID(), itemID, itemCount));
+				else route.addToRoute(new RouteAction(action, point, robot.getID()));
 			}
 			start = goal;
 		}
