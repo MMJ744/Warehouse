@@ -34,7 +34,7 @@ public class RouteExecutor {
 	RouteIntegration routePlanner;
 	final static Logger logger = Logger.getLogger(RouteExecutor.class);
 	Collection<Job> completed = new ArrayList<Job>();
-	
+
 	public RouteExecutor(Robot _r1, Robot _r2, Robot _r3, RouteIntegration _routePlanner) {
 		routePlanner = _routePlanner;
 		r1 = _r1;
@@ -47,10 +47,11 @@ public class RouteExecutor {
 		d2 = Orientation.N;
 		d3 = Orientation.N;
 	}
-	
-	public Collection<Job> getCompletedJobs(){
+
+	public Collection<Job> getCompletedJobs() {
 		return completed;
 	}
+
 	public void Execute() {
 		while (true) {
 			++currentStep;
@@ -62,36 +63,42 @@ public class RouteExecutor {
 			n1.start();
 			n2.start();
 			n3.start();
-			
+
 			try {
 				n1.join();
 				n2.join();
 				n3.join();
 			} catch (InterruptedException e) {
 			}
-			
+
 		}
 	}
 
 	private void checkRoutes() {
 		try {
 			if (route1 == null || route1.isRouteEmpty() || c1) {
-				if(!c1 && route1 != null)
-				//	completed.add(route1.getJob());
+				if (!c1 && route1 != null) {
+					completed.add(route1.getJob());
+					sendInterface("finished", r1.getID());
+				}
 				route1 = routePlanner.planRoute(r1, currentStep);
-				//r1.setCurrentJob(route1.get);
+				r1.setCurrentJob(route1.getJob());
 			}
 			if (route2 == null || route2.isRouteEmpty() || c2) {
-				if(!c2 && route2 != null)
-					//	completed.add(route2.getJob());
+				if (!c2 && route2 != null) {
+					completed.add(route2.getJob());
+					sendInterface("finished", r2.getID());
+				}
 				route2 = routePlanner.planRoute(r2, currentStep);
-				//r2.setCurrentJob(route2);
+				r2.setCurrentJob(route2.getJob());
 			}
-			if (route3 == null || route3.isRouteEmpty() || c3){
-				if(!c3 && route3 != null)
-					//	completed.add(route3.getJob());
+			if (route3 == null || route3.isRouteEmpty() || c3) {
+				if (!c3 && route3 != null) {
+					completed.add(route3.getJob());
+					sendInterface("finished", r3.getID());
+				}
 				route3 = routePlanner.planRoute(r3, currentStep);
-				//r3.setCurrentJob(route3);
+				r3.setCurrentJob(route3.getJob());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,11 +118,7 @@ public class RouteExecutor {
 	}
 
 	private boolean sendInterface(String action, int id) {
-		boolean r = false;
-		// r = how ever to send the action
-		if (action.equalsIgnoreCase("pickup")) {
-			// send the number of items to pickup
-		}
+		boolean r = Sender.sendJob(id, action);
 		return r;
 	}
 
@@ -141,12 +144,12 @@ public class RouteExecutor {
 			d = _d;
 		}
 
-		public void run() {	
+		public void run() {
 			if (a.getAction() != WAIT) {
 				Point point = a.getPoint();
-				
+
 				System.out.println(r.getID() + " going to " + point.toString());
-				
+
 				orientate(point, r, d);
 			}
 			switch (a.getAction()) {
@@ -163,13 +166,13 @@ public class RouteExecutor {
 		}
 
 		private boolean tellInterface(int id, String action, String itemID, int numberOfItem) {
-			//either: cancelled. finished. pickup.
+			// either: cancelled. finished. pickup.
 			boolean r = false;
-		//	 r = Sender.sendJob(id, action);
-			//if (action.equalsIgnoreCase("pickup")) {
-				//Sender.sendJob(id, itemID);
-				//Sender.sendJob(id, numberOfItem.toString);
-			//}
+			// r = Sender.sendJob(id, action);
+			// if (action.equalsIgnoreCase("pickup")) {
+			// Sender.sendJob(id, itemID);
+			// Sender.sendJob(id, numberOfItem.toString);
+			// }
 			return r;
 		}
 
@@ -198,9 +201,15 @@ public class RouteExecutor {
 			}
 			tellRobot(Orientation.rotate(d, desired), r.getID()); // sends the command to point the robot in the right
 			switch (r.getID()) {
-			case 1: d1 = desired; break;
-			case 2: d2 = desired; break;
-			case 3: d3 = desired; break;
+			case 1:
+				d1 = desired;
+				break;
+			case 2:
+				d2 = desired;
+				break;
+			case 3:
+				d3 = desired;
+				break;
 			}
 		}
 
