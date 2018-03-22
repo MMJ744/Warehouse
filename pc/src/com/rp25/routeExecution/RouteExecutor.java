@@ -134,7 +134,7 @@ public class RouteExecutor {
 			}
 			switch (a.getAction()) {
 			case PICKUP:
-				tellInterface("pickup", r.getID());
+				tellInterface(r.getID(), "pickup", // some way to get item and amount);
 				break;
 			case DROPOFF:
 				tellInterface("finished", r.getID());
@@ -144,11 +144,12 @@ public class RouteExecutor {
 			}
 		}
 
-		private boolean tellInterface(String action, int id) {
-			boolean r = false;
-			// r = how ever to send the action
+		private boolean tellInterface(int id, String action, String itemID, int numberOfItem) {
+			//either: cancelled. finished. pickup.
+			boolean r = Sender.sendJob(id, action);
 			if (action.equalsIgnoreCase("pickup")) {
-				// send the number of items to pickup
+				Sender.sendJob(id, itemID);
+				Sender.sendJob(id, numberOfItem.toString);
 			}
 			return r;
 		}
