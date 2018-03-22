@@ -41,4 +41,31 @@ public class JobSelectionAndAllocationTest {
 		
 	}
 
+	@Test
+	public void jobsChangeOrder() {
+		ArrayList<Job> jobs = getJobs.getJobs();
+		boolean firstJobIsFirst = false;
+		if(jobs.get(0).getName().equals("10000")) {
+			firstJobIsFirst = true;
+		}
+		assertFalse("Jobs haven't changed order", firstJobIsFirst);
+	}
+
+	@Test
+	public void jobsShouldBeAllocatedToAllRobots() {
+		boolean jobIsNotAllocated = false;
+		if(JobAllocation.getNextJob(1).equals(null)) {
+			jobIsNotAllocated = true;
+		}
+		else if(JobAllocation.getNextJob(2).equals(null)) {
+			jobIsNotAllocated = true;
+		}
+		else if(JobAllocation.getNextJob(3).equals(null)) {
+			jobIsNotAllocated = true;
+		}
+		assertFalse("A robot hasn't been allocated any jobs", jobIsNotAllocated);
+		
+	}
+	
+
 }
