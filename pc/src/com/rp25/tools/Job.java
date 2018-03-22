@@ -52,7 +52,7 @@ public class Job {
 	
 	public void setPriority(BigDecimal newPriority) {
 		priority = newPriority;
-		logger.debug("Priority set to " + getPriority());
+		logger.trace("Priority set to " + getPriority());
 	}
 	
 	public BigDecimal getPriority() {

@@ -79,7 +79,7 @@ public class RouteExecutor {
 				if(!c1 && route1 != null)
 				//	completed.add(route1.getJob());
 				route1 = routePlanner.planRoute(r1, currentStep);
-				//r1.setCurrentJob(route1);
+				//r1.setCurrentJob(route1.get);
 			}
 			if (route2 == null || route2.isRouteEmpty() || c2) {
 				if(!c2 && route2 != null)
