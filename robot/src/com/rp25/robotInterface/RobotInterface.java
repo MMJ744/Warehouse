@@ -35,6 +35,7 @@ public class RobotInterface extends Thread {
 				itemCode = queue.take();
 				String noOfItemsString = queue.take();
 				noOfItems = Integer.valueOf(noOfItemsString);
+				System.out.println("Please give: " + noOfItems + " of: " + itemCode);
 				pickingUp();
 			}
 
@@ -57,7 +58,7 @@ public class RobotInterface extends Thread {
 	private void pickingUp() {
 		itemsCollected = 0;
 		itemsDelivered = false;
-		Sound.playTone(1000, 100, 100);
+		Sound.beepSequenceUp();
 		while (itemsCollected == 0) {
 			Button.ENTER.addButtonListener(new ButtonListener() {
 				@Override
@@ -78,10 +79,7 @@ public class RobotInterface extends Thread {
 				buttonPressed = 0;
 				itemsCollected = 1;
 
-			} else if (function.equals("cancelled")) {
-				System.out.println("Job has been cancelled");
-				break;
-			}
+			} 
 		}
 	}
 
