@@ -1,7 +1,6 @@
 package tests.com.rp25.jobSelectionAndAllocation;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -15,25 +14,33 @@ import com.rp25.tools.Job;
 public class JobSelectionAndAllocationTest {
 	
 	JobSelection getJobs;
+	String jobFilePath = "jobs.csv";
+	String itemFilePath = "items.csv";
+	String locationFilePath = "locations.csv";
+	String cancelLocation = "cancellations.csv";
+	String testLocation = jobFilePath;
 	
 	@Before
-	public void initialiseJobSelection(String jobFilePath, String itemFilePath, String locationFilePath, String cancelLocation, String testLocation) {
+	public void initialiseJobSelection() {
 		getJobs = new JobSelection(jobFilePath, itemFilePath, locationFilePath, cancelLocation, testLocation);
 	}
 	
 	@Test
 	public void jobsAreAdded() {
-		assertNotNull("Jobs are not added", JobAllocation.getNextJob(0));
+		getJobs = new JobSelection(jobFilePath, itemFilePath, locationFilePath, cancelLocation, testLocation);
+		assertNotNull("Jobs are not added", JobAllocation.getNextJob(1));
 	}
 	
 	@Test
-	public void shouldDeleteGivenJob(Job givenJob) {
-	
+	public void shouldDeleteGivenJob() {
+
+		getJobs = new JobSelection(jobFilePath, itemFilePath, locationFilePath, cancelLocation, testLocation);
+		String givenJob = "10000";
 		ArrayList<Job> jobs = getJobs.getJobs();
-		getJobs.cancelJobByJob(givenJob);
+		getJobs.cancelJobByName(givenJob);
 		boolean jobFound = false;
 		for(int i = 0; i < jobs.size(); i++) {
-			if(givenJob == jobs.get(i)) {
+			if(givenJob == jobs.get(i).getName()) {
 				jobFound = true;
 			}
 		}
@@ -43,7 +50,9 @@ public class JobSelectionAndAllocationTest {
 
 	@Test
 	public void jobsChangeOrder() {
+		getJobs = new JobSelection(jobFilePath, itemFilePath, locationFilePath, cancelLocation, testLocation);
 		ArrayList<Job> jobs = getJobs.getJobs();
+		assertTrue(jobs.size() > 0);
 		boolean firstJobIsFirst = false;
 		if(jobs.get(0).getName().equals("10000")) {
 			firstJobIsFirst = true;
@@ -53,6 +62,7 @@ public class JobSelectionAndAllocationTest {
 
 	@Test
 	public void jobsShouldBeAllocatedToAllRobots() {
+		getJobs = new JobSelection(jobFilePath, itemFilePath, locationFilePath, cancelLocation, testLocation);
 		boolean jobIsNotAllocated = false;
 		if(JobAllocation.getNextJob(1).equals(null)) {
 			jobIsNotAllocated = true;

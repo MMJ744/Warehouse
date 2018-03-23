@@ -16,8 +16,6 @@ import com.rp25.tools.HelperMethods;
 import com.rp25.tools.Job;
 import com.rp25.tools.JobPart;
 
-import rp.util.Collections;
-
 public class JobSelection {
 	
 	private BufferedReader brJobs;
