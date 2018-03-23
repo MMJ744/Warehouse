@@ -10,7 +10,7 @@ public class AStarTest {
 	public static void main(String[] args) {
 		Point start = new Point(2, 4);
 		Point goal = new Point(3, 5);
-		AStarSearch search = new AStarSearch(start, goal);
+		AStarSearch search = new AStarSearch();
 		Queue<Point> path = new Queue<Point>();
 		path = search.search();
 		if (path == null)
