@@ -3,19 +3,16 @@ package com.rp25.tools;
 import java.awt.Point;
 import java.math.BigDecimal;
 
-import java.awt.Point;
-import java.math.BigDecimal;
-
 public class JobPart {
-	
+
 	private int xCoord;
 	private int yCoord;
 	private String name;
 	private int numberOfItems;
 	private BigDecimal weight;
 	private BigDecimal reward;
-	
-	public JobPart(String name,int x,int y,int numItems, BigDecimal weight, BigDecimal reward) {
+
+	public JobPart(String name, int x, int y, int numItems, BigDecimal weight, BigDecimal reward) {
 		this.name = name;
 		xCoord = x;
 		yCoord = y;
@@ -23,15 +20,15 @@ public class JobPart {
 		this.weight = weight;
 		this.reward = reward;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public int getX() {
 		return xCoord;
 	}
-	
+
 	public int getY() {
 		return yCoord;
 	}
@@ -39,7 +36,7 @@ public class JobPart {
 	public Point getCoordinates() {
 		return new Point(xCoord, yCoord);
 	}
-	
+
 	public int getNumOfItems() {
 		return numberOfItems;
 	}
@@ -47,11 +44,9 @@ public class JobPart {
 	public BigDecimal getWeight() {
 		return weight;
 	}
-	
+
 	public BigDecimal getReward() {
 		return reward;
 	}
 
-
 }
-

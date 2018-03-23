@@ -13,20 +13,20 @@ public class WarehouseCLI implements Runnable {
 	private WarehouseState warehouseState;
 	private Scanner userInput;
 	final static Logger logger = Logger.getLogger(WarehouseCLI.class);
-	
+
 	public WarehouseCLI(WarehouseState state) {
 		warehouseState = state;
 		userInput = new Scanner(System.in);
 	}
-	
+
 	public WarehouseState getState() {
 		return warehouseState;
 	}
-	
+
 	public String getInput() {
 		return userInput.next();
 	}
-	
+
 	public void close() {
 		userInput.close();
 	}
@@ -34,19 +34,19 @@ public class WarehouseCLI implements Runnable {
 	@Override
 	public void run() {
 		String i;
-		
-		while(!(i = getInput()).equalsIgnoreCase("quit")) {
-			switch(i) {
+
+		while (!(i = getInput()).equalsIgnoreCase("quit")) {
+			switch (i) {
 			case "get":
 				int id = Integer.parseInt(getInput());
 				logger.debug(warehouseState.getRobot(id).toString());
 				break;
-				
-			case "move": 
+
+			case "move":
 				int botid = Integer.parseInt(getInput());
 				Robot current = warehouseState.getRobot(botid);
 				String movement = getInput();
-				switch(movement) {
+				switch (movement) {
 				case "up":
 					current.updateCoordinates(current.getX(), current.getY() + 1);
 					break;
@@ -62,7 +62,7 @@ public class WarehouseCLI implements Runnable {
 				}
 				logger.debug(warehouseState.getRobot(botid).posString());
 				break;
-				
+
 			case "job":
 				int botid2 = Integer.parseInt(getInput());
 				Robot current2 = warehouseState.getRobot(botid2);
@@ -71,8 +71,7 @@ public class WarehouseCLI implements Runnable {
 				current2.setCurrentJob(j);
 				logger.debug(warehouseState.getRobot(botid2).jobString());
 				break;
-			
-			
+
 			case "action":
 				int botid3 = Integer.parseInt(getInput());
 				Robot current3 = warehouseState.getRobot(botid3);
@@ -82,7 +81,7 @@ public class WarehouseCLI implements Runnable {
 				break;
 			}
 		}
-		
+
 		close();
 	}
 }

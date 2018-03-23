@@ -5,25 +5,25 @@ import java.awt.Point;
 public class Cell {
 	private Point xy;
 	private int step;
-	
+
 	public Cell(Point xy, int step) {
 		this.xy = xy;
 		this.step = step;
 	}
-	
+
 	public Point getXY() {
 		return xy;
 	}
-	
+
 	public int getStep() {
 		return step;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "x: " + xy.x + ", y: " + xy.y + ", t: " + step;
 	}
-	
+
 	private int pointHashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -31,7 +31,7 @@ public class Cell {
 		result = prime * result + xy.y;
 		return result;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -59,6 +59,5 @@ public class Cell {
 			return false;
 		return true;
 	}
-	
-	
+
 }

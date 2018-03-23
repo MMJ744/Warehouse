@@ -7,5 +7,5 @@ public class HelperMethods {
 	public static String[] split(String str, String regex, int limit) {
 		return Pattern.compile(regex).split(str, limit);
 	}
-	
+
 }

@@ -1,13 +1,13 @@
 package com.rp25.routeExecution;
 
+import static com.rp25.routePlanning.RouteAction.ACTION.WAIT;
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Queue;
 
 import org.apache.log4j.Logger;
 
-import com.rp25.interfaces.warehouse.WarehouseState;
 import com.rp25.networkCommunication.Sender;
 import com.rp25.routePlanning.Route;
 import com.rp25.routePlanning.RouteAction;
@@ -16,11 +16,6 @@ import com.rp25.tools.Job;
 import com.rp25.tools.Robot;
 
 import lejos.util.Delay;
-
-import static com.rp25.routePlanning.RouteAction.ACTION.DROPOFF;
-import static com.rp25.routePlanning.RouteAction.ACTION.PICKUP;
-import static com.rp25.routePlanning.RouteAction.ACTION.MOVE;
-import static com.rp25.routePlanning.RouteAction.ACTION.WAIT;
 
 public class RouteExecutor {
 
@@ -52,14 +47,15 @@ public class RouteExecutor {
 	public Collection<Job> getCompletedJobs() {
 		return completed;
 	}
-	
+
 	public void setPause() {
 		pause = !pause;
 	}
+
 	public void Execute() {
 		System.out.println("exe");
 		while (true) {
-			while(pause)
+			while (pause)
 				Delay.msDelay(1000);
 			++currentStep;
 			checkRoutes();
@@ -108,7 +104,7 @@ public class RouteExecutor {
 				r3.setCurrentJob(route3.getJob());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.printStackTrace(); // Will throw a path not found exception if A* cant generate a route
 		}
 		if (c1) {
 			sendInterface("cancel", 1);
@@ -125,7 +121,7 @@ public class RouteExecutor {
 	}
 
 	private int sendInterface(String action, int id) {
-		//Delay.msDelay(3000);
+		// Delay.msDelay(3000);
 		return Sender.sendJob(id, action);
 	}
 
@@ -172,13 +168,13 @@ public class RouteExecutor {
 				break;
 			default:
 				break;
-			} 
+			}
 		}
 
 		private int tellInterface(int id, String action, String itemID, Integer numberOfItem) {
 			// either: cancelled. finished. pickup.
 			System.out.println(1);
-			int	r = Sender.sendJob(id, action);
+			int r = Sender.sendJob(id, action);
 			System.out.println(2);
 			if (action.equalsIgnoreCase("pickup")) {
 				Sender.sendJob(id, itemID);
@@ -186,7 +182,7 @@ public class RouteExecutor {
 				Sender.sendJob(id, numberOfItem.toString());
 				System.out.println(4);
 			}
-			//Delay.msDelay(3000);
+			// Delay.msDelay(3000);
 			return r;
 		}
 

@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import lejos.geom.Point;
 import rp.robotics.mapping.IGridMap;
 import rp.robotics.mapping.LineMap;
-import rp.robotics.visualisation.GridMapVisualisation;
 import rp.robotics.visualisation.MapVisualisationComponent;
 
 /**
- * Effectively a copy of rp.robotics.visualisation.GridMapVisualsation,
- * with extra features for more GUI flexibility
+ * Effectively a copy of rp.robotics.visualisation.GridMapVisualsation, with
+ * extra features for more GUI flexibility
+ * 
  * @author ass782
  *
  */
@@ -25,27 +25,25 @@ public class WarehouseGridViz extends MapVisualisationComponent {
 	protected IGridMap m_gridMap;
 	private ArrayList<java.awt.Point> pickUpPoints;
 	private ArrayList<java.awt.Point> dropOffPoints;
-	
-	public WarehouseGridViz(IGridMap _gridMap, LineMap _lineMap, float _scaleFactor, 
+
+	public WarehouseGridViz(IGridMap _gridMap, LineMap _lineMap, float _scaleFactor,
 			ArrayList<java.awt.Point> _pickupPoints, ArrayList<java.awt.Point> _dropOffPoints) {
 		super(_lineMap, _scaleFactor);
 		m_gridMap = _gridMap;
 		pickUpPoints = _pickupPoints;
 		dropOffPoints = _dropOffPoints;
 	}
-	
+
 	@Override
 	public Dimension getPreferredSize() {
-	    return new Dimension(650,600);
+		return new Dimension(650, 600);
 	}
-	
-	private void connectToNeighbour(Graphics2D _g2, int _x, int _y, int _dx,
-			int _dy) {
+
+	private void connectToNeighbour(Graphics2D _g2, int _x, int _y, int _dx, int _dy) {
 
 		if (m_gridMap.isValidTransition(_x, _y, _x + _dx, _y + _dy)) {
 			Point p1 = m_gridMap.getCoordinatesOfGridPosition(_x, _y);
-			Point p2 = m_gridMap.getCoordinatesOfGridPosition(_x + _dx, _y
-					+ _dy);
+			Point p2 = m_gridMap.getCoordinatesOfGridPosition(_x + _dx, _y + _dy);
 			renderLine(p1, p2, _g2);
 		}
 
@@ -67,16 +65,14 @@ public class WarehouseGridViz extends MapVisualisationComponent {
 					if (isPickupPoint(x, y)) {
 						_g2.setStroke(new BasicStroke(5));
 						_g2.setPaint(Color.GREEN);
-					} 
-					else if(isDropOffPoint(x, y)) {
+					} else if (isDropOffPoint(x, y)) {
 						_g2.setStroke(new BasicStroke(5));
 						_g2.setPaint(Color.RED);
-					}
-					else {
+					} else {
 						_g2.setStroke(new BasicStroke(1));
 						_g2.setPaint(Color.BLUE);
 					}
-					
+
 					renderPoint(gridPoint, _g2, 0.02);
 				}
 			}
@@ -98,15 +94,17 @@ public class WarehouseGridViz extends MapVisualisationComponent {
 	}
 
 	private boolean isDropOffPoint(int x, int y) {
-		for(java.awt.Point p : dropOffPoints) {
-			if (p.getX() == x && p.getY() == y) return true;
+		for (java.awt.Point p : dropOffPoints) {
+			if (p.getX() == x && p.getY() == y)
+				return true;
 		}
 		return false;
 	}
 
 	private boolean isPickupPoint(int x, int y) {
-		for(java.awt.Point p : pickUpPoints) {
-			if (p.getX() == x && p.getY() == y) return true;
+		for (java.awt.Point p : pickUpPoints) {
+			if (p.getX() == x && p.getY() == y)
+				return true;
 		}
 		return false;
 	}

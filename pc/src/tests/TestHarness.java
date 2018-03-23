@@ -9,11 +9,7 @@ import tests.com.rp25.routeExecution.RouteExecutionTest;
 import tests.com.rp25.routePlanning.RoutePlanningTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({
-	RoutePlanningTest.class,
-	JobSelectionAndAllocationTest.class,
-	RouteExecutionTest.class
-})
+@SuiteClasses({ RoutePlanningTest.class, JobSelectionAndAllocationTest.class, RouteExecutionTest.class })
 
 public class TestHarness {
 

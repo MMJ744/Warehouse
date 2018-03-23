@@ -21,10 +21,15 @@ public class Robot {
 
 	/**
 	 * Constructor to initialize the robot class.
-	 * @param j Current job that the robot is assigned to.
-	 * @param idNumber ID number of the robot.
-	 * @param xCoor X-coordinate of the robot.
-	 * @param yCoor Y-coordinate of the robot.
+	 * 
+	 * @param j
+	 *            Current job that the robot is assigned to.
+	 * @param idNumber
+	 *            ID number of the robot.
+	 * @param xCoor
+	 *            X-coordinate of the robot.
+	 * @param yCoor
+	 *            Y-coordinate of the robot.
 	 */
 	public Robot(int idNumber, int xCoor, int yCoor) {
 		id = idNumber;
@@ -44,7 +49,9 @@ public class Robot {
 
 	/**
 	 * Allows for updating the current job of the robot.
-	 * @param newJob The new job.
+	 * 
+	 * @param newJob
+	 *            The new job.
 	 */
 	public void setCurrentJob(Job newJob) {
 		currentJob = newJob;
@@ -59,7 +66,9 @@ public class Robot {
 
 	/**
 	 * Updates the current action.
-	 * @param s String of the new action.
+	 * 
+	 * @param s
+	 *            String of the new action.
 	 */
 	public void setCurrentAction(String s) {
 		currentAction = s;
@@ -77,8 +86,11 @@ public class Robot {
 
 	/**
 	 * Allows for updating the coordinates of the robot.
-	 * @param newX new x-coordinate.
-	 * @param newY new y-coordinate.
+	 * 
+	 * @param newX
+	 *            new x-coordinate.
+	 * @param newY
+	 *            new y-coordinate.
 	 */
 	public void updateCoordinates(int newX, int newY) {
 		x = newX;
