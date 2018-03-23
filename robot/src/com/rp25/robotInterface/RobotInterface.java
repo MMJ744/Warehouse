@@ -68,24 +68,8 @@ public class RobotInterface extends Thread {
 		for (int i = 0; i < noOfItems; i++) {
 			Button.waitForAnyPress();
 		}
+		Sound.twoBeeps();
 		System.out.println("thanks for items");
-		/*
-		 * while (itemsCollected == 0) { Button.ENTER.addButtonListener(new
-		 * ButtonListener() {
-		 * 
-		 * @Override public void buttonReleased(Button _b) { Sound.beep();
-		 * buttonPressed++; }
-		 * 
-		 * @Override public void buttonPressed(Button _b) {
-		 * 
-		 * } });
-		 * 
-		 * if (buttonPressed == noOfItems) { Sound.twoBeeps();
-		 * System.out.println("All items have been collected"); buttonPressed = 0;
-		 * itemsCollected = 1;
-		 * 
-		 * } }
-		 */
 	}
 
 	public void sendData() {
