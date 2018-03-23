@@ -53,8 +53,8 @@ public class RouteExecutor {
 		return completed;
 	}
 	
-	public void setPause(Boolean b) {
-		pause = b;
+	public void setPause() {
+		pause = !pause;
 	}
 	public void Execute() {
 		System.out.println("exe");
@@ -125,7 +125,7 @@ public class RouteExecutor {
 	}
 
 	private int sendInterface(String action, int id) {
-		Delay.msDelay(3000);
+		//Delay.msDelay(3000);
 		return Sender.sendJob(id, action);
 	}
 
@@ -186,7 +186,7 @@ public class RouteExecutor {
 				Sender.sendJob(id, numberOfItem.toString());
 				System.out.println(4);
 			}
-			Delay.msDelay(3000);
+			//Delay.msDelay(3000);
 			return r;
 		}
 

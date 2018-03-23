@@ -34,8 +34,7 @@ public class WarehouseInterfaceView {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!paused) warehouseState.getExecutor().setPause(true);
-				else warehouseState.getExecutor().setPause(false);
+				warehouseState.getExecutor().setPause();
 				
 			}
 		});
