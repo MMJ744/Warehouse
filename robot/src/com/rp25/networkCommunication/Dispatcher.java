@@ -37,7 +37,7 @@ public class Dispatcher extends Thread {
 				Purpose purpose = Purpose.values()[in.readInt()];
 				if (purpose == Purpose.JOB) {//dispatching job string
 					String s =in.readUTF();
-					jobs.push(s);
+					jobs.push(s.trim());
 					out.writeInt(0);
 					out.flush();
 				}

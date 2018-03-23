@@ -29,9 +29,10 @@ public class RobotInterface extends Thread {
 
 	@Override
 	public void run() {
-		while (true) {
+		System.out.println("RUNNING");
+		while (true) {		
 			function = queue.take();
-			//System.out.println(function);
+			System.out.println(function);
 			if (function.equals("pickup")) {
 				System.out.println("ENTERING PICKUP");
 				Sound.setVolume(100);
@@ -43,13 +44,14 @@ public class RobotInterface extends Thread {
 				pickingUp();
 			}
 
-			if (function.equals("finished")) {
+			else if (function.equals("finished")) {
 				System.out.println("Job " + itemCode + " has been completed");
 				itemsDelivered = true;
 			} else if (function.equals("cancelled")) {
 				System.out.println("Job has been cancelled, dropping items");
 				break;
 			}
+			else{System.out.println("FUCKED");}
 			sendData();
 			// send back 1 for true.
 		}

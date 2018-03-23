@@ -16,7 +16,7 @@ public class AStarSearch {
 	private Grid grid;
 
 	private static AStarSearch instance;
-	public AStarSearch() {}
+	private AStarSearch() {}
 
 	public static AStarSearch getInstance() {
 		if(instance == null)
@@ -30,14 +30,21 @@ public class AStarSearch {
 	};
 
 	public List<Point> getPath(Robot r, Point startXY, Point goalXY, int priority, int startStep) throws PathNotFoundException {
-		List<Point> path = new AStar(grid, startXY, goalXY).getPath();
+		System.out.println();
+		List<Point> path = new AStar(grid, startXY, goalXY, startStep).getPath(true);
 
-		int s = grid.getStep() + startStep;
+		int s = startStep;
 		for(Point xy : path) {
-			System.out.println("R" + r.getID() + " reserving " + xy.toString() + " at " + s++);
-			grid.reserveCell(new Cell(xy, s), r.getID());
+			Cell c = new Cell(xy, s);
+			
+			System.out.println("R" + r.getID() + " reserving " + xy.toString() + " at " + s);
+			grid.reserveCell(c, r.getID());
+			
+			s++;
 		}
-
+		
+		grid.printReservationTable();
+		
 		return path;
 	}
 
@@ -156,16 +163,16 @@ public class AStarSearch {
 
 		private int startStep;
 
-		public AStar(Grid grid, Point startXY, Point goalXY) {
+		public AStar(Grid grid, Point startXY, Point goalXY, int startStep) {
 			this.grid = grid;
 
 			this.startXY = startXY;
 			this.goalXY = goalXY;
 
-			this.startStep = grid.getStep();
+			this.startStep = startStep;
 		}
 
-		public List<Point> getPath() throws PathNotFoundException {
+		public List<Point> getPath(boolean debug) throws PathNotFoundException {
 			Node startNode = new Node(startXY, goalXY, startStep, null, grid);
 			openNodes.add(startNode);
 
@@ -174,6 +181,8 @@ public class AStarSearch {
 				searchNode = openNodes.poll();
 				if(searchNode.getF() != Integer.MAX_VALUE && searchNode.getF() > 30) break;
 			
+				if(debug) System.out.println(new Cell(searchNode.getXY(), searchNode.getStep()).toString() + " checked with F: " + searchNode.getF());
+				
 				if(searchNode.getXY().equals(goalXY)) {
 					List<Point> path = grabRoute(searchNode);
 					return path.subList(1, path.size());

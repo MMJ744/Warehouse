@@ -45,7 +45,7 @@ public class NavigateJunction implements Behavior {
 		
 		if(action.equals(Command.FORWARD)) {
 			try {
-				Thread.sleep(1075);
+				Thread.sleep(1275);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

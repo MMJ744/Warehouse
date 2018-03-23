@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Grid {
@@ -46,6 +47,8 @@ public class Grid {
 	}
 
 	public boolean reserveCell(Cell cell, int id) {
+		cell = new Cell(cell.getXY(), cell.getStep() + 1);
+		
 		return !Optional.ofNullable(reservationTable.put(cell, id)).isPresent();
 	}
 
@@ -65,19 +68,34 @@ public class Grid {
 	}
 
 	public boolean isCellUnavailable(Cell oldCell, Cell newCell) {
-		if(reservationTable.containsKey(newCell)) return true;
+		boolean debug = newCell.getXY().equals(new Point(5, 5));
+		
+		if(reservationTable.containsKey(newCell)) {
+			if(debug) System.out.println(newCell.toString() + " DENIED");
+			return true;
+		}
+		
+		if(debug) System.out.println(newCell.toString() + " NOT RESERVED");
 		
 		boolean isNextPosReservedLastStep = isCellReserved(new Cell(newCell.getXY(), oldCell.getStep()));
 		if(isNextPosReservedLastStep) {
 			int r1 = reservationTable.get(new Cell(newCell.getXY(), oldCell.getStep()));
+			
+			if(debug) System.out.println(newCell.toString() + " RESERVED LAST STEP");
 			boolean isLastPosReservedNextStep = isCellReserved(new Cell(oldCell.getXY(), newCell.getStep()));
 			
 			if(isLastPosReservedNextStep) {
-				int r2 = reservationTable.get(new Cell(oldCell.getXY(), newCell.getStep()));
+				if(debug) System.out.println(newCell.toString() + " LAST POS RESERVED NEXT STEP");
+				boolean identicalIds = reservationTable.get(new Cell(oldCell.getXY(), newCell.getStep())) == r1;
 				
-				return r1 == r2;
+				if(debug && identicalIds) System.out.println(newCell.toString() + " identicalIds");
+				else if(debug) System.out.println(newCell.toString() + " not identicalIds");
+				return identicalIds;
 			} else return false;
-		} else return false;
+		} else {
+			if(debug) System.out.println(newCell.toString() + " IS AVAILABLE");
+			return false;
+		}
 	}
 	
 	public void output() {
@@ -185,5 +203,15 @@ public class Grid {
 
 			System.out.println();
 		}
+	}
+
+	public void printReservationTable() {
+		System.out.println(reservationTable.size() + " cells reserved.");
+		
+		for(Map.Entry<Cell, Integer> entry : reservationTable.entrySet()) {
+			System.out.print(entry.getValue() + " -> " + entry.getKey().toString() + ", ");
+		}
+		
+		System.out.println();
 	}
 }
