@@ -100,7 +100,7 @@ public class JobSelection {
 			logger.trace("Priority: " + priority);
 			job.setPriority(priority);
 		}
-		Collections.sort(allJobs, (a, b) -> b.getPriority().compareTo(a.getPriority()));
+		java.util.Collections.sort(allJobs, (a, b) -> b.getPriority().compareTo(a.getPriority()));
 		while(!allJobs.isEmpty()) {
 			nextJob();
 		}
