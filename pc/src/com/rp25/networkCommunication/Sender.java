@@ -11,6 +11,8 @@ import com.rp25.routeExecution.Command;
 import com.rp25.tools.Channel;
 import com.rp25.tools.Job;
 
+import lejos.util.Delay;
+
 
 public class Sender  {
 
@@ -24,13 +26,17 @@ public class Sender  {
 	 * it'll mess everything up
 	 * */
 	public static int pollButton(int i){
-		
+		--i;
 		try {
+			
 			DataOutputStream out = channels[i].getOutput(); //gets output stream for that robot.
 			out.writeInt(Purpose.POLL.ordinal()); //writes the enum int to stream
 			logger.debug("Button poll sent: " + Purpose.POLL.ordinal());
 			out.flush();
-			return (new DataInputStream(channels[i].getInput())).readInt();
+			int x = new DataInputStream(channels[i].getInput()).readInt();
+			System.out.println("Poll returned "+ x);
+			Delay.msDelay(3000);
+			return (x);
 		}
 		catch(Exception e){
 			logger.info("Poll failed", e);

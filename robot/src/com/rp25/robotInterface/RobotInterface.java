@@ -69,6 +69,7 @@ public class RobotInterface extends Thread {
 		for(int i = 0; i < noOfItems; i ++){
 			Button.waitForAnyPress();
 		}
+		System.out.println("thanks for items");
 		/*while (itemsCollected == 0) {
 			Button.ENTER.addButtonListener(new ButtonListener() {
 				@Override
