@@ -3,6 +3,7 @@ import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 import org.apache.log4j.Logger;
 
@@ -43,7 +44,7 @@ public class Sender  {
 			DataOutputStream out = channels[i].getOutput(); //gets output stream for that robot.
 			out.writeInt(Purpose.JOB.ordinal()); //writes the enum int to stream
 			logger.debug("Job int sent: " + Purpose.JOB.ordinal());
-			new BufferedWriter(new OutputStreamWriter(System.out)).write(s);
+			out.writeUTF(s+"\n");
 			out.flush();
 			return (new DataInputStream(channels[i].getInput())).readInt();
 		}

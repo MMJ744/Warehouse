@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import com.rp25.tools.BlockingQueue;
 import com.rp25.tools.Command;
 
+import lejos.util.Delay;
+
 
 public class Dispatcher extends Thread {
 	public static enum Purpose{JOB,MOVE,POLL}
@@ -34,7 +36,8 @@ public class Dispatcher extends Thread {
 			try {
 				Purpose purpose = Purpose.values()[in.readInt()];
 				if (purpose == Purpose.JOB) {//dispatching job string
-					jobs.push((new BufferedReader(new InputStreamReader(in))).readLine());
+					String s =in.readUTF();
+					jobs.push(s);
 					out.writeInt(0);
 					out.flush();
 				}

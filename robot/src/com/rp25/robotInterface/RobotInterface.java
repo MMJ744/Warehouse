@@ -31,7 +31,11 @@ public class RobotInterface extends Thread {
 	public void run() {
 		while (true) {
 			function = queue.take();
+			//System.out.println(function);
 			if (function.equals("pickup")) {
+				System.out.println("ENTERING PICKUP");
+				Sound.setVolume(100);
+				Sound.beep();
 				itemCode = queue.take();
 				String noOfItemsString = queue.take();
 				noOfItems = Integer.valueOf(noOfItemsString);
@@ -59,7 +63,11 @@ public class RobotInterface extends Thread {
 		itemsCollected = 0;
 		itemsDelivered = false;
 		Sound.beepSequenceUp();
-		while (itemsCollected == 0) {
+		System.out.println("Please give " + noOfItems + " of " + itemCode);
+		for(int i = 0; i < noOfItems; i ++){
+			Button.waitForAnyPress();
+		}
+		/*while (itemsCollected == 0) {
 			Button.ENTER.addButtonListener(new ButtonListener() {
 				@Override
 				public void buttonReleased(Button _b) {
@@ -80,7 +88,7 @@ public class RobotInterface extends Thread {
 				itemsCollected = 1;
 
 			} 
-		}
+		} */
 	}
 
 	public void sendData() {

@@ -53,6 +53,7 @@ public class RouteExecutor {
 	}
 
 	public void Execute() {
+		System.out.println("exe");
 		while (true) {
 			++currentStep;
 			checkRoutes();
@@ -79,7 +80,7 @@ public class RouteExecutor {
 			if (route1 == null || route1.isRouteEmpty() || c1) {
 				if (!c1 && route1 != null) {
 					completed.add(route1.getJob());
-					sendInterface("finished", r1.getID());
+					//sendInterface("finished", r1.getID());
 				}
 				route1 = routePlanner.planRoute(r1, currentStep);
 				r1.setCurrentJob(route1.getJob());
@@ -87,7 +88,7 @@ public class RouteExecutor {
 			if (route2 == null || route2.isRouteEmpty() || c2) {
 				if (!c2 && route2 != null) {
 					completed.add(route2.getJob());
-					sendInterface("finished", r2.getID());
+					//sendInterface("finished", r2.getID());
 				}
 				route2 = routePlanner.planRoute(r2, currentStep);
 				r2.setCurrentJob(route2.getJob());
@@ -95,7 +96,7 @@ public class RouteExecutor {
 			if (route3 == null || route3.isRouteEmpty() || c3) {
 				if (!c3 && route3 != null) {
 					completed.add(route3.getJob());
-					sendInterface("finished", r3.getID());
+					//sendInterface("finished", r3.getID());
 				}
 				route3 = routePlanner.planRoute(r3, currentStep);
 				r3.setCurrentJob(route3.getJob());
@@ -104,15 +105,15 @@ public class RouteExecutor {
 			e.printStackTrace();
 		}
 		if (c1) {
-			sendInterface("cancel", 1);
+			//sendInterface("cancel", 1);
 			c1 = false;
 		}
 		if (c2) {
-			sendInterface("cancel", 2);
+			//sendInterface("cancel", 2);
 			c2 = false;
 		}
 		if (c3) {
-			sendInterface("cancel", 3);
+			//sendInterface("cancel", 3);
 			c3 = false;
 		}
 	}
@@ -151,25 +152,32 @@ public class RouteExecutor {
 
 				orientate(point, r, d);
 			}
-			switch (a.getAction()) {
+			/*switch (a.getAction()) {
 			case PICKUP:
+				System.out.println("pickng up");
 				tellInterface(r.getID(), "pickup", a.getItemID(), a.getItemCount());
+				System.out.println("Waiting");
 				Sender.pollButton(r.getID());
+				System.out.println("done");
 				break;
 			case DROPOFF:
-				tellInterface(r.getID(), "finished", "", 0);
+				//tellInterface(r.getID(), "finished", "", 0);
 				break;
 			default:
 				break;
-			}
+			} */
 		}
 
 		private int tellInterface(int id, String action, String itemID, Integer numberOfItem) {
 			// either: cancelled. finished. pickup.
-			int			r = Sender.sendJob(id, action);
+			System.out.println(1);
+			int	r = Sender.sendJob(id, action);
+			System.out.println(2);
 			if (action.equalsIgnoreCase("pickup")) {
 				Sender.sendJob(id, itemID);
+				System.out.println(3);
 				Sender.sendJob(id, numberOfItem.toString());
+				System.out.println(4);
 			}
 			return r;
 		}

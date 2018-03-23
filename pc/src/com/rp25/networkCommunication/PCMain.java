@@ -19,9 +19,9 @@ public class PCMain {
 	private static String[][] robots = {
 			{"iRobot", "00:16:53:17:BA:74"},
 			{"Thunderbird 6","00:16:53:17:BD:EA"},
-			{"Spike","00:16:53:0A:A6:81"},
+			//{"Spike","00:16:53:0A:A6:81"},
 			//{"Chappie","00:16:53:1A:F6:D6"}
-			//{"Dave","00:16:53:08:DA:D2"}
+			{"Dave","00:16:53:08:DA:D2"}
 			} ; //robots
 
 	public static void main(String[] args) {
@@ -47,9 +47,9 @@ public class PCMain {
 			// TODO Auto-generated catch block
 			logger.info("\n\nError using Bluetooth Drivers", e);
 		}
-		logger.debug(Sender.sendMove(1, Command.FORWARD));
-		logger.debug(Sender.sendMove(2, Command.LEFT));
-		logger.debug(Sender.sendMove(3, Command.UTURN));
+		//logger.debug(Sender.sendMove(1, Command.FORWARD));
+		//logger.debug(Sender.sendMove(2, Command.LEFT));
+		//logger.debug(Sender.sendMove(3, Command.UTURN));
 		//Sender.sendMove(1,Command.LEFT);
 		//Sender.sendMove(2, Command.FORWARD);
 		//Sender.sendMove(3,Command.FORWARD);
