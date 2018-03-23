@@ -8,7 +8,7 @@ import com.rp25.routePlanning.AStarSearch;
 public class AStarTest {
 
 	public static void main(String[] args) {
-		Point start = new Point(2, 4);
+		/*Point start = new Point(2, 4);
 		Point goal = new Point(3, 5);
 		AStarSearch search = new AStarSearch();
 		Queue<Point> path = new Queue<Point>();
@@ -19,7 +19,7 @@ public class AStarTest {
 			for (int i = 0; i < path.size(); i++) {
 				System.out.println(path.pop());
 			}
-		}
+		} */
 
 	}
 
