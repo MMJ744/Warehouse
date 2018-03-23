@@ -16,6 +16,7 @@ public class WarehouseInterfaceView {
 	
 	WarehouseInterfaceFrame frame;
 	WarehouseState warehouseState;
+	boolean paused = false;
 		
 	public WarehouseInterfaceView(WarehouseState state, WarehouseGridSim sim) {
 		frame = new WarehouseInterfaceFrame("Robot Warehouse Interface", sim);
@@ -29,6 +30,16 @@ public class WarehouseInterfaceView {
 	}
 	
 	private void initialise() {
+		frame.addPauseListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(!paused) warehouseState.getExecutor().setPause(true);
+				else warehouseState.getExecutor().setPause(false);
+				
+			}
+		});
+		
 		for (Robot r : warehouseState.getAllRobots()) {
 			frame.addInfo(r);
 			frame.addListeners(r.getID(), new ActionListener() {

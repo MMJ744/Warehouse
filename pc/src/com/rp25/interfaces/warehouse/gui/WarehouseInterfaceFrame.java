@@ -60,5 +60,9 @@ public class WarehouseInterfaceFrame extends JFrame {
 	public void addListeners(int id, ActionListener listener) {
 		infoPanel.addButtonListeners(id, listener);
 	}
+	
+	public void addPauseListener(ActionListener listener) {
+		completedJobsPanel.addPauseListener(listener);
+	}
 
 }
