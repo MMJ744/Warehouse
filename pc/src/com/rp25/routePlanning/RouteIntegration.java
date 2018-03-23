@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.rp25.jobSelectionAndAllocation.JobAllocation;
+import com.rp25.main.GivenData;
 import com.rp25.routePlanning.RouteAction.ACTION;
 import com.rp25.tools.Job;
 import com.rp25.tools.JobPart;
@@ -34,8 +35,15 @@ public class RouteIntegration {
 		AStarSearch.getInstance().setGrid(grid);
 	};
 
-	static final Point[] DROPOFFLOCATIONS = { new Point(4, 7), new Point(6, 5) };
+	static Point[] DROPOFFLOCATIONS;
 
+	public RouteIntegration(ArrayList<Point> _dropoffLocations) {
+		DROPOFFLOCATIONS = new Point[_dropoffLocations.size()];
+		for (int i = 0; i < _dropoffLocations.size(); i++) {
+			DROPOFFLOCATIONS[i] = _dropoffLocations.get(i);
+		}
+	}
+	
 	public Route planRoute(Robot r, int s) throws PathNotFoundException {
 		Robot robot = r;
 
