@@ -34,6 +34,7 @@ public class RouteExecutor {
 	RouteIntegration routePlanner;
 	final static Logger logger = Logger.getLogger(RouteExecutor.class);
 	Collection<Job> completed = new ArrayList<Job>();
+	Boolean pause = false;
 
 	public RouteExecutor(Robot _r1, Robot _r2, Robot _r3, RouteIntegration _routePlanner) {
 		routePlanner = _routePlanner;
@@ -51,10 +52,15 @@ public class RouteExecutor {
 	public Collection<Job> getCompletedJobs() {
 		return completed;
 	}
-
+	
+	public void setPause(Boolean b) {
+		pause = b;
+	}
 	public void Execute() {
 		System.out.println("exe");
 		while (true) {
+			while(pause)
+				Delay.msDelay(1000);
 			++currentStep;
 			checkRoutes();
 			System.out.println("" + (route1 == null) + (r1 == null) + (d1 == null));
