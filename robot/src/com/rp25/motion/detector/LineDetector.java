@@ -16,7 +16,7 @@ public class LineDetector extends Thread {
 
 	public LineDetector(SensorPort leftPort, SensorPort rightPort) {
 		setDaemon(true);
-		
+
 		left = new LightSensor(leftPort);
 		right = new LightSensor(rightPort);
 
@@ -27,10 +27,10 @@ public class LineDetector extends Thread {
 
 	@Override
 	public void run() {
-		while(true) {
+		while (true) {
 			leftOnLine = left.getNormalizedLightValue() < THRESHOLD;
 			rightOnLine = right.getNormalizedLightValue() < THRESHOLD;
-			
+
 			lineDetected = leftOnLine || rightOnLine;
 		}
 	}
@@ -38,11 +38,11 @@ public class LineDetector extends Thread {
 	public boolean testLeftOnLine() {
 		return left.getNormalizedLightValue() < THRESHOLD;
 	}
-	
+
 	public boolean testRightOnLine() {
 		return right.getNormalizedLightValue() < THRESHOLD;
 	}
-	
+
 	public boolean isLineDetected() {
 		return lineDetected;
 	}

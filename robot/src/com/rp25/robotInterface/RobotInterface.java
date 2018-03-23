@@ -1,11 +1,9 @@
 package com.rp25.robotInterface;
 
-import lejos.nxt.Button;
-import lejos.nxt.ButtonListener;
-import lejos.nxt.Sound;
-
 import com.rp25.tools.BlockingQueue;
 
+import lejos.nxt.Button;
+import lejos.nxt.Sound;
 
 public class RobotInterface extends Thread {
 
@@ -30,7 +28,7 @@ public class RobotInterface extends Thread {
 	@Override
 	public void run() {
 		System.out.println("RUNNING");
-		while (true) {		
+		while (true) {
 			function = queue.take();
 			System.out.println(function);
 			if (function.equals("pickup")) {
@@ -50,8 +48,9 @@ public class RobotInterface extends Thread {
 			} else if (function.equals("cancelled")) {
 				System.out.println("Job has been cancelled, dropping items");
 				break;
+			} else {
+				System.out.println("FUCKED");
 			}
-			else{System.out.println("FUCKED");}
 			sendData();
 			// send back 1 for true.
 		}
@@ -66,32 +65,27 @@ public class RobotInterface extends Thread {
 		itemsDelivered = false;
 		Sound.beepSequenceUp();
 		System.out.println("Please give " + noOfItems + " of " + itemCode);
-		for(int i = 0; i < noOfItems; i ++){
+		for (int i = 0; i < noOfItems; i++) {
 			Button.waitForAnyPress();
 		}
 		System.out.println("thanks for items");
-		/*while (itemsCollected == 0) {
-			Button.ENTER.addButtonListener(new ButtonListener() {
-				@Override
-				public void buttonReleased(Button _b) {
-					Sound.beep();
-					buttonPressed++;
-				}
-
-				@Override
-				public void buttonPressed(Button _b) {
-
-				}
-			});
-
-			if (buttonPressed == noOfItems) {
-				Sound.twoBeeps();
-				System.out.println("All items have been collected");
-				buttonPressed = 0;
-				itemsCollected = 1;
-
-			} 
-		} */
+		/*
+		 * while (itemsCollected == 0) { Button.ENTER.addButtonListener(new
+		 * ButtonListener() {
+		 * 
+		 * @Override public void buttonReleased(Button _b) { Sound.beep();
+		 * buttonPressed++; }
+		 * 
+		 * @Override public void buttonPressed(Button _b) {
+		 * 
+		 * } });
+		 * 
+		 * if (buttonPressed == noOfItems) { Sound.twoBeeps();
+		 * System.out.println("All items have been collected"); buttonPressed = 0;
+		 * itemsCollected = 1;
+		 * 
+		 * } }
+		 */
 	}
 
 	public void sendData() {

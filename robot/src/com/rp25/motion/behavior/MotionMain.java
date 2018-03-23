@@ -15,34 +15,32 @@ public class MotionMain {
 
 	public static void main(String[] args) {
 		Button.waitForAnyPress();
-		
+
 		DifferentialPilot pilot = new DifferentialPilot(56, 110.5, Motor.C, Motor.B);
 		LineDetector lineDetector = new LineDetector(SensorPort.S3, SensorPort.S2);
 		JunctionDetector junctionDetector = new JunctionDetector(SensorPort.S3, SensorPort.S2);
-		
-		Behavior go = new GoTheFuckForward(pilot);
+
+		Behavior go = new GoForward(pilot);
 		Behavior correctLeftSkew = new CorrectLeftSkew(pilot, lineDetector);
 		Behavior correctRightSkew = new CorrectRightSkew(pilot, lineDetector);
 		Behavior navJunction = new NavigateJunction(pilot, junctionDetector, null, null);
-		
+
 		lineDetector.start();
 		junctionDetector.start();
-		
+
 		Button.LEFT.addButtonListener(new ButtonListener() {
 			@Override
-			public void buttonReleased(Button b) { }
+			public void buttonReleased(Button b) {
+			}
 
 			@Override
 			public void buttonPressed(Button b) {
 				System.exit(3000);
 			}
 		});
-		
-		
-		
-		Arbitrator arb = new Arbitrator(new Behavior[] {go, correctLeftSkew, correctRightSkew, navJunction});
+
+		Arbitrator arb = new Arbitrator(new Behavior[] { go, correctLeftSkew, correctRightSkew, navJunction });
 		arb.start();
 	}
-
 
 }

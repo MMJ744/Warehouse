@@ -17,7 +17,7 @@ public enum Orientation {
 			return Command.UTURN;
 		if (goal.toInt() == start.toInt() + 3 || goal.toInt() == start.toInt() - 1)
 			return Command.LEFT;
-		
+
 		return Command.FORWARD;
 	}
 
